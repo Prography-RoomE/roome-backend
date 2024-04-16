@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "apple")
 public class AppleProperties {
+    private String grantType;
     private String clientId;
     private String clientSecret;
     private String tokenUri;

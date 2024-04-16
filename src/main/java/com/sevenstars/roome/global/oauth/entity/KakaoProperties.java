@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "kakao")
 public class KakaoProperties {
+    private String grantType;
     private String clientId;
     private String clientSecret;
     private String tokenUri;

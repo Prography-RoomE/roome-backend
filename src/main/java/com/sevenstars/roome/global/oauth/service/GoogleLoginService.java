@@ -5,9 +5,11 @@ import com.sevenstars.roome.global.common.exception.CustomServerErrorException;
 import com.sevenstars.roome.global.common.response.ExceptionMessage;
 import com.sevenstars.roome.global.oauth.entity.GoogleProperties;
 import com.sevenstars.roome.global.oauth.entity.OAuth2Provider;
+import com.sevenstars.roome.global.oauth.entity.OAuth2ProviderToken;
 import com.sevenstars.roome.global.oauth.entity.TokenHeader;
 import com.sevenstars.roome.global.oauth.request.SignInRequest;
 import com.sevenstars.roome.global.oauth.request.WithdrawalRequest;
+import com.sevenstars.roome.global.oauth.response.GoogleTokenResponse;
 import com.sevenstars.roome.global.oauth.response.PublicKeyResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -16,16 +18,22 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.Set;
+
+import static com.sevenstars.roome.global.common.response.ExceptionMessage.PROVIDER_INVALID_RESPONSE;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,7 +43,6 @@ public class GoogleLoginService implements OAuth2LoginService {
     private final GoogleProperties properties;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
-    private PrivateKey privateKey;
 
     @Override
     public boolean supports(OAuth2Provider provider) {
@@ -46,14 +53,41 @@ public class GoogleLoginService implements OAuth2LoginService {
     public void signIn(SignInRequest request) {
 
         String code = request.getCode();
-        String idToken = request.getIdToken();
+        //String idToken = request.getIdToken();
 
+        String idToken = getToken(code).getIdToken();
         Claims claims = getClaims(idToken);
+        log.info("{} {}", claims.getSubject(), claims.get("email"));
     }
 
     @Override
     public void withdrawal(WithdrawalRequest request) {
+        String code = request.getCode();
+        String accessToken = getToken(code).getAccessToken();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("token", accessToken);
+        restTemplate.postForObject(properties.getTokenRevokeUri(), params, String.class);
+    }
 
+    public OAuth2ProviderToken getToken(String code) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", properties.getGrantType());
+        params.add("code", code);
+        params.add("redirect_uri", properties.getRedirectUri());
+        params.add("client_id", properties.getClientId());
+        params.add("client_secret", properties.getClientSecret());
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+        GoogleTokenResponse response = restTemplate.postForObject(properties.getTokenUri(), request, GoogleTokenResponse.class);
+
+        if (response == null) {
+            throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE.getMessage());
+        }
+
+        return new OAuth2ProviderToken(response.getAccessToken(), response.getIdToken());
     }
 
     public Claims getClaims(String identityToken) {

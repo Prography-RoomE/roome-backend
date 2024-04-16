@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "google")
 public class GoogleProperties {
+    private String grantType;
     private String clientId;
     private String clientSecret;
     private String tokenUri;
