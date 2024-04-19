@@ -10,7 +10,6 @@ import com.sevenstars.roome.global.oauth.entity.OAuth2ProviderToken;
 import com.sevenstars.roome.global.oauth.response.TokenResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
@@ -27,8 +26,6 @@ import java.nio.file.Paths;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Date;
 
@@ -41,6 +38,8 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
 
     private final AppleProperties properties;
     private final RestTemplate restTemplate;
+    private final PrivateKey privateKey;
+    private final long tokenValidityInMilliseconds;
 
     public AppleLoginService(RestTemplate restTemplate,
                              ObjectMapper objectMapper,
@@ -48,13 +47,8 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
         super(restTemplate, objectMapper);
         this.restTemplate = restTemplate;
         this.properties = properties;
-    }
-
-    private PrivateKey privateKey;
-
-    @PostConstruct
-    public void init() {
-        //this.privateKey = getPrivateKey();
+        this.privateKey = getPrivateKey();
+        this.tokenValidityInMilliseconds = properties.getTokenValidityInSeconds() * 1000;
     }
 
     @Override
@@ -74,7 +68,13 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
 
     @Override
     protected void revokeToken(String code) {
-
+        String accessToken = getToken(code).getAccessToken();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("client_id", accessToken);
+        params.add("client_secret", accessToken);
+        params.add("token", accessToken);
+        params.add("token_type_hint", "access_token");
+        restTemplate.postForObject(properties.getTokenRevokeUri(), params, String.class);
     }
 
     @Override
@@ -82,11 +82,9 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
 
         String tokenUri = properties.getTokenUri();
         String clientId = properties.getClientId();
-        // TODO
-        // kid: Key ID
-        // iss: Team ID
-        // sub: Client ID
-        String clientSecret = getClientSecret("", "", clientId);
+        String keyId = properties.getKeyId();
+        String teamId = properties.getTeamId();
+        String clientSecret = getClientSecret(keyId, teamId, clientId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -116,18 +114,17 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
     }
 
     private String getClientSecret(String kid, String iss, String sub) {
-        Date expirationDate = Date.from(LocalDateTime.now().plusDays(30).atZone(ZoneId.systemDefault()).toInstant());
+        Date now = new Date();
+        Date expirationDate = new Date(now.getTime() + tokenValidityInMilliseconds);
 
         return Jwts.builder()
-                .header().add("kid", kid)
-                .add("alg", "ES256")
+                .header()
+                .keyId(kid)
                 .and()
                 .issuer(iss)
-                .issuedAt(new Date(System.currentTimeMillis()))
+                .issuedAt(now)
                 .expiration(expirationDate)
-                .audience()
-                .add(properties.getIssuerUri())
-                .and()
+                .claim("aud", properties.getIssuerUri())
                 .subject(sub)
                 .signWith(getPrivateKey(), Jwts.SIG.ES256)
                 .compact();
@@ -136,7 +133,8 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
     private PrivateKey getPrivateKey() {
 
         try {
-            ClassPathResource resource = new ClassPathResource("Apple_Developer_페이지에서_다운.p8");
+            String keyFileName = "AuthKey_" + properties.getKeyId() + ".p8";
+            ClassPathResource resource = new ClassPathResource(keyFileName);
             Path path = Paths.get(resource.getURI());
             String content = Files.readString(path);
 

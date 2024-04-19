@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sevenstars.roome.global.common.exception.CustomServerErrorException;
 import com.sevenstars.roome.global.common.response.ExceptionMessage;
 import com.sevenstars.roome.global.oauth.config.OAuth2ProviderProperties;
-import com.sevenstars.roome.global.oauth.response.Key;
 import com.sevenstars.roome.global.oauth.entity.OAuth2Provider;
 import com.sevenstars.roome.global.oauth.entity.OAuth2ProviderToken;
 import com.sevenstars.roome.global.oauth.entity.TokenHeader;
 import com.sevenstars.roome.global.oauth.request.SignInRequest;
 import com.sevenstars.roome.global.oauth.request.WithdrawalRequest;
+import com.sevenstars.roome.global.oauth.response.Key;
 import com.sevenstars.roome.global.oauth.response.PublicKeyResponse;
 import com.sevenstars.roome.global.oauth.response.TokenResponse;
 import io.jsonwebtoken.Claims;
@@ -19,9 +19,6 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
@@ -73,9 +70,6 @@ public abstract class AbstractLoginService {
     }
 
     protected OAuth2ProviderToken getToken(String code) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", getProperties().getGrantType());
         params.add("code", code);
@@ -83,8 +77,7 @@ public abstract class AbstractLoginService {
         params.add("client_id", getProperties().getClientId());
         params.add("client_secret", getProperties().getClientSecret());
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-        TokenResponse response = restTemplate.postForObject(getProperties().getTokenUri(), request, TokenResponse.class);
+        TokenResponse response = restTemplate.postForObject(getProperties().getTokenUri(), params, TokenResponse.class);
 
         if (response == null) {
             throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE.getMessage());

@@ -16,4 +16,7 @@ public class AppleProperties implements OAuth2ProviderProperties {
     private final String tokenRevokeUri;
     private final String publicKeyUri;
     private final String issuerUri;
+    private final String keyId;
+    private final String teamId;
+    private final Long tokenValidityInSeconds;
 }
