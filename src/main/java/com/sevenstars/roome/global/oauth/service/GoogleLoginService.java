@@ -1,161 +1,51 @@
 package com.sevenstars.roome.global.oauth.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sevenstars.roome.global.common.exception.CustomServerErrorException;
-import com.sevenstars.roome.global.common.response.ExceptionMessage;
-import com.sevenstars.roome.global.oauth.entity.GoogleProperties;
+import com.sevenstars.roome.global.oauth.config.GoogleProperties;
+import com.sevenstars.roome.global.oauth.config.OAuth2ProviderProperties;
 import com.sevenstars.roome.global.oauth.entity.OAuth2Provider;
-import com.sevenstars.roome.global.oauth.entity.OAuth2ProviderToken;
-import com.sevenstars.roome.global.oauth.entity.TokenHeader;
-import com.sevenstars.roome.global.oauth.request.SignInRequest;
-import com.sevenstars.roome.global.oauth.request.WithdrawalRequest;
-import com.sevenstars.roome.global.oauth.response.GoogleTokenResponse;
-import com.sevenstars.roome.global.oauth.response.PublicKeyResponse;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.security.SignatureException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigInteger;
-import java.security.KeyFactory;
-import java.security.PublicKey;
-import java.security.spec.RSAPublicKeySpec;
-import java.util.Base64;
-import java.util.Set;
-
-import static com.sevenstars.roome.global.common.response.ExceptionMessage.PROVIDER_INVALID_RESPONSE;
+import static com.sevenstars.roome.global.oauth.entity.OAuth2Provider.GOOGLE;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
-public class GoogleLoginService implements OAuth2LoginService {
+public class GoogleLoginService extends AbstractLoginService implements OAuth2LoginService {
 
     private final GoogleProperties properties;
     private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
+
+    public GoogleLoginService(RestTemplate restTemplate,
+                              ObjectMapper objectMapper,
+                              GoogleProperties properties) {
+        super(restTemplate, objectMapper);
+        this.restTemplate = restTemplate;
+        this.properties = properties;
+    }
 
     @Override
     public boolean supports(OAuth2Provider provider) {
-        return OAuth2Provider.GOOGLE.equals(provider);
+        return getProvider().equals(provider);
     }
 
     @Override
-    public void signIn(SignInRequest request) {
-
-        String code = request.getCode();
-        //String idToken = request.getIdToken();
-
-        String idToken = getToken(code).getIdToken();
-        Claims claims = getClaims(idToken);
-        log.info("{} {}", claims.getSubject(), claims.get("email"));
+    protected OAuth2Provider getProvider() {
+        return GOOGLE;
     }
 
     @Override
-    public void withdrawal(WithdrawalRequest request) {
-        String code = request.getCode();
+    protected OAuth2ProviderProperties getProperties() {
+        return properties;
+    }
+
+    public void revokeToken(String code) {
         String accessToken = getToken(code).getAccessToken();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("token", accessToken);
         restTemplate.postForObject(properties.getTokenRevokeUri(), params, String.class);
-    }
-
-    public OAuth2ProviderToken getToken(String code) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", properties.getGrantType());
-        params.add("code", code);
-        params.add("redirect_uri", properties.getRedirectUri());
-        params.add("client_id", properties.getClientId());
-        params.add("client_secret", properties.getClientSecret());
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-        GoogleTokenResponse response = restTemplate.postForObject(properties.getTokenUri(), request, GoogleTokenResponse.class);
-
-        if (response == null) {
-            throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE.getMessage());
-        }
-
-        return new OAuth2ProviderToken(response.getAccessToken(), response.getIdToken());
-    }
-
-    public Claims getClaims(String identityToken) {
-        Claims claims = verifyIdentityTokenSignature(identityToken);
-        verifyClaims(claims);
-        return claims;
-    }
-
-    private Claims verifyIdentityTokenSignature(String identityToken) {
-
-        try {
-
-            PublicKeyResponse response = fetchPublicKey();
-
-            String headerString = identityToken.substring(0, identityToken.indexOf("."));
-            TokenHeader header = objectMapper.readValue(Base64.getUrlDecoder().decode(headerString), TokenHeader.class);
-
-            PublicKeyResponse.Key key = response.getKey(header.getKid(), header.getAlg())
-                    .orElseThrow(() -> new CustomServerErrorException(ExceptionMessage.PUBLIC_KEY_NOT_FOUND.getMessage()));
-
-            byte[] nBytes = Base64.getUrlDecoder().decode(key.getN());
-            byte[] eBytes = Base64.getUrlDecoder().decode(key.getE());
-
-            BigInteger n = new BigInteger(1, nBytes);
-            BigInteger e = new BigInteger(1, eBytes);
-
-            RSAPublicKeySpec publicKeySpec = new RSAPublicKeySpec(n, e);
-            KeyFactory keyFactory = KeyFactory.getInstance(key.getKty());
-            PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
-
-            return Jwts.parser().verifyWith(publicKey).build()
-                    .parseSignedClaims(identityToken)
-                    .getPayload();
-
-        } catch (SignatureException | MalformedJwtException exception) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_TOKEN.getMessage());
-        } catch (ExpiredJwtException exception) {
-            throw new IllegalArgumentException(ExceptionMessage.EXPIRED_TOKEN.getMessage());
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    private void verifyClaims(Claims claims) {
-        verifyIss(claims);
-        verifyAud(claims);
-    }
-
-    private void verifyIss(Claims claims) {
-        String iss = (String) claims.get("iss");
-        if (!iss.contains(properties.getIssuerUri()) && !properties.getIssuerUri().contains(iss)) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_TOKEN.getMessage());
-        }
-    }
-
-    private void verifyAud(Claims claims) {
-        Set<String> auds = (Set) claims.get("aud");
-
-        for (String aud : auds) {
-            if (aud.equals(properties.getClientId())) {
-                return;
-            }
-        }
-
-        throw new IllegalArgumentException(ExceptionMessage.INVALID_TOKEN.getMessage());
-    }
-
-    private PublicKeyResponse fetchPublicKey() {
-        return restTemplate.getForObject(properties.getPublicKeyUri(), PublicKeyResponse.class);
     }
 }
