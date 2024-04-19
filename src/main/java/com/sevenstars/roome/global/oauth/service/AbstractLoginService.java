@@ -24,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
@@ -48,8 +49,8 @@ public abstract class AbstractLoginService {
         String code = request.getCode();
         String idToken = request.getIdToken();
 
-        if (idToken == null) {
-            if (code == null) {
+        if (!StringUtils.hasText(idToken)) {
+            if (!StringUtils.hasText(code)) {
                 throw new IllegalArgumentException();
             }
             idToken = getToken(code).getIdToken();
@@ -64,7 +65,7 @@ public abstract class AbstractLoginService {
 
         String code = request.getCode();
 
-        if (code != null) {
+        if (StringUtils.hasText(code)) {
             revokeToken(code);
         }
 
