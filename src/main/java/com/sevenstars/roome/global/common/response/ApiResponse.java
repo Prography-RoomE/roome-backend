@@ -12,7 +12,7 @@ public class ApiResponse<T> {
     private final Integer code;
     private final String message;
     @JsonInclude(NON_NULL)
-    private final T result;
+    private final T data;
 
     public static <T> ApiResponse<T> success(T data) {
         return result(SUCCESS, data);
@@ -44,6 +44,14 @@ public class ApiResponse<T> {
                 .build();
     }
 
+    public static <T> ApiResponse<T> unauthorized() {
+        return result(UNAUTHORIZED);
+    }
+
+    public static <T> ApiResponse<T> forbidden() {
+        return result(FORBIDDEN);
+    }
+
     public static <T> ApiResponse<T> result(Result result) {
         return ApiResponse.<T>builder()
                 .result(result)
@@ -61,6 +69,6 @@ public class ApiResponse<T> {
     public ApiResponse(Result result, Integer code, String message, T data) {
         this.code = (result == null) ? code : result.getCode();
         this.message = (result == null) ? message : result.getMessage();
-        this.result = data;
+        this.data = data;
     }
 }
