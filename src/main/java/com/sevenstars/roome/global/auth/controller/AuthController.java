@@ -6,12 +6,17 @@ import com.sevenstars.roome.global.auth.response.TokenResponse;
 import com.sevenstars.roome.global.auth.service.LoginService;
 import com.sevenstars.roome.global.common.response.ApiResponse;
 import com.sevenstars.roome.global.jwt.service.JwtTokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "인증")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -25,18 +30,22 @@ public class AuthController {
         return ApiResponse.success(loginService.signIn(request));
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/reissue")
     public ApiResponse<TokenResponse> reissue(@AuthenticationPrincipal Long id,
+                                              @Parameter(hidden = true)
                                               @RequestHeader("Authorization") String authorizationHeader) {
         return ApiResponse.success(tokenService.reissue(id, authorizationHeader));
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/withdrawal")
     public ApiResponse<Void> signIn(@AuthenticationPrincipal Long id, @RequestBody @Valid WithdrawalRequest request) {
         loginService.withdrawal(id, request);
         return ApiResponse.success();
     }
 
+    @Operation(hidden = true)
     @GetMapping("/login/{provider}")
     public void login(@PathVariable String provider, @RequestParam String code) {
         log.info("{}= {}", provider, code);
