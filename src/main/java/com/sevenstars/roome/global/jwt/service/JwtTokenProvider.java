@@ -1,6 +1,6 @@
 package com.sevenstars.roome.global.jwt.service;
 
-import com.sevenstars.roome.global.jwt.config.AuthProperties;
+import com.sevenstars.roome.global.jwt.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -22,12 +22,12 @@ import static com.sevenstars.roome.global.common.response.ExceptionMessage.INVAL
 @Component
 public class JwtTokenProvider {
 
-    private final AuthProperties properties;
+    private final JwtProperties properties;
     private final long tokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
     private final SecretKey key;
 
-    public JwtTokenProvider(AuthProperties properties) {
+    public JwtTokenProvider(JwtProperties properties) {
         this.properties = properties;
         tokenValidityInMilliseconds = properties.getTokenValidityInSeconds() * 1000;
         refreshTokenValidityInMilliseconds = properties.getRefreshTokenValidityInSeconds() * 1000;
