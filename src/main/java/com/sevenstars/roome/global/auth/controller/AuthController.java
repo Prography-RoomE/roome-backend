@@ -1,13 +1,13 @@
 package com.sevenstars.roome.global.auth.controller;
 
 import com.sevenstars.roome.global.auth.request.SignInRequest;
+import com.sevenstars.roome.global.auth.request.TokenRequest;
 import com.sevenstars.roome.global.auth.request.WithdrawalRequest;
 import com.sevenstars.roome.global.auth.response.TokenResponse;
 import com.sevenstars.roome.global.auth.service.LoginService;
 import com.sevenstars.roome.global.common.response.ApiResponse;
 import com.sevenstars.roome.global.jwt.service.JwtTokenService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -37,12 +37,9 @@ public class AuthController {
         return ApiResponse.success();
     }
 
-    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/reissue")
-    public ApiResponse<TokenResponse> reissue(@AuthenticationPrincipal Long userId,
-                                              @Parameter(hidden = true)
-                                              @RequestHeader("Authorization") String authorizationHeader) {
-        return ApiResponse.success(tokenService.reissue(userId, authorizationHeader));
+    public ApiResponse<TokenResponse> reissue(@RequestBody @Valid TokenRequest request) {
+        return ApiResponse.success(tokenService.reissue(request));
     }
 
     @SecurityRequirement(name = "bearerAuth")

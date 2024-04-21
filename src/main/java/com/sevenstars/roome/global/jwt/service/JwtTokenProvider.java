@@ -10,6 +10,7 @@ import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
 import java.util.Base64;
@@ -22,6 +23,10 @@ import static com.sevenstars.roome.global.common.response.ExceptionMessage.INVAL
 @Component
 public class JwtTokenProvider {
 
+    private static final String BEARER_PREFIX = "Bearer ";
+    private static final String TOKEN_TYPE_CLAIM_NAME = "token_type";
+    private static final String TOKEN_TYPE_CLAIM_VALUE_ACCESS_TOKEN = "access_token";
+    private static final String TOKEN_TYPE_CLAIM_VALUE_REFRESH_TOKEN = "refresh_token";
     private final JwtProperties properties;
     private final long tokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
@@ -45,6 +50,7 @@ public class JwtTokenProvider {
                 .issuedAt(now)
                 .expiration(expirationDate)
                 .subject(userId.toString())
+                .claim(TOKEN_TYPE_CLAIM_NAME, TOKEN_TYPE_CLAIM_VALUE_ACCESS_TOKEN)
                 .signWith(key)
                 .compact();
     }
@@ -59,6 +65,7 @@ public class JwtTokenProvider {
                 .issuedAt(now)
                 .expiration(expirationDate)
                 .subject(userId.toString())
+                .claim(TOKEN_TYPE_CLAIM_NAME, TOKEN_TYPE_CLAIM_VALUE_REFRESH_TOKEN)
                 .signWith(key)
                 .compact();
     }
@@ -67,10 +74,33 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userId, "", Collections.emptyList());
     }
 
-    public Claims getClaims(String token) {
+    public Claims verifyAccessToken(String token) {
+        token = resolveToken(token);
         Claims claims = verifyTokenSignature(token);
-        verifyClaims(claims);
+        verifyIss(claims);
+        verifyAccessTokenType(claims);
         return claims;
+    }
+
+    public Claims verifyRefreshToken(String token) {
+        token = resolveToken(token);
+        Claims claims = verifyTokenSignature(token);
+        verifyIss(claims);
+        verifyRefreshTokenType(claims);
+        return claims;
+    }
+
+    public String resolveToken(String token) {
+
+        if (!StringUtils.hasText(token)) {
+            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+        }
+
+        if (token.startsWith(BEARER_PREFIX)) {
+            return token.substring(BEARER_PREFIX.length());
+        }
+
+        return token;
     }
 
     private Claims verifyTokenSignature(String token) {
@@ -89,13 +119,24 @@ public class JwtTokenProvider {
         }
     }
 
-    private void verifyClaims(Claims claims) {
-        verifyIss(claims);
-    }
 
     private void verifyIss(Claims claims) {
         String iss = (String) claims.get("iss");
         if (!iss.contains(properties.getIssuerUri()) && !properties.getIssuerUri().contains(iss)) {
+            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+        }
+    }
+
+    private void verifyAccessTokenType(Claims claims) {
+        String tokenType = (String) claims.get(TOKEN_TYPE_CLAIM_NAME);
+        if (!TOKEN_TYPE_CLAIM_VALUE_ACCESS_TOKEN.equals(tokenType)) {
+            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+        }
+    }
+
+    private void verifyRefreshTokenType(Claims claims) {
+        String tokenType = (String) claims.get(TOKEN_TYPE_CLAIM_NAME);
+        if (!TOKEN_TYPE_CLAIM_VALUE_REFRESH_TOKEN.equals(tokenType)) {
             throw new IllegalStateException(INVALID_TOKEN.getMessage());
         }
     }

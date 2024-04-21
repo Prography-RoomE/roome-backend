@@ -2,13 +2,14 @@ package com.sevenstars.roome.global.jwt.service;
 
 import com.sevenstars.roome.domain.user.entity.User;
 import com.sevenstars.roome.domain.user.repository.UserRepository;
+import com.sevenstars.roome.global.auth.request.TokenRequest;
 import com.sevenstars.roome.global.auth.response.TokenResponse;
 import com.sevenstars.roome.global.jwt.entity.RefreshToken;
 import com.sevenstars.roome.global.jwt.repository.RefreshTokenRepository;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -45,18 +46,17 @@ public class JwtTokenService {
     }
 
     @Transactional
-    public TokenResponse reissue(Long userId, String authorizationHeader) {
+    public TokenResponse reissue(TokenRequest request) {
+
+        String token = tokenProvider.resolveToken(request.getRefreshToken());
+        Claims claims = tokenProvider.verifyRefreshToken(token);
+        Long userId = Long.valueOf(claims.getSubject());
 
         User user = userRepository.findByIdAndWithdrawalFalse(userId)
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_ID.getMessage()));
 
         RefreshToken refreshToken = refreshTokenRepository.findByUser(user)
                 .orElseThrow(() -> new IllegalStateException(INVALID_TOKEN.getMessage()));
-
-        if (!StringUtils.hasText(authorizationHeader) || !authorizationHeader.startsWith(BEARER_PREFIX)) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
-        }
-        String token = authorizationHeader.substring(BEARER_PREFIX.length());
 
         if (!token.equals(refreshToken.getToken())) {
             throw new IllegalStateException(INVALID_TOKEN.getMessage());
