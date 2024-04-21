@@ -90,17 +90,13 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
         String teamId = properties.getTeamId();
         String clientSecret = getClientSecret(keyId, teamId, clientId);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("client_id", clientId);
         params.add("client_secret", clientSecret);
         params.add("code", code);
         params.add("grant_type", "authorization_code");
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-        OAuth2TokenResponse response = restTemplate.postForObject(tokenUri, request, OAuth2TokenResponse.class);
+        OAuth2TokenResponse response = restTemplate.postForObject(tokenUri, params, OAuth2TokenResponse.class);
 
         if (response == null) {
             throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE.getMessage());
