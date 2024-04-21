@@ -61,7 +61,8 @@ public abstract class AbstractLoginService {
         Claims claims = getClaims(idToken);
 
         String subject = claims.getSubject();
-        User user = userService.saveOrUpdate(new UserRequest(getProvider().getName(), subject, ""));
+        String email = (String) claims.get("email");
+        User user = userService.saveOrUpdate(new UserRequest(getProvider().getName(), subject, email));
         Long userId = user.getId();
 
         return tokenService.issue(userId);
@@ -75,6 +76,7 @@ public abstract class AbstractLoginService {
             revokeToken(code);
         }
 
+        tokenService.delete(id);
         userService.withdraw(id);
     }
 

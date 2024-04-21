@@ -31,17 +31,24 @@ public class AuthController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/signout")
+    public ApiResponse<TokenResponse> signOut(@AuthenticationPrincipal Long userId) {
+        tokenService.delete(userId);
+        return ApiResponse.success();
+    }
+
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/reissue")
-    public ApiResponse<TokenResponse> reissue(@AuthenticationPrincipal Long id,
+    public ApiResponse<TokenResponse> reissue(@AuthenticationPrincipal Long userId,
                                               @Parameter(hidden = true)
                                               @RequestHeader("Authorization") String authorizationHeader) {
-        return ApiResponse.success(tokenService.reissue(id, authorizationHeader));
+        return ApiResponse.success(tokenService.reissue(userId, authorizationHeader));
     }
 
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/withdrawal")
-    public ApiResponse<Void> signIn(@AuthenticationPrincipal Long id, @RequestBody @Valid WithdrawalRequest request) {
-        loginService.withdrawal(id, request);
+    public ApiResponse<Void> signIn(@AuthenticationPrincipal Long userId, @RequestBody @Valid WithdrawalRequest request) {
+        loginService.withdraw(userId, request);
         return ApiResponse.success();
     }
 

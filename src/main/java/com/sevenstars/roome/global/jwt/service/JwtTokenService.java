@@ -69,4 +69,14 @@ public class JwtTokenService {
 
         return new TokenResponse(newToken, newRefreshToken);
     }
+
+    @Transactional
+    public void delete(Long userId) {
+
+        User user = userRepository.findByIdAndWithdrawalFalse(userId)
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_ID.getMessage()));
+
+        refreshTokenRepository.findByUser(user)
+                .ifPresent(refreshTokenRepository::delete);
+    }
 }

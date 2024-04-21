@@ -33,7 +33,7 @@ public class LoginService {
         return oAuth2LoginService.signIn(request);
     }
 
-    public void withdrawal(Long id, WithdrawalRequest request) {
+    public void withdraw(Long id, WithdrawalRequest request) {
 
         OAuth2Provider oAuth2Provider = Arrays.stream(OAuth2Provider.values())
                 .filter(provider -> provider.getName().equals(request.getProvider()))
