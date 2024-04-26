@@ -105,14 +105,6 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
         return new OAuth2ProviderToken(response.getAccessToken(), response.getIdToken());
     }
 
-    @Override
-    protected void verifyAud(Claims claims) {
-        String aud = (String) claims.get("aud");
-        if (!aud.equals(properties.getClientId())) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
-        }
-    }
-
     private String getClientSecret(String kid, String iss, String sub) {
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + tokenValidityInMilliseconds);
