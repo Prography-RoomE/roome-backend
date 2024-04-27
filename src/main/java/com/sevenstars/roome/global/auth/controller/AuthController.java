@@ -44,7 +44,7 @@ public class AuthController {
 
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/withdrawal")
-    public ApiResponse<Void> signIn(@AuthenticationPrincipal Long userId, @RequestBody @Valid WithdrawalRequest request) {
+    public ApiResponse<Void> withdraw(@AuthenticationPrincipal Long userId, @RequestBody @Valid WithdrawalRequest request) {
         loginService.withdraw(userId, request);
         return ApiResponse.success();
     }
