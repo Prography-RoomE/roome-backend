@@ -81,14 +81,21 @@ public abstract class AbstractLoginService {
     }
 
     protected OAuth2ProviderToken getToken(String code) {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", getProperties().getGrantType());
-        params.add("code", code);
-        params.add("redirect_uri", getProperties().getRedirectUri());
-        params.add("client_id", getProperties().getClientId());
-        params.add("client_secret", getProperties().getClientSecret());
 
-        OAuth2TokenResponse response = restTemplate.postForObject(getProperties().getTokenUri(), params, OAuth2TokenResponse.class);
+        String tokenUri = getProperties().getTokenUri();
+        String clientId = getProperties().getClientId();
+        String clientSecret = getProperties().getClientSecret();
+        String grantType = getProperties().getGrantType();
+        String redirectUri = getProperties().getRedirectUri();
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("client_id", clientId);
+        params.add("client_secret", clientSecret);
+        params.add("code", code);
+        params.add("grant_type", grantType);
+        params.add("redirect_uri", redirectUri);
+
+        OAuth2TokenResponse response = restTemplate.postForObject(tokenUri, params, OAuth2TokenResponse.class);
 
         if (response == null) {
             throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE.getMessage());

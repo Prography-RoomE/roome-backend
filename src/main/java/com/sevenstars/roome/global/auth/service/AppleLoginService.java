@@ -9,13 +9,9 @@ import com.sevenstars.roome.global.auth.entity.OAuth2ProviderToken;
 import com.sevenstars.roome.global.auth.response.OAuth2TokenResponse;
 import com.sevenstars.roome.global.common.exception.CustomServerErrorException;
 import com.sevenstars.roome.global.jwt.service.JwtTokenService;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -31,7 +27,6 @@ import java.util.Base64;
 import java.util.Date;
 
 import static com.sevenstars.roome.global.auth.entity.OAuth2Provider.APPLE;
-import static com.sevenstars.roome.global.common.response.ExceptionMessage.INVALID_TOKEN;
 import static com.sevenstars.roome.global.common.response.ExceptionMessage.PROVIDER_INVALID_RESPONSE;
 
 @Slf4j
@@ -72,13 +67,18 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
 
     @Override
     protected void revokeToken(String code) {
+
+        String tokenRevokeUri = properties.getTokenRevokeUri();
+        String clientId = properties.getClientId();
+        String clientSecret = getClientSecret();
         String accessToken = getToken(code).getAccessToken();
+
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("client_id", accessToken);
-        params.add("client_secret", accessToken);
+        params.add("client_id", clientId);
+        params.add("client_secret", clientSecret);
         params.add("token", accessToken);
         params.add("token_type_hint", "access_token");
-        restTemplate.postForObject(properties.getTokenRevokeUri(), params, String.class);
+        restTemplate.postForObject(tokenRevokeUri, params, String.class);
     }
 
     @Override
@@ -86,15 +86,14 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
 
         String tokenUri = properties.getTokenUri();
         String clientId = properties.getClientId();
-        String keyId = properties.getKeyId();
-        String teamId = properties.getTeamId();
-        String clientSecret = getClientSecret(keyId, teamId, clientId);
+        String clientSecret = getClientSecret();
+        String grantType = getProperties().getGrantType();
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("client_id", clientId);
         params.add("client_secret", clientSecret);
         params.add("code", code);
-        params.add("grant_type", "authorization_code");
+        params.add("grant_type", grantType);
 
         OAuth2TokenResponse response = restTemplate.postForObject(tokenUri, params, OAuth2TokenResponse.class);
 
@@ -105,19 +104,26 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
         return new OAuth2ProviderToken(response.getAccessToken(), response.getIdToken());
     }
 
-    private String getClientSecret(String kid, String iss, String sub) {
+    public String getClientSecret() {
+
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + tokenValidityInMilliseconds);
 
+        String clientId = properties.getClientId();
+        String keyId = properties.getKeyId();
+        String teamId = properties.getTeamId();
+
         return Jwts.builder()
                 .header()
-                .keyId(kid)
+                .keyId(keyId)
                 .and()
-                .issuer(iss)
+                .issuer(teamId)
                 .issuedAt(now)
                 .expiration(expirationDate)
+                //.audience().add(properties.getIssuerUri())
+                //.and()
                 .claim("aud", properties.getIssuerUri())
-                .subject(sub)
+                .subject(clientId)
                 .signWith(privateKey, Jwts.SIG.ES256)
                 .compact();
     }
