@@ -120,9 +120,8 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
                 .issuer(teamId)
                 .issuedAt(now)
                 .expiration(expirationDate)
-                //.audience().add(properties.getIssuerUri())
-                //.and()
-                .claim("aud", properties.getIssuerUri())
+                .audience().add(properties.getIssuerUri())
+                .and()
                 .subject(clientId)
                 .signWith(privateKey, Jwts.SIG.ES256)
                 .compact();
