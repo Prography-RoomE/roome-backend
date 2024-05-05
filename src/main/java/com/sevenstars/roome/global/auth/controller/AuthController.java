@@ -32,7 +32,7 @@ public class AuthController {
 
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/signout")
-    public ApiResponse<TokenResponse> signOut(@AuthenticationPrincipal Long userId) {
+    public ApiResponse<Void> signOut(@AuthenticationPrincipal Long userId) {
         tokenService.delete(userId);
         return ApiResponse.success();
     }
