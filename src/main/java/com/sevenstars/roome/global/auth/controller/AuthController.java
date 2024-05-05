@@ -30,16 +30,16 @@ public class AuthController {
         return ApiResponse.success(loginService.signIn(request));
     }
 
+    @PostMapping("/token")
+    public ApiResponse<TokenResponse> getToken(@RequestBody @Valid TokenRequest request) {
+        return ApiResponse.success(tokenService.getToken(request));
+    }
+
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/signout")
     public ApiResponse<Void> signOut(@AuthenticationPrincipal Long userId) {
         tokenService.delete(userId);
         return ApiResponse.success();
-    }
-
-    @PostMapping("/reissue")
-    public ApiResponse<TokenResponse> reissue(@RequestBody @Valid TokenRequest request) {
-        return ApiResponse.success(tokenService.reissue(request));
     }
 
     @SecurityRequirement(name = "bearerAuth")

@@ -46,7 +46,7 @@ public class JwtTokenService {
     }
 
     @Transactional
-    public TokenResponse reissue(TokenRequest request) {
+    public TokenResponse getToken(TokenRequest request) {
 
         String token = tokenProvider.resolveToken(request.getRefreshToken());
         Claims claims = tokenProvider.verifyRefreshToken(token);

@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/health").permitAll()
                         .requestMatchers("/signin").permitAll()
-                        .requestMatchers("/reissue").permitAll()
+                        .requestMatchers("/token").permitAll()
                         .requestMatchers(antMatcher("/login/**")).permitAll()
                         .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
                         .requestMatchers(antMatcher("/swagger-resources/**")).permitAll()
