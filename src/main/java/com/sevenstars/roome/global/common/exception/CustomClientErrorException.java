@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CustomServerErrorException extends RuntimeException {
+public class CustomClientErrorException extends RuntimeException {
     private final Result result;
 }

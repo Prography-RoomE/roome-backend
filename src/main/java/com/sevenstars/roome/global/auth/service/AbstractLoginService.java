@@ -14,6 +14,7 @@ import com.sevenstars.roome.global.auth.response.Key;
 import com.sevenstars.roome.global.auth.response.OAuth2TokenResponse;
 import com.sevenstars.roome.global.auth.response.PublicKeyResponse;
 import com.sevenstars.roome.global.auth.response.TokenResponse;
+import com.sevenstars.roome.global.common.exception.CustomClientErrorException;
 import com.sevenstars.roome.global.common.exception.CustomServerErrorException;
 import com.sevenstars.roome.global.jwt.service.JwtTokenService;
 import io.jsonwebtoken.Claims;
@@ -34,7 +35,7 @@ import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.*;
 
-import static com.sevenstars.roome.global.common.response.ExceptionMessage.*;
+import static com.sevenstars.roome.global.common.response.Result.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -53,7 +54,7 @@ public abstract class AbstractLoginService {
 
         if (!StringUtils.hasText(idToken)) {
             if (!StringUtils.hasText(code)) {
-                throw new IllegalArgumentException();
+                throw new CustomClientErrorException(AUTHORIZATION_CODE_AND_ID_TOKEN_EMPTY);
             }
             idToken = getToken(code).getIdToken();
         }
@@ -98,7 +99,7 @@ public abstract class AbstractLoginService {
         OAuth2TokenResponse response = restTemplate.postForObject(tokenUri, params, OAuth2TokenResponse.class);
 
         if (response == null) {
-            throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE.getMessage());
+            throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE);
         }
 
         return new OAuth2ProviderToken(response.getAccessToken(), response.getIdToken());
@@ -117,7 +118,7 @@ public abstract class AbstractLoginService {
             TokenHeader header = objectMapper.readValue(Base64.getUrlDecoder().decode(headerString), TokenHeader.class);
 
             Key key = getKey(header.getKid(), header.getAlg())
-                    .orElseThrow(() -> new CustomServerErrorException(PUBLIC_KEY_NOT_FOUND.getMessage()));
+                    .orElseThrow(() -> new CustomServerErrorException(PUBLIC_KEY_NOT_FOUND));
 
             byte[] nBytes = Base64.getUrlDecoder().decode(key.getN());
             byte[] eBytes = Base64.getUrlDecoder().decode(key.getE());
@@ -134,9 +135,9 @@ public abstract class AbstractLoginService {
                     .getPayload();
 
         } catch (SignatureException | MalformedJwtException exception) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+            throw new CustomClientErrorException(INVALID_TOKEN);
         } catch (ExpiredJwtException exception) {
-            throw new IllegalStateException(EXPIRED_TOKEN.getMessage());
+            throw new CustomClientErrorException(EXPIRED_TOKEN);
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
@@ -150,7 +151,7 @@ public abstract class AbstractLoginService {
     protected void verifyIss(Claims claims) {
         String iss = (String) claims.get("iss");
         if (!iss.contains(getProperties().getIssuerUri()) && !getProperties().getIssuerUri().contains(iss)) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+            throw new CustomClientErrorException(INVALID_TOKEN);
         }
     }
 
@@ -163,13 +164,13 @@ public abstract class AbstractLoginService {
             }
         }
 
-        throw new IllegalStateException(INVALID_TOKEN.getMessage());
+        throw new CustomClientErrorException(INVALID_TOKEN);
     }
 
     protected void updateKey() {
         PublicKeyResponse response = fetchPublicKey();
         if (response == null || response.getKeys().isEmpty()) {
-            throw new IllegalStateException(PUBLIC_KEY_UPDATE_FAIL.getMessage());
+            throw new CustomClientErrorException(PUBLIC_KEY_UPDATE_FAIL);
         }
         keys = response.getKeys();
         log.info("{}={}", getProvider().getName(), keys);

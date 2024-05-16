@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static com.sevenstars.roome.global.common.response.Result.NULL;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -22,15 +24,22 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(CustomServerErrorException.class)
     public ApiResponse<Void> handleCustomServerErrorException(CustomServerErrorException exception) {
-        log.error("[CustomServerErrorException]: ", exception);
-        return ApiResponse.error(exception.getMessage());
+        log.error("[CustomServerErrorException]: {}", exception.getResult().getMessage());
+        return ApiResponse.result(exception.getResult());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CustomClientErrorException.class)
+    public ApiResponse<Void> handleCustomException(CustomClientErrorException exception) {
+        log.error("[handleCustomException]: {}", exception.getResult().getMessage());
+        return ApiResponse.result(exception.getResult());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ApiResponse<Void> handleIllegalArgumentException(IllegalArgumentException exception) {
         log.error("[handleIllegalArgumentException]: {}", exception.getMessage());
-        return ApiResponse.fail();
+        return ApiResponse.fail(exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -44,6 +53,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ApiResponse<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         log.error("[handleMethodArgumentNotValidException]: {}", exception.getMessage());
-        return ApiResponse.fail();
+        return ApiResponse.result(NULL);
     }
 }

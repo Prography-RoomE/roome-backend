@@ -52,6 +52,6 @@ public class AuthController {
     @Operation(hidden = true)
     @GetMapping("/login/{provider}")
     public void login(@PathVariable String provider, @RequestParam String code) {
-        log.info("{}= {}", provider, code);
+        log.info("{}={}", provider, code);
     }
 }
