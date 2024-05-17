@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "유저")
+@Tag(name = "사용자")
 @SecurityRequirement(name = "bearerAuth")
 @RequiredArgsConstructor
 @RestController
