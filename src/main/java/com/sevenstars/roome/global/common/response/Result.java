@@ -35,7 +35,10 @@ public enum Result {
     USER_NICKNAME_EMPTY(2006, "빈 문자열입니다."),
     USER_NICKNAME_CAN_CONTAIN_KOREAN_ENGLISH_OR_NUMBERS(2007, "한글/영문/숫자만 입력 가능합니다."),
     USER_NICKNAME_LENGTH_EXCEEDED(2008, "닉네임은 8자를 초과할 수 없습니다."),
-    USER_TERMS_AGREEMENT_NOT_FOUND(2009, "사용자 약관 동의를 찾을 수 없습니다.");
+    USER_TERMS_AGREEMENT_NOT_FOUND(2009, "사용자 약관 동의를 찾을 수 없습니다."),
+
+    // Profile
+    PROFILE_NOT_FOUND(3000, "프로필을 찾을 수 없습니다.");
 
     private final int code;
     private final String message;

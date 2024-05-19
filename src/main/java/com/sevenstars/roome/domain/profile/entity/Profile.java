@@ -75,4 +75,24 @@ public class Profile extends BaseTimeEntity {
         this.activity = null;
         this.color = null;
     }
+
+    public void updateHorrorThemePosition(HorrorThemePosition position) {
+        this.horrorThemePosition = position;
+    }
+
+    public void updateHintUsagePreference(HintUsagePreference preference) {
+        this.hintUsagePreference = preference;
+    }
+
+    public void updateDeviceLockPreference(DeviceLockPreference preference) {
+        this.deviceLockPreference = preference;
+    }
+
+    public void updateActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public void updateColor(Color color) {
+        this.color = color;
+    }
 }

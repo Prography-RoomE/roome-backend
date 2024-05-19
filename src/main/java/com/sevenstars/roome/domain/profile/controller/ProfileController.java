@@ -1,6 +1,7 @@
 package com.sevenstars.roome.domain.profile.controller;
 
 import com.sevenstars.roome.domain.profile.response.ProfileDefaultResponse;
+import com.sevenstars.roome.domain.profile.response.ProfileResponse;
 import com.sevenstars.roome.domain.profile.service.ProfileService;
 import com.sevenstars.roome.global.common.response.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -21,5 +22,10 @@ public class ProfileController {
     @GetMapping("/profiles/defaults")
     public ApiResponse<ProfileDefaultResponse> getProfileDefaults(@AuthenticationPrincipal Long id) {
         return ApiResponse.success(profileService.getProfileDefaults());
+    }
+
+    @GetMapping("/profiles")
+    public ApiResponse<ProfileResponse> getProfile(@AuthenticationPrincipal Long id) {
+        return ApiResponse.success(profileService.getProfile(id));
     }
 }
