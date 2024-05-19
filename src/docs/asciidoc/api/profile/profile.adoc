@@ -1,0 +1,29 @@
+=== 프로필 기본 정보 조회
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/response-fields.adoc[]
