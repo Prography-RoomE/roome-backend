@@ -21,15 +21,15 @@ public class ProfileResponse {
     private final ProfileState state;
     private final Integer count;
     private final Boolean isPlusEnabled;
-    private final List<Genre> genres;
+    private final List<Genre> preferredGenres;
     private final Mbti mbti;
-    private final List<Strength> strengths;
-    private final List<ImportantFactor> importantFactors;
+    private final List<Strength> userStrengths;
+    private final List<ImportantFactor> themeImportantFactors;
     private final HorrorThemePosition horrorThemePosition;
     private final HintUsagePreference hintUsagePreference;
     private final DeviceLockPreference deviceLockPreference;
     private final Activity activity;
-    private final List<DislikedFactor> dislikedFactors;
+    private final List<DislikedFactor> themeDislikedFactors;
     private final Color color;
 
     public static ProfileResponse of(Profile profile,

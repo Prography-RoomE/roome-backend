@@ -25,4 +25,9 @@ public class UserStrength {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "strength_id")
     private Strength strength;
+
+    public UserStrength(Profile profile, Strength strength) {
+        this.profile = profile;
+        this.strength = strength;
+    }
 }

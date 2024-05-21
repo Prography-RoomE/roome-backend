@@ -25,4 +25,9 @@ public class ThemeImportantFactor {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "important_factor_id")
     private ImportantFactor importantFactor;
+
+    public ThemeImportantFactor(Profile profile, ImportantFactor importantFactor) {
+        this.profile = profile;
+        this.importantFactor = importantFactor;
+    }
 }

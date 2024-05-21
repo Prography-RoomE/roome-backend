@@ -25,4 +25,9 @@ public class ThemeDislikedFactor {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "disliked_factor_id")
     private DislikedFactor dislikedFactor;
+
+    public ThemeDislikedFactor(Profile profile, DislikedFactor dislikedFactor) {
+        this.profile = profile;
+        this.dislikedFactor = dislikedFactor;
+    }
 }

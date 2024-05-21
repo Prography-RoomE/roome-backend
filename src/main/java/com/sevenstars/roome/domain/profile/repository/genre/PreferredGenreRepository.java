@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface PreferredGenreRepository extends JpaRepository<PreferredGenre, Long> {
     List<PreferredGenre> findByProfile(Profile profile);
+
+    void deleteByProfile(Profile profile);
 }

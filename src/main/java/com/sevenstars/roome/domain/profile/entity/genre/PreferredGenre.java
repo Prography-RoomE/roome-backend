@@ -25,4 +25,9 @@ public class PreferredGenre {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
+
+    public PreferredGenre(Profile profile, Genre genre) {
+        this.profile = profile;
+        this.genre = genre;
+    }
 }

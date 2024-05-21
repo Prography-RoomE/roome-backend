@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ThemeDislikedFactorRepository extends JpaRepository<ThemeDislikedFactor, Long> {
     List<ThemeDislikedFactor> findByProfile(Profile profile);
+
+    void deleteByProfile(Profile profile);
 }

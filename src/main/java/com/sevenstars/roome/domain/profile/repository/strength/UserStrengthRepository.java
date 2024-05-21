@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface UserStrengthRepository extends JpaRepository<UserStrength, Long> {
     List<UserStrength> findByProfile(Profile profile);
+
+    void deleteByProfile(Profile profile);
 }
