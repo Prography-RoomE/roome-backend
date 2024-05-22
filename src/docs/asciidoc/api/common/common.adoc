@@ -1,0 +1,29 @@
+=== 헬스 체크
+
+==== 1. Curl Request
+include::{snippets}/health-check-controller-docs-test/get-health/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/health-check-controller-docs-test/get-health/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/health-check-controller-docs-test/get-health/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/health-check-controller-docs-test/get-health/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/health-check-controller-docs-test/get-health/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/health-check-controller-docs-test/get-health/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/health-check-controller-docs-test/get-health/request-body.adoc[]
+// include::{snippets}/health-check-controller-docs-test/get-health/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/health-check-controller-docs-test/get-health/response-body.adoc[]
+include::{snippets}/health-check-controller-docs-test/get-health/response-fields.adoc[]

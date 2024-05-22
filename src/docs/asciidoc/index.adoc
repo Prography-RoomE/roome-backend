@@ -19,5 +19,11 @@ include::api/common/status-detail.adoc[]
 
 = API
 
+== 공통
+include::api/common/common.adoc[]
+
+== 인증
+include::api/auth/auth.adoc[]
+
 == 사용자
 include::api/user/user.adoc[]
