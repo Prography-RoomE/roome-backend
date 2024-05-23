@@ -2,6 +2,8 @@ package com.sevenstars.roome.docs.user;
 
 import com.sevenstars.roome.docs.RestDocsTest;
 import com.sevenstars.roome.domain.profile.controller.ProfileController;
+import com.sevenstars.roome.domain.profile.entity.color.ColorDirection;
+import com.sevenstars.roome.domain.profile.entity.color.ColorShape;
 import com.sevenstars.roome.domain.profile.response.ProfileDefaultResponse;
 import com.sevenstars.roome.domain.profile.service.ProfileService;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +13,10 @@ import org.springframework.restdocs.payload.JsonFieldType;
 
 import java.util.List;
 
+import static com.sevenstars.roome.domain.profile.entity.color.ColorDirection.TOP_LEFT_TO_BOTTOM_RIGHT;
+import static com.sevenstars.roome.domain.profile.entity.color.ColorMode.GRADIENT;
+import static com.sevenstars.roome.domain.profile.entity.color.ColorMode.SOLID;
+import static com.sevenstars.roome.domain.profile.entity.color.ColorShape.LINEAR;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -66,9 +72,8 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                 new ProfileDefaultResponse.DislikedFactor(2L, "노가다 문제"));
 
         List<ProfileDefaultResponse.Color> colors = List.of(
-                new ProfileDefaultResponse.Color(1L, "색상 1"),
-                new ProfileDefaultResponse.Color(2L, "색상 2"));
-
+                new ProfileDefaultResponse.Color(1L, "Gradient Red", GRADIENT, LINEAR, TOP_LEFT_TO_BOTTOM_RIGHT, "#FF453C", "#FFACB3"),
+                new ProfileDefaultResponse.Color(1L, "Solid Black", SOLID, ColorShape.NONE, ColorDirection.NONE, "#000000", "#000000"));
         ProfileDefaultResponse response = new ProfileDefaultResponse(genres,
                 strengths,
                 importantFactors,
@@ -149,6 +154,16 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                                         fieldWithPath("data.colors[].id").type(JsonFieldType.NUMBER)
                                                 .description("색상 ID"),
                                         fieldWithPath("data.colors[].title").type(JsonFieldType.STRING)
-                                                .description("색상 제목"))));
+                                                .description("색상 제목"),
+                                        fieldWithPath("data.colors[].mode").type(JsonFieldType.STRING)
+                                                .description("색상 모드"),
+                                        fieldWithPath("data.colors[].shape").type(JsonFieldType.STRING)
+                                                .description("색상 모양"),
+                                        fieldWithPath("data.colors[].direction").type(JsonFieldType.STRING)
+                                                .description("색상 방향"),
+                                        fieldWithPath("data.colors[].startColor").type(JsonFieldType.STRING)
+                                                .description("색상 시작 색상"),
+                                        fieldWithPath("data.colors[].endColor").type(JsonFieldType.STRING)
+                                                .description("색상 종료 색상"))));
     }
 }

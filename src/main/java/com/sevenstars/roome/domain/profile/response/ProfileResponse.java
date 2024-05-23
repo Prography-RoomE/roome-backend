@@ -3,6 +3,9 @@ package com.sevenstars.roome.domain.profile.response;
 import com.sevenstars.roome.domain.profile.entity.Mbti;
 import com.sevenstars.roome.domain.profile.entity.Profile;
 import com.sevenstars.roome.domain.profile.entity.ProfileState;
+import com.sevenstars.roome.domain.profile.entity.color.ColorDirection;
+import com.sevenstars.roome.domain.profile.entity.color.ColorMode;
+import com.sevenstars.roome.domain.profile.entity.color.ColorShape;
 import com.sevenstars.roome.domain.profile.entity.dislike.ThemeDislikedFactor;
 import com.sevenstars.roome.domain.profile.entity.genre.PreferredGenre;
 import com.sevenstars.roome.domain.profile.entity.important.ThemeImportantFactor;
@@ -146,9 +149,20 @@ public class ProfileResponse {
     public static class Color {
         private final Long id;
         private final String title;
+        private final ColorMode mode;
+        private final ColorShape shape;
+        private final ColorDirection direction;
+        private final String startColor;
+        private final String endColor;
 
         public static Color from(com.sevenstars.roome.domain.profile.entity.color.Color color) {
-            return new Color(color.getId(), color.getTitle());
+            return new Color(color.getId(),
+                    color.getTitle(),
+                    color.getMode(),
+                    color.getShape(),
+                    color.getDirection(),
+                    color.getStartColor(),
+                    color.getEndColor());
         }
     }
 }
