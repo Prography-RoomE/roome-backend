@@ -20,12 +20,18 @@ public class DislikedFactor {
 
     private String title;
 
+    private String emoji;
+
+    private String imageUrl;
+
     private Boolean isDeleted;
 
     private Integer priority;
 
-    public DislikedFactor(String title, Integer priority) {
+    public DislikedFactor(String title, String emoji, String imageUrl, Integer priority) {
         this.title = title;
+        this.emoji = emoji;
+        this.imageUrl = imageUrl;
         this.isDeleted = false;
         this.priority = priority;
     }

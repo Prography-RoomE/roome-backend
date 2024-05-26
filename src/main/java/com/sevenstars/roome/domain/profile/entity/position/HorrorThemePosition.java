@@ -22,13 +22,19 @@ public class HorrorThemePosition {
 
     private String description;
 
+    private String emoji;
+
+    private String imageUrl;
+
     private Boolean isDeleted;
 
     private Integer priority;
 
-    public HorrorThemePosition(String title, String description, Integer priority) {
+    public HorrorThemePosition(String title, String description, String emoji, String imageUrl, Integer priority) {
         this.title = title;
         this.description = description;
+        this.emoji = emoji;
+        this.imageUrl = imageUrl;
         this.isDeleted = false;
         this.priority = priority;
     }

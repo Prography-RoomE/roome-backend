@@ -12,6 +12,7 @@ import com.sevenstars.roome.domain.profile.entity.important.ThemeImportantFactor
 import com.sevenstars.roome.domain.profile.entity.strength.UserStrength;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,7 +64,8 @@ public class ProfileResponse {
         private final String title;
 
         public static Genre from(com.sevenstars.roome.domain.profile.entity.genre.Genre genre) {
-            return new Genre(genre.getId(), genre.getTitle());
+            return new Genre(genre.getId(),
+                    StringUtils.hasText(genre.getEmoji()) ? genre.getEmoji() + " " + genre.getTitle() : genre.getTitle());
         }
     }
 
@@ -74,7 +76,8 @@ public class ProfileResponse {
         private final String title;
 
         public static Strength from(com.sevenstars.roome.domain.profile.entity.strength.Strength strength) {
-            return new Strength(strength.getId(), strength.getTitle());
+            return new Strength(strength.getId(),
+                    StringUtils.hasText(strength.getEmoji()) ? strength.getEmoji() + " " + strength.getTitle() : strength.getTitle());
         }
     }
 
@@ -85,7 +88,8 @@ public class ProfileResponse {
         private final String title;
 
         public static ImportantFactor from(com.sevenstars.roome.domain.profile.entity.important.ImportantFactor importantFactor) {
-            return new ImportantFactor(importantFactor.getId(), importantFactor.getTitle());
+            return new ImportantFactor(importantFactor.getId(),
+                    StringUtils.hasText(importantFactor.getEmoji()) ? importantFactor.getEmoji() + " " + importantFactor.getTitle() : importantFactor.getTitle());
         }
     }
 
@@ -96,7 +100,8 @@ public class ProfileResponse {
         private final String title;
 
         public static HorrorThemePosition from(com.sevenstars.roome.domain.profile.entity.position.HorrorThemePosition horrorThemePosition) {
-            return new HorrorThemePosition(horrorThemePosition.getId(), horrorThemePosition.getTitle());
+            return new HorrorThemePosition(horrorThemePosition.getId(),
+                    StringUtils.hasText(horrorThemePosition.getEmoji()) ? horrorThemePosition.getEmoji() + " " + horrorThemePosition.getTitle() : horrorThemePosition.getTitle());
         }
     }
 
@@ -107,7 +112,8 @@ public class ProfileResponse {
         private final String title;
 
         public static HintUsagePreference from(com.sevenstars.roome.domain.profile.entity.hint.HintUsagePreference hintUsagePreference) {
-            return new HintUsagePreference(hintUsagePreference.getId(), hintUsagePreference.getTitle());
+            return new HintUsagePreference(hintUsagePreference.getId(),
+                    StringUtils.hasText(hintUsagePreference.getEmoji()) ? hintUsagePreference.getEmoji() + " " + hintUsagePreference.getTitle() : hintUsagePreference.getTitle());
         }
     }
 
@@ -118,7 +124,8 @@ public class ProfileResponse {
         private final String title;
 
         public static DeviceLockPreference from(com.sevenstars.roome.domain.profile.entity.device.DeviceLockPreference deviceLockPreference) {
-            return new DeviceLockPreference(deviceLockPreference.getId(), deviceLockPreference.getTitle());
+            return new DeviceLockPreference(deviceLockPreference.getId(),
+                    StringUtils.hasText(deviceLockPreference.getEmoji()) ? deviceLockPreference.getEmoji() + " " + deviceLockPreference.getTitle() : deviceLockPreference.getTitle());
         }
     }
 
@@ -129,7 +136,8 @@ public class ProfileResponse {
         private final String title;
 
         public static Activity from(com.sevenstars.roome.domain.profile.entity.activity.Activity activity) {
-            return new Activity(activity.getId(), activity.getTitle());
+            return new Activity(activity.getId(),
+                    StringUtils.hasText(activity.getEmoji()) ? activity.getEmoji() + " " + activity.getTitle() : activity.getTitle());
         }
     }
 
@@ -140,7 +148,8 @@ public class ProfileResponse {
         private final String title;
 
         public static DislikedFactor from(com.sevenstars.roome.domain.profile.entity.dislike.DislikedFactor dislikedFactor) {
-            return new DislikedFactor(dislikedFactor.getId(), dislikedFactor.getTitle());
+            return new DislikedFactor(dislikedFactor.getId(),
+                    StringUtils.hasText(dislikedFactor.getEmoji()) ? dislikedFactor.getEmoji() + " " + dislikedFactor.getTitle() : dislikedFactor.getTitle());
         }
     }
 

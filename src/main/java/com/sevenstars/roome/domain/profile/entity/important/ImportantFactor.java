@@ -20,12 +20,18 @@ public class ImportantFactor {
 
     private String title;
 
+    private String emoji;
+
+    private String imageUrl;
+
     private Boolean isDeleted;
 
     private Integer priority;
 
-    public ImportantFactor(String title, Integer priority) {
+    public ImportantFactor(String title, String emoji, String imageUrl, Integer priority) {
         this.title = title;
+        this.emoji = emoji;
+        this.imageUrl = imageUrl;
         this.isDeleted = false;
         this.priority = priority;
     }
