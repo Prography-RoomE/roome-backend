@@ -42,6 +42,12 @@ public class ProfileController {
         return ApiResponse.success();
     }
 
+    @PutMapping("/profiles/room-count-range")
+    public ApiResponse<Void> updateRoomCountRange(@AuthenticationPrincipal Long id, @RequestBody @Valid RoomCountRangeRequest request) {
+        profileService.updateRoomCountRange(id, request);
+        return ApiResponse.success();
+    }
+
     @PutMapping("/profiles/preferred-genres")
     public ApiResponse<Void> updatePreferredGenres(@AuthenticationPrincipal Long id, @RequestBody @Valid PreferredGenresRequest request) {
         profileService.updatePreferredGenres(id, request);

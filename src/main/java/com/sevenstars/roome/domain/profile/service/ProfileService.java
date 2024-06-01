@@ -13,6 +13,7 @@ import com.sevenstars.roome.domain.profile.entity.hint.HintUsagePreference;
 import com.sevenstars.roome.domain.profile.entity.important.ImportantFactor;
 import com.sevenstars.roome.domain.profile.entity.important.ThemeImportantFactor;
 import com.sevenstars.roome.domain.profile.entity.position.HorrorThemePosition;
+import com.sevenstars.roome.domain.profile.entity.room.RoomCountRange;
 import com.sevenstars.roome.domain.profile.entity.strength.Strength;
 import com.sevenstars.roome.domain.profile.entity.strength.UserStrength;
 import com.sevenstars.roome.domain.profile.repository.ProfileRepository;
@@ -27,6 +28,7 @@ import com.sevenstars.roome.domain.profile.repository.hint.HintUsagePreferenceRe
 import com.sevenstars.roome.domain.profile.repository.important.ImportantFactorRepository;
 import com.sevenstars.roome.domain.profile.repository.important.ThemeImportantFactorRepository;
 import com.sevenstars.roome.domain.profile.repository.position.HorrorThemePositionRepository;
+import com.sevenstars.roome.domain.profile.repository.room.RoomCountRangeRepository;
 import com.sevenstars.roome.domain.profile.repository.strength.StrengthRepository;
 import com.sevenstars.roome.domain.profile.repository.strength.UserStrengthRepository;
 import com.sevenstars.roome.domain.profile.request.*;
@@ -48,6 +50,7 @@ import static com.sevenstars.roome.global.common.response.Result.*;
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
+    private final RoomCountRangeRepository roomCountRangeRepository;
     private final GenreRepository genreRepository;
     private final StrengthRepository strengthRepository;
     private final ImportantFactorRepository importantFactorRepository;
@@ -65,6 +68,7 @@ public class ProfileService {
     @Transactional(readOnly = true)
     public ProfileDefaultResponse getProfileDefaults() {
 
+        List<RoomCountRange> roomCountRanges = roomCountRangeRepository.findAll();
         List<Genre> genres = genreRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
         List<Strength> strengths = strengthRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
         List<ImportantFactor> importantFactors = importantFactorRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
@@ -76,6 +80,7 @@ public class ProfileService {
         List<Color> colors = colorRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
 
         return ProfileDefaultResponse.of(
+                roomCountRanges,
                 genres,
                 strengths,
                 importantFactors,
@@ -126,9 +131,20 @@ public class ProfileService {
                 .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
 
         Integer count = request.getCount();
-        Boolean isPlusEnabled = request.getIsPlusEnabled();
 
-        profile.updateRoomCount(count, isPlusEnabled);
+        profile.updateRoomCount(count);
+    }
+
+    @Transactional
+    public void updateRoomCountRange(Long userId, RoomCountRangeRequest request) {
+
+        Profile profile = profileRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
+
+        Integer minCount = request.getMinCount();
+        Integer maxCount = request.getMaxCount();
+
+        profile.updateRoomCountRange(minCount, maxCount);
     }
 
     @Transactional

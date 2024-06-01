@@ -45,6 +45,15 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void getProfileDefaults() throws Exception {
 
         // Given
+        List<ProfileDefaultResponse.RoomCountRange> roomCountRanges = List.of(
+                new ProfileDefaultResponse.RoomCountRange(1L, "0~30번", 0, 30),
+                new ProfileDefaultResponse.RoomCountRange(2L, "0~30번", 31, 60),
+                new ProfileDefaultResponse.RoomCountRange(3L, "0~30번", 61, 99),
+                new ProfileDefaultResponse.RoomCountRange(4L, "0~30번", 100, 150),
+                new ProfileDefaultResponse.RoomCountRange(5L, "0~30번", 151, 200),
+                new ProfileDefaultResponse.RoomCountRange(6L, "0~30번", 201, 300),
+                new ProfileDefaultResponse.RoomCountRange(7L, "0~30번", 301, 99999));
+
         List<ProfileDefaultResponse.Genre> genres = List.of(
                 new ProfileDefaultResponse.Genre(1L, "공포"),
                 new ProfileDefaultResponse.Genre(2L, "스릴러"));
@@ -83,7 +92,8 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                 new ProfileDefaultResponse.Color(1L, "Gradient Red", GRADIENT, LINEAR, TOP_LEFT_TO_BOTTOM_RIGHT, "#FF453C", "#FFACB3"),
                 new ProfileDefaultResponse.Color(1L, "Solid Black", SOLID, ColorShape.NONE, ColorDirection.NONE, "#000000", "#000000"));
 
-        ProfileDefaultResponse response = new ProfileDefaultResponse(genres,
+        ProfileDefaultResponse response = new ProfileDefaultResponse(roomCountRanges,
+                genres,
                 strengths,
                 importantFactors,
                 horrorThemePositions,
@@ -104,6 +114,16 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                 .andDo(restDocs.document(
                         responseFields(responseCommon())
                                 .and(
+                                        fieldWithPath("data.roomCountRanges[]").type(JsonFieldType.ARRAY)
+                                                .description("방 수 범위 목록"),
+                                        fieldWithPath("data.roomCountRanges[].id").type(JsonFieldType.NUMBER)
+                                                .description("방 수 범위 ID"),
+                                        fieldWithPath("data.roomCountRanges[].title").type(JsonFieldType.STRING)
+                                                .description("방 수 범위 제목"),
+                                        fieldWithPath("data.roomCountRanges[].minCount").type(JsonFieldType.NUMBER)
+                                                .description("방 수 범위 최소값"),
+                                        fieldWithPath("data.roomCountRanges[].maxCount").type(JsonFieldType.NUMBER)
+                                                .description("방 수 범위 최대값"),
                                         fieldWithPath("data.genres[]").type(JsonFieldType.ARRAY)
                                                 .description("선호 장르 목록"),
                                         fieldWithPath("data.genres[].id").type(JsonFieldType.NUMBER)
@@ -216,8 +236,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         ProfileResponse response = new ProfileResponse(
                 1L,
                 COMPLETE,
-                150,
-                true,
+                "150",
                 genres,
                 Mbti.ISFJ,
                 strengths,
@@ -244,10 +263,8 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                                                 .description("프로필 ID"),
                                         fieldWithPath("data.state").type(JsonFieldType.STRING)
                                                 .description("프로필 상태"),
-                                        fieldWithPath("data.count").type(JsonFieldType.NUMBER)
+                                        fieldWithPath("data.count").type(JsonFieldType.STRING)
                                                 .description("방 수"),
-                                        fieldWithPath("data.isPlusEnabled").type(JsonFieldType.BOOLEAN)
-                                                .description("+ 여부"),
                                         fieldWithPath("data.preferredGenres[]").type(JsonFieldType.ARRAY)
                                                 .description("선호 장르 목록"),
                                         fieldWithPath("data.preferredGenres[].id").type(JsonFieldType.NUMBER)
@@ -313,10 +330,29 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         // Given
         RoomCountRequest request = new RoomCountRequest();
         request.setCount(150);
-        request.setIsPlusEnabled(true);
 
         // When & Then
         mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/room-count")
+                        .header(AUTHORIZATION, "Bearer {token}")
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        responseFields(responseCommon())));
+    }
+
+    @DisplayName("방 수 범위 저장")
+    @Test
+    void updateRoomCountRange() throws Exception {
+
+        // Given
+        RoomCountRangeRequest request = new RoomCountRangeRequest();
+        request.setMinCount(0);
+        request.setMaxCount(30);
+
+        // When & Then
+        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/room-count-range")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))

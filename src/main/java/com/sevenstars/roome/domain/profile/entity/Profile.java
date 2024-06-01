@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 import static com.sevenstars.roome.domain.profile.entity.Mbti.NONE;
 import static com.sevenstars.roome.domain.profile.entity.ProfileState.*;
-import static com.sevenstars.roome.global.common.response.Result.PROFILE_ROOM_COUNT_POSITIVE_OR_ZERO;
+import static com.sevenstars.roome.global.common.response.Result.*;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -41,7 +41,11 @@ public class Profile extends BaseTimeEntity {
 
     private Integer count;
 
-    private Boolean isPlusEnabled;
+    private Integer minCount;
+
+    private Integer maxCount;
+
+    private Boolean isCountRange;
 
     @Column(columnDefinition = "VARCHAR(255)")
     @Enumerated(STRING)
@@ -71,7 +75,9 @@ public class Profile extends BaseTimeEntity {
         this.user = user;
         this.state = ROOM_COUNT;
         this.count = 0;
-        this.isPlusEnabled = false;
+        this.minCount = 0;
+        this.maxCount = 0;
+        this.isCountRange = false;
         this.mbti = NONE;
         this.horrorThemePosition = null;
         this.hintUsagePreference = null;
@@ -83,7 +89,9 @@ public class Profile extends BaseTimeEntity {
     public void clear() {
         this.state = ROOM_COUNT;
         this.count = 0;
-        this.isPlusEnabled = false;
+        this.minCount = 0;
+        this.maxCount = 0;
+        this.isCountRange = false;
         this.mbti = NONE;
         this.horrorThemePosition = null;
         this.hintUsagePreference = null;
@@ -92,13 +100,39 @@ public class Profile extends BaseTimeEntity {
         this.color = null;
     }
 
-    public void updateRoomCount(Integer count, Boolean isPlusEnabled) {
+    public Boolean isCountRange() {
+        return this.isCountRange;
+    }
+
+    public void updateRoomCount(Integer count) {
         updateStateIfMatch(ROOM_COUNT);
         if (count < 0) {
             throw new CustomClientErrorException(PROFILE_ROOM_COUNT_POSITIVE_OR_ZERO);
         }
+        if (count > 99999) {
+            throw new CustomClientErrorException(PROFILE_ROOM_COUNT_EXCEEDED);
+        }
         this.count = count;
-        this.isPlusEnabled = isPlusEnabled;
+        this.minCount = 0;
+        this.maxCount = 0;
+        this.isCountRange = false;
+    }
+
+    public void updateRoomCountRange(Integer minCount, Integer maxCount) {
+        updateStateIfMatch(ROOM_COUNT);
+        if (minCount > maxCount) {
+            throw new CustomClientErrorException(PROFILE_INVALID_ROOM_COUNT_RANGE);
+        }
+        if (minCount < 0) {
+            throw new CustomClientErrorException(PROFILE_ROOM_COUNT_POSITIVE_OR_ZERO);
+        }
+        if (minCount > 99999 || maxCount > 99999) {
+            throw new CustomClientErrorException(PROFILE_ROOM_COUNT_EXCEEDED);
+        }
+        this.count = 0;
+        this.minCount = minCount;
+        this.maxCount = maxCount;
+        this.isCountRange = true;
     }
 
     public void updatePreferredGenres() {

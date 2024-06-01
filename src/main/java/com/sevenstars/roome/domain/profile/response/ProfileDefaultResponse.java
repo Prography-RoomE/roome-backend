@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProfileDefaultResponse {
 
+    private final List<RoomCountRange> roomCountRanges;
     private final List<Genre> genres;
     private final List<Strength> strengths;
     private final List<ImportantFactor> importantFactors;
@@ -23,6 +24,7 @@ public class ProfileDefaultResponse {
     private final List<Color> colors;
 
     public static ProfileDefaultResponse of(
+            List<com.sevenstars.roome.domain.profile.entity.room.RoomCountRange> roomCountRanges,
             List<com.sevenstars.roome.domain.profile.entity.genre.Genre> genres,
             List<com.sevenstars.roome.domain.profile.entity.strength.Strength> strengths,
             List<com.sevenstars.roome.domain.profile.entity.important.ImportantFactor> importantFactors,
@@ -34,6 +36,7 @@ public class ProfileDefaultResponse {
             List<com.sevenstars.roome.domain.profile.entity.color.Color> colors) {
 
         return new ProfileDefaultResponse(
+                roomCountRanges.stream().map(ProfileDefaultResponse.RoomCountRange::from).toList(),
                 genres.stream().map(ProfileDefaultResponse.Genre::from).toList(),
                 strengths.stream().map(ProfileDefaultResponse.Strength::from).toList(),
                 importantFactors.stream().map(ProfileDefaultResponse.ImportantFactor::from).toList(),
@@ -43,6 +46,22 @@ public class ProfileDefaultResponse {
                 activities.stream().map(ProfileDefaultResponse.Activity::from).toList(),
                 dislikedFactors.stream().map(ProfileDefaultResponse.DislikedFactor::from).toList(),
                 colors.stream().map(ProfileDefaultResponse.Color::from).toList());
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class RoomCountRange {
+        private final Long id;
+        private final String title;
+        private final Integer minCount;
+        private final Integer maxCount;
+
+        public static RoomCountRange from(com.sevenstars.roome.domain.profile.entity.room.RoomCountRange roomCountRange) {
+            return new RoomCountRange(roomCountRange.getId(),
+                    roomCountRange.getTitle(),
+                    roomCountRange.getMinCount(),
+                    roomCountRange.getMaxCount());
+        }
     }
 
     @Getter

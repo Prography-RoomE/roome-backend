@@ -88,6 +88,36 @@ include::{snippets}/profile-controller-docs-test/update-room-count/request-body.
 include::{snippets}/profile-controller-docs-test/update-room-count/response-body.adoc[]
 include::{snippets}/profile-controller-docs-test/update-room-count/response-fields.adoc[]
 
+=== 방 수 범위 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-room-count-range/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-room-count-range/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-room-count-range/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-room-count-range/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-room-count-range/response-fields.adoc[]
+
 === 선호 장르 저장
 
 ==== 1. Curl Request

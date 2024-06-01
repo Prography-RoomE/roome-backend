@@ -49,7 +49,9 @@ public enum Result {
     PROFILE_DEVICE_LOCK_PREFERENCE_NOT_FOUND(3008, "장치 자물쇠 선호도를 찾을 수 없습니다."),
     PROFILE_ACTIVITY_NOT_FOUND(3009, "활동성을 찾을 수 없습니다."),
     PROFILE_THEME_DISLIKED_FACTORS_NOT_FOUND(3010, "테마 싫어하는 요소를 찾을 수 없습니다."),
-    PROFILE_COLOR_NOT_FOUND(3011, "색상을 찾을 수 없습니다.");
+    PROFILE_COLOR_NOT_FOUND(3011, "색상을 찾을 수 없습니다."),
+    PROFILE_ROOM_COUNT_EXCEEDED(3012, "방 수가 최대값을 초과하였습니다."),
+    PROFILE_INVALID_ROOM_COUNT_RANGE(3013, "방 수 범위가 유효하지 않습니다.");
 
     private final int code;
     private final String message;

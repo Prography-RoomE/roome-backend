@@ -4,7 +4,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class RoomCountRequest {
+public class RoomCountRangeRequest {
     @NotNull
-    private Integer count;
+    private Integer minCount;
+    @NotNull
+    private Integer maxCount;
 }

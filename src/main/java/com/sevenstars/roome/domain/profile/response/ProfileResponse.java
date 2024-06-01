@@ -23,8 +23,7 @@ public class ProfileResponse {
 
     private final Long id;
     private final ProfileState state;
-    private final Integer count;
-    private final Boolean isPlusEnabled;
+    private final String count;
     private final List<Genre> preferredGenres;
     private final Mbti mbti;
     private final List<Strength> userStrengths;
@@ -43,8 +42,7 @@ public class ProfileResponse {
                                      List<ThemeDislikedFactor> themeDislikedFactors) {
         return new ProfileResponse(profile.getId(),
                 profile.getState(),
-                profile.getCount(),
-                profile.getIsPlusEnabled(),
+                profile.isCountRange() ? profile.getMinCount() + "~" + profile.getMaxCount() : profile.getCount().toString(),
                 preferredGenres.stream().map(preferredGenre -> Genre.from(preferredGenre.getGenre())).collect(Collectors.toList()),
                 profile.getMbti(),
                 userStrengths.stream().map(userStrength -> Strength.from(userStrength.getStrength())).collect(Collectors.toList()),
@@ -89,7 +87,7 @@ public class ProfileResponse {
 
         public static ImportantFactor from(com.sevenstars.roome.domain.profile.entity.important.ImportantFactor importantFactor) {
             return new ImportantFactor(importantFactor.getId(),
-                    StringUtils.hasText(importantFactor.getEmoji()) ? importantFactor.getEmoji() + " " + importantFactor.getTitle() : importantFactor.getTitle());
+                    StringUtils.hasText(importantFactor.getEmoji()) ? importantFactor.getEmoji() + " " + importantFactor.getSubTitle() : importantFactor.getSubTitle());
         }
     }
 
