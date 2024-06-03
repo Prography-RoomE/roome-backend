@@ -20,6 +20,8 @@ public class DeviceLockPreference {
 
     private String title;
 
+    private String description;
+
     private String emoji;
 
     private String imageUrl;
@@ -28,8 +30,9 @@ public class DeviceLockPreference {
 
     private Integer priority;
 
-    public DeviceLockPreference(String title, String emoji, String imageUrl, Integer priority) {
+    public DeviceLockPreference(String title, String description, String emoji, String imageUrl, Integer priority) {
         this.title = title;
+        this.description = description;
         this.emoji = emoji;
         this.imageUrl = imageUrl;
         this.isDeleted = false;

@@ -126,9 +126,10 @@ public class ProfileDefaultResponse {
     public static class DeviceLockPreference {
         private final Long id;
         private final String title;
+        private final String description;
 
         public static DeviceLockPreference from(com.sevenstars.roome.domain.profile.entity.device.DeviceLockPreference preference) {
-            return new DeviceLockPreference(preference.getId(), preference.getTitle());
+            return new DeviceLockPreference(preference.getId(), preference.getTitle(), preference.getDescription());
         }
     }
 

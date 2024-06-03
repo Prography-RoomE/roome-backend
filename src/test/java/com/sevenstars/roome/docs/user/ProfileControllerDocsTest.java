@@ -47,12 +47,12 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         // Given
         List<ProfileDefaultResponse.RoomCountRange> roomCountRanges = List.of(
                 new ProfileDefaultResponse.RoomCountRange(1L, "0~30번", 0, 30),
-                new ProfileDefaultResponse.RoomCountRange(2L, "0~30번", 31, 60),
-                new ProfileDefaultResponse.RoomCountRange(3L, "0~30번", 61, 99),
-                new ProfileDefaultResponse.RoomCountRange(4L, "0~30번", 100, 150),
-                new ProfileDefaultResponse.RoomCountRange(5L, "0~30번", 151, 200),
-                new ProfileDefaultResponse.RoomCountRange(6L, "0~30번", 201, 300),
-                new ProfileDefaultResponse.RoomCountRange(7L, "0~30번", 301, 99999));
+                new ProfileDefaultResponse.RoomCountRange(2L, "31~60번", 31, 60),
+                new ProfileDefaultResponse.RoomCountRange(3L, "61~99번", 61, 99),
+                new ProfileDefaultResponse.RoomCountRange(4L, "100~150번", 100, 150),
+                new ProfileDefaultResponse.RoomCountRange(5L, "151~200번", 151, 200),
+                new ProfileDefaultResponse.RoomCountRange(6L, "201~300번", 201, 300),
+                new ProfileDefaultResponse.RoomCountRange(7L, "301번 이상", 301, 99999));
 
         List<ProfileDefaultResponse.Genre> genres = List.of(
                 new ProfileDefaultResponse.Genre(1L, "공포"),
@@ -76,9 +76,9 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                 new ProfileDefaultResponse.HintUsagePreference(3L, "힌트 사용 괜찮아요", "조금만 막혀도 바로 사용해요"));
 
         List<ProfileDefaultResponse.DeviceLockPreference> deviceLockPreferences = List.of(
-                new ProfileDefaultResponse.DeviceLockPreference(1L, "장치"),
-                new ProfileDefaultResponse.DeviceLockPreference(2L, "자물쇠"),
-                new ProfileDefaultResponse.DeviceLockPreference(3L, "장치&자물쇠 모두"));
+                new ProfileDefaultResponse.DeviceLockPreference(1L, "장치", "특정 물체를 조작, 작동하여 진행되는 방식(센서, 기계 등)"),
+                new ProfileDefaultResponse.DeviceLockPreference(2L, "자물쇠", "문제를 풀어 얻는 답 (숫자, 문자, 방향 등)이나 열쇠로 자물쇠를 푸는 방식"),
+                new ProfileDefaultResponse.DeviceLockPreference(3L, "장치&자물쇠 모두", ""));
 
         List<ProfileDefaultResponse.Activity> activities = List.of(
                 new ProfileDefaultResponse.Activity(1L, "높은 활동성", "걷고, 뛰고, 계단 이동하는 게 좋아요"),
@@ -164,6 +164,8 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                                                 .description("장치 자물쇠 선호도 ID"),
                                         fieldWithPath("data.deviceLockPreferences[].title").type(JsonFieldType.STRING)
                                                 .description("장치 자물쇠 선호도 제목"),
+                                        fieldWithPath("data.deviceLockPreferences[].description").type(JsonFieldType.STRING)
+                                                .description("장치 자물쇠 선호도 설명"),
                                         fieldWithPath("data.activities[]").type(JsonFieldType.ARRAY)
                                                 .description("활동성 목록"),
                                         fieldWithPath("data.activities[].id").type(JsonFieldType.NUMBER)

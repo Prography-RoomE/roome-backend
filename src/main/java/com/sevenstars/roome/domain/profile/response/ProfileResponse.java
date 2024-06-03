@@ -42,7 +42,7 @@ public class ProfileResponse {
                                      List<ThemeDislikedFactor> themeDislikedFactors) {
         return new ProfileResponse(profile.getId(),
                 profile.getState(),
-                profile.isCountRange() ? profile.getMinCount() + "~" + profile.getMaxCount() : profile.getCount().toString(),
+                profile.getCount(),
                 preferredGenres.stream().map(preferredGenre -> Genre.from(preferredGenre.getGenre())).collect(Collectors.toList()),
                 profile.getMbti(),
                 userStrengths.stream().map(userStrength -> Strength.from(userStrength.getStrength())).collect(Collectors.toList()),

@@ -27,6 +27,8 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 public class Profile extends BaseTimeEntity {
 
+    private static final int MAX_COUNT = 99999;
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -100,8 +102,14 @@ public class Profile extends BaseTimeEntity {
         this.color = null;
     }
 
-    public Boolean isCountRange() {
-        return this.isCountRange;
+    public String getCount() {
+        if (isCountRange) {
+            if (maxCount >= MAX_COUNT) {
+                return minCount + "~";
+            }
+            return minCount + "~" + maxCount;
+        }
+        return count.toString();
     }
 
     public void updateRoomCount(Integer count) {
