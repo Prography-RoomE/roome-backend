@@ -81,7 +81,7 @@ class UserServiceTest {
 
     @DisplayName("약관 동의 저장시 필수 항목에 동의가 되면 성공한다. 사용자 상태가 닉네임으로 변경된다.")
     @Test
-    void updateTermsAgreement() {
+    void updateTermsAgreementTest1() {
 
         // Given
         String serviceId = "google";
@@ -114,7 +114,7 @@ class UserServiceTest {
 
     @DisplayName("약관 동의 저장시 필수 항목에 동의가 안되면 실패한다.")
     @Test
-    void updateTermsAgreementFail() {
+    void updateTermsAgreementTest2() {
 
         // Given
         String serviceId = "google";

@@ -1,15 +1,12 @@
 package com.sevenstars.roome.domain.profile.response;
 
+import com.sevenstars.roome.domain.profile.entity.Element;
 import com.sevenstars.roome.domain.profile.entity.Mbti;
 import com.sevenstars.roome.domain.profile.entity.Profile;
 import com.sevenstars.roome.domain.profile.entity.ProfileState;
 import com.sevenstars.roome.domain.profile.entity.color.ColorDirection;
 import com.sevenstars.roome.domain.profile.entity.color.ColorMode;
 import com.sevenstars.roome.domain.profile.entity.color.ColorShape;
-import com.sevenstars.roome.domain.profile.entity.dislike.ThemeDislikedFactor;
-import com.sevenstars.roome.domain.profile.entity.genre.PreferredGenre;
-import com.sevenstars.roome.domain.profile.entity.important.ThemeImportantFactor;
-import com.sevenstars.roome.domain.profile.entity.strength.UserStrength;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
@@ -36,22 +33,26 @@ public class ProfileResponse {
     private final Color color;
 
     public static ProfileResponse of(Profile profile,
-                                     List<PreferredGenre> preferredGenres,
-                                     List<UserStrength> userStrengths,
-                                     List<ThemeImportantFactor> themeImportantFactors,
-                                     List<ThemeDislikedFactor> themeDislikedFactors) {
+                                     List<Element> preferredGenres,
+                                     List<Element> userStrengths,
+                                     List<Element> themeImportantFactors,
+                                     List<Element> horrorThemePositions,
+                                     List<Element> hintUsagePreferences,
+                                     List<Element> deviceLockPreferences,
+                                     List<Element> activities,
+                                     List<Element> themeDislikedFactors) {
         return new ProfileResponse(profile.getId(),
                 profile.getState(),
                 profile.getCount(),
-                preferredGenres.stream().map(preferredGenre -> Genre.from(preferredGenre.getGenre())).collect(Collectors.toList()),
+                preferredGenres.stream().map(Genre::from).collect(Collectors.toList()),
                 profile.getMbti(),
-                userStrengths.stream().map(userStrength -> Strength.from(userStrength.getStrength())).collect(Collectors.toList()),
-                themeImportantFactors.stream().map(themeImportantFactor -> ImportantFactor.from(themeImportantFactor.getImportantFactor())).collect(Collectors.toList()),
-                profile.getHorrorThemePosition() == null ? null : HorrorThemePosition.from(profile.getHorrorThemePosition()),
-                profile.getHintUsagePreference() == null ? null : HintUsagePreference.from(profile.getHintUsagePreference()),
-                profile.getDeviceLockPreference() == null ? null : DeviceLockPreference.from(profile.getDeviceLockPreference()),
-                profile.getActivity() == null ? null : Activity.from(profile.getActivity()),
-                themeDislikedFactors.stream().map(themeDislikedFactor -> DislikedFactor.from(themeDislikedFactor.getDislikedFactor())).collect(Collectors.toList()),
+                userStrengths.stream().map(Strength::from).collect(Collectors.toList()),
+                themeImportantFactors.stream().map(ImportantFactor::from).collect(Collectors.toList()),
+                horrorThemePositions.isEmpty() ? null : HorrorThemePosition.from(horrorThemePositions.get(0)),
+                hintUsagePreferences.isEmpty() ? null : HintUsagePreference.from(hintUsagePreferences.get(0)),
+                deviceLockPreferences.isEmpty() ? null : DeviceLockPreference.from(deviceLockPreferences.get(0)),
+                activities.isEmpty() ? null : Activity.from(activities.get(0)),
+                themeDislikedFactors.stream().map(DislikedFactor::from).collect(Collectors.toList()),
                 profile.getColor() == null ? null : Color.from(profile.getColor()));
     }
 
@@ -61,7 +62,7 @@ public class ProfileResponse {
         private final Long id;
         private final String title;
 
-        public static Genre from(com.sevenstars.roome.domain.profile.entity.genre.Genre genre) {
+        public static Genre from(Element genre) {
             return new Genre(genre.getId(),
                     StringUtils.hasText(genre.getEmoji()) ? genre.getEmoji() + " " + genre.getTitle() : genre.getTitle());
         }
@@ -73,7 +74,7 @@ public class ProfileResponse {
         private final Long id;
         private final String title;
 
-        public static Strength from(com.sevenstars.roome.domain.profile.entity.strength.Strength strength) {
+        public static Strength from(Element strength) {
             return new Strength(strength.getId(),
                     StringUtils.hasText(strength.getEmoji()) ? strength.getEmoji() + " " + strength.getTitle() : strength.getTitle());
         }
@@ -85,7 +86,7 @@ public class ProfileResponse {
         private final Long id;
         private final String title;
 
-        public static ImportantFactor from(com.sevenstars.roome.domain.profile.entity.important.ImportantFactor importantFactor) {
+        public static ImportantFactor from(Element importantFactor) {
             return new ImportantFactor(importantFactor.getId(),
                     StringUtils.hasText(importantFactor.getEmoji()) ? importantFactor.getEmoji() + " " + importantFactor.getSubTitle() : importantFactor.getSubTitle());
         }
@@ -97,7 +98,7 @@ public class ProfileResponse {
         private final Long id;
         private final String title;
 
-        public static HorrorThemePosition from(com.sevenstars.roome.domain.profile.entity.position.HorrorThemePosition horrorThemePosition) {
+        public static HorrorThemePosition from(Element horrorThemePosition) {
             return new HorrorThemePosition(horrorThemePosition.getId(),
                     StringUtils.hasText(horrorThemePosition.getEmoji()) ? horrorThemePosition.getEmoji() + " " + horrorThemePosition.getTitle() : horrorThemePosition.getTitle());
         }
@@ -109,7 +110,7 @@ public class ProfileResponse {
         private final Long id;
         private final String title;
 
-        public static HintUsagePreference from(com.sevenstars.roome.domain.profile.entity.hint.HintUsagePreference hintUsagePreference) {
+        public static HintUsagePreference from(Element hintUsagePreference) {
             return new HintUsagePreference(hintUsagePreference.getId(),
                     StringUtils.hasText(hintUsagePreference.getEmoji()) ? hintUsagePreference.getEmoji() + " " + hintUsagePreference.getTitle() : hintUsagePreference.getTitle());
         }
@@ -121,7 +122,7 @@ public class ProfileResponse {
         private final Long id;
         private final String title;
 
-        public static DeviceLockPreference from(com.sevenstars.roome.domain.profile.entity.device.DeviceLockPreference deviceLockPreference) {
+        public static DeviceLockPreference from(Element deviceLockPreference) {
             return new DeviceLockPreference(deviceLockPreference.getId(),
                     StringUtils.hasText(deviceLockPreference.getEmoji()) ? deviceLockPreference.getEmoji() + " " + deviceLockPreference.getTitle() : deviceLockPreference.getTitle());
         }
@@ -133,7 +134,7 @@ public class ProfileResponse {
         private final Long id;
         private final String title;
 
-        public static Activity from(com.sevenstars.roome.domain.profile.entity.activity.Activity activity) {
+        public static Activity from(Element activity) {
             return new Activity(activity.getId(),
                     StringUtils.hasText(activity.getEmoji()) ? activity.getEmoji() + " " + activity.getTitle() : activity.getTitle());
         }
@@ -145,7 +146,7 @@ public class ProfileResponse {
         private final Long id;
         private final String title;
 
-        public static DislikedFactor from(com.sevenstars.roome.domain.profile.entity.dislike.DislikedFactor dislikedFactor) {
+        public static DislikedFactor from(Element dislikedFactor) {
             return new DislikedFactor(dislikedFactor.getId(),
                     StringUtils.hasText(dislikedFactor.getEmoji()) ? dislikedFactor.getEmoji() + " " + dislikedFactor.getTitle() : dislikedFactor.getTitle());
         }

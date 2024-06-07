@@ -1,5 +1,6 @@
 package com.sevenstars.roome.domain.profile.response;
 
+import com.sevenstars.roome.domain.profile.entity.Element;
 import com.sevenstars.roome.domain.profile.entity.color.ColorDirection;
 import com.sevenstars.roome.domain.profile.entity.color.ColorMode;
 import com.sevenstars.roome.domain.profile.entity.color.ColorShape;
@@ -25,14 +26,14 @@ public class ProfileDefaultResponse {
 
     public static ProfileDefaultResponse of(
             List<com.sevenstars.roome.domain.profile.entity.room.RoomCountRange> roomCountRanges,
-            List<com.sevenstars.roome.domain.profile.entity.genre.Genre> genres,
-            List<com.sevenstars.roome.domain.profile.entity.strength.Strength> strengths,
-            List<com.sevenstars.roome.domain.profile.entity.important.ImportantFactor> importantFactors,
-            List<com.sevenstars.roome.domain.profile.entity.position.HorrorThemePosition> horrorThemePositions,
-            List<com.sevenstars.roome.domain.profile.entity.hint.HintUsagePreference> hintUsagePreferences,
-            List<com.sevenstars.roome.domain.profile.entity.device.DeviceLockPreference> deviceLockPreferences,
-            List<com.sevenstars.roome.domain.profile.entity.activity.Activity> activities,
-            List<com.sevenstars.roome.domain.profile.entity.dislike.DislikedFactor> dislikedFactors,
+            List<Element> genres,
+            List<Element> strengths,
+            List<Element> importantFactors,
+            List<Element> horrorThemePositions,
+            List<Element> hintUsagePreferences,
+            List<Element> deviceLockPreferences,
+            List<Element> activities,
+            List<Element> dislikedFactors,
             List<com.sevenstars.roome.domain.profile.entity.color.Color> colors) {
 
         return new ProfileDefaultResponse(
@@ -70,7 +71,7 @@ public class ProfileDefaultResponse {
         private final Long id;
         private final String title;
 
-        public static Genre from(com.sevenstars.roome.domain.profile.entity.genre.Genre genre) {
+        public static Genre from(Element genre) {
             return new Genre(genre.getId(), genre.getTitle());
         }
     }
@@ -81,7 +82,7 @@ public class ProfileDefaultResponse {
         private final Long id;
         private final String title;
 
-        public static Strength from(com.sevenstars.roome.domain.profile.entity.strength.Strength strength) {
+        public static Strength from(Element strength) {
             return new Strength(strength.getId(), strength.getTitle());
         }
     }
@@ -92,7 +93,7 @@ public class ProfileDefaultResponse {
         private final Long id;
         private final String title;
 
-        public static ImportantFactor from(com.sevenstars.roome.domain.profile.entity.important.ImportantFactor factor) {
+        public static ImportantFactor from(Element factor) {
             return new ImportantFactor(factor.getId(), factor.getTitle());
         }
     }
@@ -104,7 +105,7 @@ public class ProfileDefaultResponse {
         private final String title;
         private final String description;
 
-        public static HorrorThemePosition from(com.sevenstars.roome.domain.profile.entity.position.HorrorThemePosition position) {
+        public static HorrorThemePosition from(Element position) {
             return new HorrorThemePosition(position.getId(), position.getTitle(), position.getDescription());
         }
     }
@@ -116,7 +117,7 @@ public class ProfileDefaultResponse {
         private final String title;
         private final String description;
 
-        public static HintUsagePreference from(com.sevenstars.roome.domain.profile.entity.hint.HintUsagePreference preference) {
+        public static HintUsagePreference from(Element preference) {
             return new HintUsagePreference(preference.getId(), preference.getTitle(), preference.getDescription());
         }
     }
@@ -128,7 +129,7 @@ public class ProfileDefaultResponse {
         private final String title;
         private final String description;
 
-        public static DeviceLockPreference from(com.sevenstars.roome.domain.profile.entity.device.DeviceLockPreference preference) {
+        public static DeviceLockPreference from(Element preference) {
             return new DeviceLockPreference(preference.getId(), preference.getTitle(), preference.getDescription());
         }
     }
@@ -140,7 +141,7 @@ public class ProfileDefaultResponse {
         private final String title;
         private final String description;
 
-        public static Activity from(com.sevenstars.roome.domain.profile.entity.activity.Activity activity) {
+        public static Activity from(Element activity) {
             return new Activity(activity.getId(), activity.getTitle(), activity.getDescription());
         }
     }
@@ -151,7 +152,7 @@ public class ProfileDefaultResponse {
         private final Long id;
         private final String title;
 
-        public static DislikedFactor from(com.sevenstars.roome.domain.profile.entity.dislike.DislikedFactor factor) {
+        public static DislikedFactor from(Element factor) {
             return new DislikedFactor(factor.getId(), factor.getTitle());
         }
     }

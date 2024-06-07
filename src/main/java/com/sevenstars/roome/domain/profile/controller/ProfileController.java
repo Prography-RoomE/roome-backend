@@ -1,5 +1,6 @@
 package com.sevenstars.roome.domain.profile.controller;
 
+import com.sevenstars.roome.domain.profile.entity.ElementType;
 import com.sevenstars.roome.domain.profile.request.*;
 import com.sevenstars.roome.domain.profile.response.ProfileDefaultResponse;
 import com.sevenstars.roome.domain.profile.response.ProfileResponse;
@@ -11,6 +12,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import static com.sevenstars.roome.domain.profile.entity.ElementType.*;
 
 @Tag(name = "프로필")
 @SecurityRequirement(name = "bearerAuth")
@@ -49,8 +52,8 @@ public class ProfileController {
     }
 
     @PutMapping("/profiles/preferred-genres")
-    public ApiResponse<Void> updatePreferredGenres(@AuthenticationPrincipal Long id, @RequestBody @Valid PreferredGenresRequest request) {
-        profileService.updatePreferredGenres(id, request);
+    public ApiResponse<Void> updatePreferredGenres(@AuthenticationPrincipal Long id, @RequestBody @Valid ProfileElementsRequest request) {
+        profileService.updateProfileElements(id, request, ElementType.PREFERRED_GENRE);
         return ApiResponse.success();
     }
 
@@ -61,44 +64,44 @@ public class ProfileController {
     }
 
     @PutMapping("/profiles/user-strengths")
-    public ApiResponse<Void> updateUserStrengths(@AuthenticationPrincipal Long id, @RequestBody @Valid UserStrengthsRequest request) {
-        profileService.updateUserStrengths(id, request);
+    public ApiResponse<Void> updateUserStrengths(@AuthenticationPrincipal Long id, @RequestBody @Valid ProfileElementsRequest request) {
+        profileService.updateProfileElements(id, request, USER_STRENGTH);
         return ApiResponse.success();
     }
 
     @PutMapping("/profiles/theme-important-factors")
-    public ApiResponse<Void> updateThemeImportantFactors(@AuthenticationPrincipal Long id, @RequestBody @Valid ThemeImportantFactorsRequest request) {
-        profileService.updateThemeImportantFactors(id, request);
+    public ApiResponse<Void> updateThemeImportantFactors(@AuthenticationPrincipal Long id, @RequestBody @Valid ProfileElementsRequest request) {
+        profileService.updateProfileElements(id, request, THEME_IMPORTANT_FACTOR);
         return ApiResponse.success();
     }
 
     @PutMapping("/profiles/horror-theme-position")
-    public ApiResponse<Void> updateHorrorThemePosition(@AuthenticationPrincipal Long id, @RequestBody @Valid HorrorThemePositionRequest request) {
-        profileService.updateHorrorThemePosition(id, request);
+    public ApiResponse<Void> updateHorrorThemePosition(@AuthenticationPrincipal Long id, @RequestBody @Valid ProfileElementRequest request) {
+        profileService.updateProfileElement(id, request, HORROR_THEME_POSITION);
         return ApiResponse.success();
     }
 
     @PutMapping("/profiles/hint-usage-preference")
-    public ApiResponse<Void> updateHintUsagePreference(@AuthenticationPrincipal Long id, @RequestBody @Valid HintUsagePreferenceRequest request) {
-        profileService.updateHintUsagePreference(id, request);
+    public ApiResponse<Void> updateHintUsagePreference(@AuthenticationPrincipal Long id, @RequestBody @Valid ProfileElementRequest request) {
+        profileService.updateProfileElement(id, request, HINT_USAGE_PREFERENCE);
         return ApiResponse.success();
     }
 
     @PutMapping("/profiles/device-lock-preference")
-    public ApiResponse<Void> updateDeviceLockPreference(@AuthenticationPrincipal Long id, @RequestBody @Valid DeviceLockPreferenceRequest request) {
-        profileService.updateDeviceLockPreference(id, request);
+    public ApiResponse<Void> updateDeviceLockPreference(@AuthenticationPrincipal Long id, @RequestBody @Valid ProfileElementRequest request) {
+        profileService.updateProfileElement(id, request, DEVICE_LOCK_PREFERENCE);
         return ApiResponse.success();
     }
 
     @PutMapping("/profiles/activity")
-    public ApiResponse<Void> updateActivity(@AuthenticationPrincipal Long id, @RequestBody @Valid ActivityRequest request) {
-        profileService.updateActivity(id, request);
+    public ApiResponse<Void> updateActivity(@AuthenticationPrincipal Long id, @RequestBody @Valid ProfileElementRequest request) {
+        profileService.updateProfileElement(id, request, ACTIVITY);
         return ApiResponse.success();
     }
 
     @PutMapping("/profiles/theme-disliked-factors")
-    public ApiResponse<Void> updateThemeDislikedFactors(@AuthenticationPrincipal Long id, @RequestBody @Valid ThemeDislikedFactorsRequest request) {
-        profileService.updateThemeDislikedFactors(id, request);
+    public ApiResponse<Void> updateThemeDislikedFactors(@AuthenticationPrincipal Long id, @RequestBody @Valid ProfileElementsRequest request) {
+        profileService.updateProfileElements(id, request, THEME_DISLIKED_FACTOR);
         return ApiResponse.success();
     }
 

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class HintUsagePreferenceRequest {
+public class ProfileElementRequest {
     @NotNull
     private Long id;
 }

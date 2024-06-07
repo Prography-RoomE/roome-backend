@@ -1,11 +1,7 @@
 package com.sevenstars.roome.domain.profile.entity;
 
 import com.sevenstars.roome.domain.common.entity.BaseTimeEntity;
-import com.sevenstars.roome.domain.profile.entity.activity.Activity;
 import com.sevenstars.roome.domain.profile.entity.color.Color;
-import com.sevenstars.roome.domain.profile.entity.device.DeviceLockPreference;
-import com.sevenstars.roome.domain.profile.entity.hint.HintUsagePreference;
-import com.sevenstars.roome.domain.profile.entity.position.HorrorThemePosition;
 import com.sevenstars.roome.domain.user.entity.User;
 import com.sevenstars.roome.global.common.exception.CustomClientErrorException;
 import jakarta.persistence.*;
@@ -54,22 +50,6 @@ public class Profile extends BaseTimeEntity {
     private Mbti mbti;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "horror_theme_position_id")
-    private HorrorThemePosition horrorThemePosition;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "hint_usage_preference_id")
-    private HintUsagePreference hintUsagePreference;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "device_lock_preference_id")
-    private DeviceLockPreference deviceLockPreference;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "activity_id")
-    private Activity activity;
-
-    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "color_id")
     private Color color;
 
@@ -81,10 +61,6 @@ public class Profile extends BaseTimeEntity {
         this.maxCount = 0;
         this.isCountRange = false;
         this.mbti = NONE;
-        this.horrorThemePosition = null;
-        this.hintUsagePreference = null;
-        this.deviceLockPreference = null;
-        this.activity = null;
         this.color = null;
     }
 
@@ -95,10 +71,6 @@ public class Profile extends BaseTimeEntity {
         this.maxCount = 0;
         this.isCountRange = false;
         this.mbti = NONE;
-        this.horrorThemePosition = null;
-        this.hintUsagePreference = null;
-        this.deviceLockPreference = null;
-        this.activity = null;
         this.color = null;
     }
 
@@ -113,7 +85,7 @@ public class Profile extends BaseTimeEntity {
     }
 
     public void updateRoomCount(Integer count) {
-        updateStateIfMatch(ROOM_COUNT);
+        updateRoomCountState();
         if (count < 0) {
             throw new CustomClientErrorException(PROFILE_ROOM_COUNT_POSITIVE_OR_ZERO);
         }
@@ -127,7 +99,7 @@ public class Profile extends BaseTimeEntity {
     }
 
     public void updateRoomCountRange(Integer minCount, Integer maxCount) {
-        updateStateIfMatch(ROOM_COUNT);
+        updateRoomCountState();
         if (minCount > maxCount) {
             throw new CustomClientErrorException(PROFILE_INVALID_ROOM_COUNT_RANGE);
         }
@@ -143,50 +115,62 @@ public class Profile extends BaseTimeEntity {
         this.isCountRange = true;
     }
 
-    public void updatePreferredGenres() {
-        updateStateIfMatch(PREFERRED_GENRES);
-    }
-
     public void updateMbti(Mbti mbti) {
-        updateStateIfMatch(MBTI);
+        updateMbtiState();
         this.mbti = mbti;
     }
 
-    public void updateUserStrengths() {
+    public void updateColor(Color color) {
+        updateColorState();
+        this.color = color;
+    }
+
+    public void updateRoomCountState() {
+        updateStateIfMatch(ROOM_COUNT);
+    }
+
+    public void updateMbtiState() {
+        updateStateIfMatch(MBTI);
+    }
+
+    public void updatePreferredGenresState() {
+        updateStateIfMatch(PREFERRED_GENRES);
+    }
+
+    public void updateUserStrengthsState() {
         updateStateIfMatch(USER_STRENGTHS);
     }
 
-    public void updateThemeImportantFactors() {
+    public void updateThemeImportantFactorsState() {
         updateStateIfMatch(THEME_IMPORTANT_FACTORS);
     }
 
-    public void updateHorrorThemePosition(HorrorThemePosition position) {
+    public void updateHorrorThemePositionState() {
         updateStateIfMatch(HORROR_THEME_POSITION);
-        this.horrorThemePosition = position;
     }
 
-    public void updateHintUsagePreference(HintUsagePreference preference) {
+    public void updateHintUsagePreferenceState() {
         updateStateIfMatch(HINT_USAGE_PREFERENCE);
-        this.hintUsagePreference = preference;
     }
 
-    public void updateDeviceLockPreference(DeviceLockPreference preference) {
+    public void updateDeviceLockPreferenceState() {
         updateStateIfMatch(DEVICE_LOCK_PREFERENCE);
-        this.deviceLockPreference = preference;
     }
 
-    public void updateActivity(Activity activity) {
+    public void updateActivityState() {
         updateStateIfMatch(ACTIVITY);
-        this.activity = activity;
     }
 
-    public void updateThemeDislikedFactors() {
+    public void updateThemeDislikedFactorsState() {
         updateStateIfMatch(THEME_DISLIKED_FACTORS);
     }
 
-    public void updateColor(Color color) {
+    public void updateColorState() {
         updateStateIfMatch(COLOR);
-        this.color = color;
+    }
+
+    public void updateStateToComplete() {
+        this.state = COMPLETE;
     }
 
     private void updateStateIfMatch(ProfileState currentState) {

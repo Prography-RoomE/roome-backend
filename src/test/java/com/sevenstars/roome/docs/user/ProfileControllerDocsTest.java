@@ -369,7 +369,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updatePreferredGenres() throws Exception {
 
         // Given
-        PreferredGenresRequest request = new PreferredGenresRequest();
+        ProfileElementsRequest request = new ProfileElementsRequest();
         request.setIds(List.of(9L, 15L));
 
         // When & Then
@@ -407,7 +407,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updateThemeImportantFactors() throws Exception {
 
         // Given
-        UserStrengthsRequest request = new UserStrengthsRequest();
+        ProfileElementsRequest request = new ProfileElementsRequest();
         request.setIds(List.of(4L, 8L));
 
         // When & Then
@@ -426,7 +426,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updateUserStrengths() throws Exception {
 
         // Given
-        ThemeImportantFactorsRequest request = new ThemeImportantFactorsRequest();
+        ProfileElementsRequest request = new ProfileElementsRequest();
         request.setIds(List.of(3L, 7L));
 
         // When & Then
@@ -445,7 +445,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updateHorrorThemePosition() throws Exception {
 
         // Given
-        HorrorThemePositionRequest request = new HorrorThemePositionRequest();
+        ProfileElementRequest request = new ProfileElementRequest();
         request.setId(4L);
 
         // When & Then
@@ -464,7 +464,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updateHintUsagePreference() throws Exception {
 
         // Given
-        HintUsagePreferenceRequest request = new HintUsagePreferenceRequest();
+        ProfileElementRequest request = new ProfileElementRequest();
         request.setId(2L);
 
         // When & Then
@@ -483,7 +483,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updateDeviceLockPreference() throws Exception {
 
         // Given
-        HintUsagePreferenceRequest request = new HintUsagePreferenceRequest();
+        ProfileElementRequest request = new ProfileElementRequest();
         request.setId(2L);
 
         // When & Then
@@ -502,7 +502,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updateActivity() throws Exception {
 
         // Given
-        HintUsagePreferenceRequest request = new HintUsagePreferenceRequest();
+        ProfileElementRequest request = new ProfileElementRequest();
         request.setId(3L);
 
         // When & Then
@@ -521,7 +521,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updateThemeDislikedFactors() throws Exception {
 
         // Given
-        ThemeImportantFactorsRequest request = new ThemeImportantFactorsRequest();
+        ProfileElementsRequest request = new ProfileElementsRequest();
         request.setIds(List.of(2L, 6L));
 
         // When & Then
@@ -540,7 +540,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
     void updateColor() throws Exception {
 
         // Given
-        HintUsagePreferenceRequest request = new HintUsagePreferenceRequest();
+        ColorRequest request = new ColorRequest();
         request.setId(4L);
 
         // When & Then
