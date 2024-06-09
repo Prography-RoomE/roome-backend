@@ -28,7 +28,7 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> fail(String message) {
         return ApiResponse.<T>builder()
-                .code(Result.FAIL.getCode())
+                .code(FAIL.getCode())
                 .message(message)
                 .build();
     }
@@ -39,7 +39,7 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> error(String message) {
         return ApiResponse.<T>builder()
-                .code(Result.ERROR.getCode())
+                .code(ERROR.getCode())
                 .message(message)
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.sevenstars.roome.global.jwt.service;
 
+import com.sevenstars.roome.global.common.exception.CustomClientErrorException;
 import com.sevenstars.roome.global.jwt.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,8 +18,9 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 
-import static com.sevenstars.roome.global.common.response.ExceptionMessage.EXPIRED_TOKEN;
-import static com.sevenstars.roome.global.common.response.ExceptionMessage.INVALID_TOKEN;
+import static com.sevenstars.roome.global.common.response.Result.EXPIRED_TOKEN;
+import static com.sevenstars.roome.global.common.response.Result.INVALID_TOKEN;
+
 
 @Component
 public class JwtTokenProvider {
@@ -93,7 +95,7 @@ public class JwtTokenProvider {
     public String resolveToken(String token) {
 
         if (!StringUtils.hasText(token)) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+            throw new CustomClientErrorException(INVALID_TOKEN);
         }
 
         if (token.startsWith(BEARER_PREFIX)) {
@@ -111,9 +113,9 @@ public class JwtTokenProvider {
                     .getPayload();
 
         } catch (SignatureException | MalformedJwtException exception) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+            throw new CustomClientErrorException(INVALID_TOKEN);
         } catch (ExpiredJwtException exception) {
-            throw new IllegalStateException(EXPIRED_TOKEN.getMessage());
+            throw new CustomClientErrorException(EXPIRED_TOKEN);
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
@@ -123,21 +125,21 @@ public class JwtTokenProvider {
     private void verifyIss(Claims claims) {
         String iss = (String) claims.get("iss");
         if (!iss.contains(properties.getIssuerUri()) && !properties.getIssuerUri().contains(iss)) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+            throw new CustomClientErrorException(INVALID_TOKEN);
         }
     }
 
     private void verifyAccessTokenType(Claims claims) {
         String tokenType = (String) claims.get(TOKEN_TYPE_CLAIM_NAME);
         if (!TOKEN_TYPE_CLAIM_VALUE_ACCESS_TOKEN.equals(tokenType)) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+            throw new CustomClientErrorException(INVALID_TOKEN);
         }
     }
 
     private void verifyRefreshTokenType(Claims claims) {
         String tokenType = (String) claims.get(TOKEN_TYPE_CLAIM_NAME);
         if (!TOKEN_TYPE_CLAIM_VALUE_REFRESH_TOKEN.equals(tokenType)) {
-            throw new IllegalStateException(INVALID_TOKEN.getMessage());
+            throw new CustomClientErrorException(INVALID_TOKEN);
         }
     }
 }

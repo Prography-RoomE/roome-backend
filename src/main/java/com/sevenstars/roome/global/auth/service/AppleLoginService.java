@@ -27,7 +27,7 @@ import java.util.Base64;
 import java.util.Date;
 
 import static com.sevenstars.roome.global.auth.entity.OAuth2Provider.APPLE;
-import static com.sevenstars.roome.global.common.response.ExceptionMessage.PROVIDER_INVALID_RESPONSE;
+import static com.sevenstars.roome.global.common.response.Result.PROVIDER_INVALID_RESPONSE;
 
 @Slf4j
 @Service
@@ -98,7 +98,7 @@ public class AppleLoginService extends AbstractLoginService implements OAuth2Log
         OAuth2TokenResponse response = restTemplate.postForObject(tokenUri, params, OAuth2TokenResponse.class);
 
         if (response == null) {
-            throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE.getMessage());
+            throw new CustomServerErrorException(PROVIDER_INVALID_RESPONSE);
         }
 
         return new OAuth2ProviderToken(response.getAccessToken(), response.getIdToken());
