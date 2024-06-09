@@ -27,3 +27,6 @@ include::api/auth/auth.adoc[]
 
 == 사용자
 include::api/user/user.adoc[]
+
+== 프로필
+include::api/profile/profile.adoc[]

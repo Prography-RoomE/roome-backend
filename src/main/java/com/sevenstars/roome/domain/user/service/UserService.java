@@ -1,6 +1,8 @@
 package com.sevenstars.roome.domain.user.service;
 
 import com.sevenstars.roome.domain.common.repository.ForbiddenWordRepository;
+import com.sevenstars.roome.domain.profile.entity.Profile;
+import com.sevenstars.roome.domain.profile.repository.ProfileRepository;
 import com.sevenstars.roome.domain.user.entity.TermsAgreement;
 import com.sevenstars.roome.domain.user.entity.User;
 import com.sevenstars.roome.domain.user.repository.TermsAgreementRepository;
@@ -25,8 +27,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final TermsAgreementRepository termsAgreementRepository;
-    //TODO
-    //private final ProfileRepository profileRepository;
+    private final ProfileRepository profileRepository;
     private final ForbiddenWordRepository forbiddenWordRepository;
 
     @Transactional
@@ -41,13 +42,11 @@ public class UserService {
         if (optionalUser.isEmpty()) {
             user = new User(serviceId, serviceUserId, email);
             TermsAgreement termsAgreement = new TermsAgreement(user);
-            //TODO
-            //Profile profile = new Profile(user);
+            Profile profile = new Profile(user);
 
             userRepository.save(user);
             termsAgreementRepository.save(termsAgreement);
-            //TODO
-            //profileRepository.save(profile);
+            profileRepository.save(profile);
 
             return user;
         } else {
