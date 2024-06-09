@@ -1,0 +1,29 @@
+ifndef::snippets[]
+:snippets: ../../build/generated-snippets
+endif::[]
+= API 명세서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+= Common
+
+== 공통 API 응답 포맷
+include::api/common/status.adoc[]
+
+== 응답 상태 코드 및 메세지
+include::api/common/status-detail.adoc[]
+
+= API
+
+== 공통
+include::api/common/common.adoc[]
+
+== 인증
+include::api/auth/auth.adoc[]
+
+== 사용자
+include::api/user/user.adoc[]

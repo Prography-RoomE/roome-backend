@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Configuration;
         tags = {
                 @Tag(name = "공통", description = "공통 API"),
                 @Tag(name = "인증", description = "인증 API"),
-                @Tag(name = "유저", description = "유저 API")
+                @Tag(name = "사용자", description = "사용자 API"),
         }
         ,
         servers = {

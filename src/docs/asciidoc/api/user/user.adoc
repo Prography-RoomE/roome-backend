@@ -1,0 +1,119 @@
+=== 사용자 정보 조회
+
+==== 1. Curl Request
+include::{snippets}/user-controller-docs-test/get-user/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/user-controller-docs-test/get-user/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/user-controller-docs-test/get-user/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/user-controller-docs-test/get-user/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/user-controller-docs-test/get-user/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/user-controller-docs-test/get-user/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/user-controller-docs-test/get-user/request-body.adoc[]
+// include::{snippets}/user-controller-docs-test/get-user/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/user-controller-docs-test/get-user/response-body.adoc[]
+include::{snippets}/user-controller-docs-test/get-user/response-fields.adoc[]
+
+=== 약관 동의 저장
+
+==== 1. Curl Request
+include::{snippets}/user-controller-docs-test/update-terms-agreement/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/user-controller-docs-test/update-terms-agreement/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/user-controller-docs-test/update-terms-agreement/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/user-controller-docs-test/update-terms-agreement/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/user-controller-docs-test/update-terms-agreement/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/user-controller-docs-test/update-terms-agreement/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/user-controller-docs-test/update-terms-agreement/request-body.adoc[]
+// include::{snippets}/user-controller-docs-test/update-terms-agreement/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/user-controller-docs-test/update-terms-agreement/response-body.adoc[]
+include::{snippets}/user-controller-docs-test/update-terms-agreement/response-fields.adoc[]
+
+=== 닉네임 유효성 검사
+
+==== 1. Curl Request
+include::{snippets}/user-controller-docs-test/validate-nickname/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/user-controller-docs-test/validate-nickname/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/user-controller-docs-test/validate-nickname/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/user-controller-docs-test/validate-nickname/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/user-controller-docs-test/validate-nickname/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/user-controller-docs-test/validate-nickname/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/user-controller-docs-test/validate-nickname/request-body.adoc[]
+// include::{snippets}/user-controller-docs-test/validate-nickname/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/user-controller-docs-test/validate-nickname/response-body.adoc[]
+include::{snippets}/user-controller-docs-test/validate-nickname/response-fields.adoc[]
+
+=== 닉네임 저장
+
+==== 1. Curl Request
+include::{snippets}/user-controller-docs-test/update-nickname/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/user-controller-docs-test/update-nickname/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/user-controller-docs-test/update-nickname/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/user-controller-docs-test/update-nickname/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/user-controller-docs-test/update-nickname/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/user-controller-docs-test/update-nickname/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/user-controller-docs-test/update-nickname/request-body.adoc[]
+// include::{snippets}/user-controller-docs-test/update-nickname/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/user-controller-docs-test/update-nickname/response-body.adoc[]
+include::{snippets}/user-controller-docs-test/update-nickname/response-fields.adoc[]
