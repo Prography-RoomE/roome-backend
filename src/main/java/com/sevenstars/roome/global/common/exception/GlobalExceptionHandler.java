@@ -7,7 +7,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import static com.sevenstars.roome.global.common.response.Result.FILE_SIZE_EXCEEDED;
 import static com.sevenstars.roome.global.common.response.Result.NULL;
 
 @Slf4j
@@ -54,5 +56,12 @@ public class GlobalExceptionHandler {
     public ApiResponse<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         log.error("[handleMethodArgumentNotValidException]: {}", exception.getMessage());
         return ApiResponse.result(NULL);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ApiResponse<Void> handleMaxUploadSizeExceededExceptionException(MaxUploadSizeExceededException exception) {
+        log.error("[handleMaxUploadSizeExceededExceptionException]: {}", exception.getMessage());
+        return ApiResponse.result(FILE_SIZE_EXCEEDED);
     }
 }

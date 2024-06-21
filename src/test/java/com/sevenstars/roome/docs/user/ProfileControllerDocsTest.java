@@ -26,6 +26,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -107,7 +108,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                 .willReturn(response);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/profiles/defaults")
+        mockMvc.perform(get("/profiles/defaults")
                         .header(AUTHORIZATION, "Bearer {token}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -254,7 +255,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                 .willReturn(response);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/profiles")
+        mockMvc.perform(get("/profiles")
                         .header(AUTHORIZATION, "Bearer {token}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -334,7 +335,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setCount(150);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/room-count")
+        mockMvc.perform(put("/profiles/room-count")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -354,7 +355,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setMaxCount(30);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/room-count-range")
+        mockMvc.perform(put("/profiles/room-count-range")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -373,7 +374,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setIds(List.of(9L, 15L));
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/preferred-genres")
+        mockMvc.perform(put("/profiles/preferred-genres")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -392,7 +393,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setMbti("ISTJ");
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/mbti")
+        mockMvc.perform(put("/profiles/mbti")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -411,7 +412,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setIds(List.of(4L, 8L));
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/user-strengths")
+        mockMvc.perform(put("/profiles/user-strengths")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -430,7 +431,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setIds(List.of(3L, 7L));
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/theme-important-factors")
+        mockMvc.perform(put("/profiles/theme-important-factors")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -449,7 +450,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setId(4L);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/horror-theme-position")
+        mockMvc.perform(put("/profiles/horror-theme-position")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -468,7 +469,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setId(2L);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/hint-usage-preference")
+        mockMvc.perform(put("/profiles/hint-usage-preference")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -487,7 +488,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setId(2L);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/device-lock-preference")
+        mockMvc.perform(put("/profiles/device-lock-preference")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -506,7 +507,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setId(3L);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/activity")
+        mockMvc.perform(put("/profiles/activity")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -525,7 +526,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setIds(List.of(2L, 6L));
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/theme-disliked-factors")
+        mockMvc.perform(put("/profiles/theme-disliked-factors")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
@@ -544,7 +545,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
         request.setId(4L);
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.put("/profiles/color")
+        mockMvc.perform(put("/profiles/color")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
