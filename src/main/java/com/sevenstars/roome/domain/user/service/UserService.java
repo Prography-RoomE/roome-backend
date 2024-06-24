@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.sevenstars.roome.domain.common.repository.ForbiddenWordRepository;
 import com.sevenstars.roome.domain.profile.entity.Profile;
+import com.sevenstars.roome.domain.profile.repository.ProfileElementRepository;
 import com.sevenstars.roome.domain.profile.repository.ProfileRepository;
 import com.sevenstars.roome.domain.user.entity.TermsAgreement;
 import com.sevenstars.roome.domain.user.entity.User;
@@ -16,6 +17,7 @@ import com.sevenstars.roome.domain.user.response.UserImageResponse;
 import com.sevenstars.roome.domain.user.response.UserResponse;
 import com.sevenstars.roome.global.common.exception.CustomClientErrorException;
 import com.sevenstars.roome.global.common.exception.CustomServerErrorException;
+import com.sevenstars.roome.global.jwt.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +41,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final TermsAgreementRepository termsAgreementRepository;
     private final ProfileRepository profileRepository;
+    private final ProfileElementRepository profileElementRepository;
     private final ForbiddenWordRepository forbiddenWordRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final AmazonS3 amazonS3;
     private final Tika tika = new Tika();
     @Value("${cloud.aws.s3.bucket}")
@@ -51,7 +55,7 @@ public class UserService {
         String serviceUserId = request.getServiceUserId();
         String email = request.getEmail();
 
-        Optional<User> optionalUser = userRepository.findByServiceIdAndServiceUserIdAndWithdrawalIsFalse(serviceId, serviceUserId);
+        Optional<User> optionalUser = userRepository.findByServiceIdAndServiceUserId(serviceId, serviceUserId);
 
         User user;
         if (optionalUser.isEmpty()) {
@@ -84,15 +88,35 @@ public class UserService {
 
     @Transactional
     public void withdraw(Long id) {
-        User user = userRepository.findByIdAndWithdrawalIsFalse(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
-        user.withdraw();
+        // Image
+        String imageUrl = user.getImageUrl();
+        deleteImage(imageUrl);
+
+        // TermsAgreement
+        termsAgreementRepository.findByUser(user).ifPresent(termsAgreementRepository::delete);
+
+        // ProfileElement, Profile
+        profileRepository.findByUser(user)
+                .ifPresent(profile -> {
+                            profileElementRepository.deleteAll(profileElementRepository.findByProfile(profile));
+                            profileRepository.delete(profile);
+                        }
+                );
+
+        // RefreshToken
+        refreshTokenRepository.findByUser(user)
+                .ifPresent(refreshTokenRepository::delete);
+
+        // User
+        userRepository.delete(user);
     }
 
     @Transactional(readOnly = true)
     public UserResponse getUser(Long id) {
-        User user = userRepository.findByIdAndWithdrawalIsFalse(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         return UserResponse.from(user);
@@ -100,7 +124,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public boolean isNicknameExists(String nickname) {
-        return userRepository.existsByNicknameAndWithdrawalIsFalse(nickname);
+        return userRepository.existsByNickname(nickname);
     }
 
     @Transactional(readOnly = true)
@@ -116,7 +140,7 @@ public class UserService {
         Boolean personalInfoAgreement = request.getPersonalInfoAgreement();
         Boolean marketingAgreement = request.getMarketingAgreement();
 
-        User user = userRepository.findByIdAndWithdrawalIsFalse(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         TermsAgreement termsAgreement = termsAgreementRepository.findByUser(user)
@@ -134,7 +158,7 @@ public class UserService {
 
         String nickname = request.getNickname();
 
-        User user = userRepository.findByIdAndWithdrawalIsFalse(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         user.validateNickname(nickname);
@@ -153,7 +177,7 @@ public class UserService {
 
         String nickname = request.getNickname();
 
-        User user = userRepository.findByIdAndWithdrawalIsFalse(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         validateNickname(id, request);
@@ -164,7 +188,7 @@ public class UserService {
     @Transactional
     public UserImageResponse updateImage(Long id, MultipartFile file) {
 
-        User user = userRepository.findByIdAndWithdrawalIsFalse(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         String originalFilename = file.getOriginalFilename();
@@ -202,17 +226,28 @@ public class UserService {
     @Transactional
     public void deleteImage(Long id) {
 
-        User user = userRepository.findByIdAndWithdrawalIsFalse(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         String imageUrl = user.getImageUrl();
+        deleteImage(imageUrl);
+        user.deleteImageUrl();
+    }
 
-        if (StringUtils.hasText(imageUrl)) {
-            String existFileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-            String userImageBucket = bucket + USER_IMAGE_PATH;
-            amazonS3.deleteObject(userImageBucket, existFileName);
-            user.deleteImageUrl();
+    public void deleteImage(String imageUrl) {
+
+        if (!StringUtils.hasText(imageUrl)) {
+            return;
         }
+
+        int index = imageUrl.lastIndexOf("/");
+        if (index == -1) {
+            return;
+        }
+
+        String existFileName = imageUrl.substring(index + 1);
+        String userImageBucket = bucket + USER_IMAGE_PATH;
+        amazonS3.deleteObject(userImageBucket, existFileName);
     }
 
     private boolean isImage(MultipartFile file) {

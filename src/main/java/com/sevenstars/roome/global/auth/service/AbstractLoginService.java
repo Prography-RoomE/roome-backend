@@ -77,7 +77,6 @@ public abstract class AbstractLoginService {
             revokeToken(code);
         }
 
-        tokenService.delete(id);
         userService.withdraw(id);
     }
 

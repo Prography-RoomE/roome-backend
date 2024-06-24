@@ -28,7 +28,7 @@ public class JwtTokenService {
     @Transactional
     public TokenResponse issue(Long userId) {
 
-        User user = userRepository.findByIdAndWithdrawalIsFalse(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         String token = tokenProvider.createToken(userId);
@@ -51,7 +51,7 @@ public class JwtTokenService {
         Claims claims = tokenProvider.verifyRefreshToken(token);
         Long userId = Long.valueOf(claims.getSubject());
 
-        User user = userRepository.findByIdAndWithdrawalIsFalse(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         RefreshToken refreshToken = refreshTokenRepository.findByUser(user)
@@ -72,7 +72,7 @@ public class JwtTokenService {
     @Transactional
     public void delete(Long userId) {
 
-        User user = userRepository.findByIdAndWithdrawalIsFalse(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         refreshTokenRepository.findByUser(user)
