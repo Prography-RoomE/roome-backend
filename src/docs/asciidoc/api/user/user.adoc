@@ -117,3 +117,63 @@ include::{snippets}/user-controller-docs-test/update-nickname/request-body.adoc[
 ==== 6. HTTP Response Body
 include::{snippets}/user-controller-docs-test/update-nickname/response-body.adoc[]
 include::{snippets}/user-controller-docs-test/update-nickname/response-fields.adoc[]
+
+=== 이미지 저장
+
+==== 1. Curl Request
+include::{snippets}/user-controller-docs-test/update-image/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/user-controller-docs-test/update-image/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/user-controller-docs-test/update-image/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/user-controller-docs-test/update-image/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/user-controller-docs-test/update-image/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/user-controller-docs-test/update-image/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/user-controller-docs-test/update-image/request-body.adoc[]
+// include::{snippets}/user-controller-docs-test/update-image/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/user-controller-docs-test/update-image/response-body.adoc[]
+include::{snippets}/user-controller-docs-test/update-image/response-fields.adoc[]
+
+=== 이미지 삭제
+
+==== 1. Curl Request
+include::{snippets}/user-controller-docs-test/delete-image/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/user-controller-docs-test/delete-image/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/user-controller-docs-test/delete-image/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/user-controller-docs-test/delete-image/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/user-controller-docs-test/delete-image/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/user-controller-docs-test/delete-image/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/user-controller-docs-test/delete-image/request-body.adoc[]
+// include::{snippets}/user-controller-docs-test/delete-image/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/user-controller-docs-test/delete-image/response-body.adoc[]
+include::{snippets}/user-controller-docs-test/delete-image/response-fields.adoc[]

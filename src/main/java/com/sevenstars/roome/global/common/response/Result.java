@@ -24,6 +24,11 @@ public enum Result {
     REFRESH_TOKEN_NOT_FOUND(1006, "리프레시 토큰을 찾을 수 없습니다."),
     AUTHORIZATION_CODE_AND_ID_TOKEN_EMPTY(1007, "인가코드와 토큰이 모두 비어있습니다."),
     NULL(1008, "파라미터에 NULL이 포함되어있습니다."),
+    FILE_UPLOAD_FAILED(1009, "파일 업로드가 실패하였습니다."),
+    FILE_SIZE_EXCEEDED(1010, "파일 사이즈 제한을 초과하였습니다."),
+    INVALID_IMAGE_FILE(1011, "이미지 파일이 아닙니다."),
+    INVALID_IMAGE_FILE_EXTENSION(1012, "이미지 파일 확장자가 아닙니다."),
+    FILE_EXTENSION_DOES_NOT_EXIST(1013, "파일 확장자가 존재하지 않습니다."),
 
     // User
     USER_NOT_FOUND(2000, "사용자를 찾을 수 없습니다."),

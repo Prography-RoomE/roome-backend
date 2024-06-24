@@ -11,8 +11,12 @@ public class UserResponse {
     private final UserState state;
     private final String email;
     private final String nickname;
+    private final String imageUrl;
 
     public static UserResponse from(User user) {
-        return new UserResponse(user.getState(), user.getEmail(), user.getNickname());
+        return new UserResponse(user.getState(),
+                user.getEmail(),
+                user.getNickname(),
+                user.getImageUrl());
     }
 }

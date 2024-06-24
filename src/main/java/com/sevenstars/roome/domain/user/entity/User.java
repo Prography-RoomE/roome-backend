@@ -34,6 +34,8 @@ public class User extends BaseTimeEntity {
 
     private String nickname;
 
+    private String imageUrl;
+
     private Boolean withdrawal;
 
     public User(String serviceId, String serviceUserId, String email) {
@@ -42,6 +44,7 @@ public class User extends BaseTimeEntity {
         this.serviceUserId = serviceUserId;
         this.email = email;
         this.nickname = "";
+        this.imageUrl = "";
         this.withdrawal = false;
     }
 
@@ -51,6 +54,14 @@ public class User extends BaseTimeEntity {
             this.state = REGISTRATION_COMPLETED;
         }
         this.nickname = nickname;
+    }
+
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void deleteImageUrl() {
+        this.imageUrl = "";
     }
 
     public void updateState(UserState state) {
