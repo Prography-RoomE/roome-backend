@@ -75,7 +75,6 @@ class UserServiceTest {
         Assertions.assertThat(user.getServiceUserId()).isEqualTo(serviceUserId);
         Assertions.assertThat(user.getEmail()).isEqualTo(email);
         Assertions.assertThat(user.getNickname()).isEqualTo("");
-        Assertions.assertThat(user.getWithdrawal()).isFalse();
         Assertions.assertThat(user.getState()).isEqualTo(TERMS_AGREEMENT);
     }
 

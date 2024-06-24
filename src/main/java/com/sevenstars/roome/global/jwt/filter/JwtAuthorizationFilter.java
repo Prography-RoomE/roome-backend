@@ -37,7 +37,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 Authentication authentication = tokenProvider.getAuthentication(userId);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception exception) {
-                log.error("Token authentication failed, {}", exception.getMessage());
+                log.error("Token authentication failed, {}", request.getRequestURL());
             }
         }
 

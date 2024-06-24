@@ -7,9 +7,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByIdAndWithdrawalIsFalse(Long id);
+    Optional<User> findByServiceIdAndServiceUserId(String serviceId, String serviceUserId);
 
-    Optional<User> findByServiceIdAndServiceUserIdAndWithdrawalIsFalse(String serviceId, String serviceUserId);
-
-    boolean existsByNicknameAndWithdrawalIsFalse(String nickname);
+    boolean existsByNickname(String nickname);
 }
