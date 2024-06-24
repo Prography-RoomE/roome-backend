@@ -61,10 +61,12 @@ public class ProfileResponse {
     public static class Genre {
         private final Long id;
         private final String title;
+        private final String text;
 
         public static Genre from(Element genre) {
             return new Genre(genre.getId(),
-                    StringUtils.hasText(genre.getEmoji()) ? genre.getEmoji() + " " + genre.getTitle() : genre.getTitle());
+                    StringUtils.hasText(genre.getEmoji()) ? genre.getEmoji() + " " + genre.getTitle() : genre.getTitle(),
+                    genre.getTitle());
         }
     }
 
@@ -73,10 +75,12 @@ public class ProfileResponse {
     public static class Strength {
         private final Long id;
         private final String title;
+        private final String text;
 
         public static Strength from(Element strength) {
             return new Strength(strength.getId(),
-                    StringUtils.hasText(strength.getEmoji()) ? strength.getEmoji() + " " + strength.getTitle() : strength.getTitle());
+                    StringUtils.hasText(strength.getEmoji()) ? strength.getEmoji() + " " + strength.getTitle() : strength.getTitle(),
+                    strength.getTitle());
         }
     }
 
@@ -85,10 +89,12 @@ public class ProfileResponse {
     public static class ImportantFactor {
         private final Long id;
         private final String title;
+        private final String text;
 
         public static ImportantFactor from(Element importantFactor) {
             return new ImportantFactor(importantFactor.getId(),
-                    StringUtils.hasText(importantFactor.getEmoji()) ? importantFactor.getEmoji() + " " + importantFactor.getSubTitle() : importantFactor.getSubTitle());
+                    StringUtils.hasText(importantFactor.getEmoji()) ? importantFactor.getEmoji() + " " + importantFactor.getSubTitle() : importantFactor.getSubTitle(),
+                    importantFactor.getSubTitle());
         }
     }
 
@@ -97,10 +103,12 @@ public class ProfileResponse {
     public static class HorrorThemePosition {
         private final Long id;
         private final String title;
+        private final String text;
 
         public static HorrorThemePosition from(Element horrorThemePosition) {
             return new HorrorThemePosition(horrorThemePosition.getId(),
-                    StringUtils.hasText(horrorThemePosition.getEmoji()) ? horrorThemePosition.getEmoji() + " " + horrorThemePosition.getTitle() : horrorThemePosition.getTitle());
+                    StringUtils.hasText(horrorThemePosition.getEmoji()) ? horrorThemePosition.getEmoji() + " " + horrorThemePosition.getTitle() : horrorThemePosition.getTitle(),
+                    horrorThemePosition.getTitle());
         }
     }
 
@@ -109,10 +117,12 @@ public class ProfileResponse {
     public static class HintUsagePreference {
         private final Long id;
         private final String title;
+        private final String text;
 
         public static HintUsagePreference from(Element hintUsagePreference) {
             return new HintUsagePreference(hintUsagePreference.getId(),
-                    StringUtils.hasText(hintUsagePreference.getEmoji()) ? hintUsagePreference.getEmoji() + " " + hintUsagePreference.getTitle() : hintUsagePreference.getTitle());
+                    StringUtils.hasText(hintUsagePreference.getEmoji()) ? hintUsagePreference.getEmoji() + " " + hintUsagePreference.getTitle() : hintUsagePreference.getTitle(),
+                    hintUsagePreference.getTitle());
         }
     }
 
@@ -121,10 +131,12 @@ public class ProfileResponse {
     public static class DeviceLockPreference {
         private final Long id;
         private final String title;
+        private final String text;
 
         public static DeviceLockPreference from(Element deviceLockPreference) {
             return new DeviceLockPreference(deviceLockPreference.getId(),
-                    StringUtils.hasText(deviceLockPreference.getEmoji()) ? deviceLockPreference.getEmoji() + " " + deviceLockPreference.getTitle() : deviceLockPreference.getTitle());
+                    StringUtils.hasText(deviceLockPreference.getEmoji()) ? deviceLockPreference.getEmoji() + " " + deviceLockPreference.getTitle() : deviceLockPreference.getTitle(),
+                    deviceLockPreference.getTitle());
         }
     }
 
@@ -133,10 +145,12 @@ public class ProfileResponse {
     public static class Activity {
         private final Long id;
         private final String title;
+        private final String text;
 
         public static Activity from(Element activity) {
             return new Activity(activity.getId(),
-                    StringUtils.hasText(activity.getEmoji()) ? activity.getEmoji() + " " + activity.getTitle() : activity.getTitle());
+                    StringUtils.hasText(activity.getEmoji()) ? activity.getEmoji() + " " + activity.getTitle() : activity.getTitle(),
+                    activity.getTitle());
         }
     }
 
@@ -145,10 +159,12 @@ public class ProfileResponse {
     public static class DislikedFactor {
         private final Long id;
         private final String title;
+        private final String text;
 
         public static DislikedFactor from(Element dislikedFactor) {
             return new DislikedFactor(dislikedFactor.getId(),
-                    StringUtils.hasText(dislikedFactor.getEmoji()) ? dislikedFactor.getEmoji() + " " + dislikedFactor.getTitle() : dislikedFactor.getTitle());
+                    StringUtils.hasText(dislikedFactor.getEmoji()) ? dislikedFactor.getEmoji() + " " + dislikedFactor.getTitle() : dislikedFactor.getTitle(),
+                    dislikedFactor.getTitle());
         }
     }
 

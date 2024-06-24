@@ -11,7 +11,6 @@ import com.sevenstars.roome.domain.profile.response.ProfileResponse;
 import com.sevenstars.roome.domain.profile.service.ProfileService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 
 import java.util.List;
@@ -26,7 +25,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -205,28 +205,28 @@ public class ProfileControllerDocsTest extends RestDocsTest {
 
         // Given
         List<ProfileResponse.Genre> genres = List.of(
-                new ProfileResponse.Genre(9L, "미스터리"),
-                new ProfileResponse.Genre(15L, "SF"));
+                new ProfileResponse.Genre(9L, "미스터리", "미스터리"),
+                new ProfileResponse.Genre(15L, "SF", "SF"));
 
         List<ProfileResponse.Strength> strengths = List.of(
-                new ProfileResponse.Strength(4L, "집중력"),
-                new ProfileResponse.Strength(8L, "침착함"));
+                new ProfileResponse.Strength(4L, "집중력", "집중력"),
+                new ProfileResponse.Strength(8L, "침착함", "침착함"));
 
         List<ProfileResponse.ImportantFactor> importantFactors = List.of(
-                new ProfileResponse.ImportantFactor(3L, "명확한 개연성"),
-                new ProfileResponse.ImportantFactor(7L, "논리적인 문제"));
+                new ProfileResponse.ImportantFactor(3L, "명확한 개연성", "명확한 개연성"),
+                new ProfileResponse.ImportantFactor(7L, "논리적인 문제", "논리적인 문제"));
 
-        ProfileResponse.HorrorThemePosition horrorThemePosition = new ProfileResponse.HorrorThemePosition(4L, "마지모탱");
+        ProfileResponse.HorrorThemePosition horrorThemePosition = new ProfileResponse.HorrorThemePosition(4L, "마지모탱", "마지모탱");
 
-        ProfileResponse.HintUsagePreference hintUsagePreference = new ProfileResponse.HintUsagePreference(2L, "최소한의 힌트만");
+        ProfileResponse.HintUsagePreference hintUsagePreference = new ProfileResponse.HintUsagePreference(2L, "최소한의 힌트만", "최소한의 힌트만");
 
-        ProfileResponse.DeviceLockPreference deviceLockPreference = new ProfileResponse.DeviceLockPreference(1L, "장치");
+        ProfileResponse.DeviceLockPreference deviceLockPreference = new ProfileResponse.DeviceLockPreference(1L, "장치", "장치");
 
-        ProfileResponse.Activity activity = new ProfileResponse.Activity(3L, "낮은 활동성");
+        ProfileResponse.Activity activity = new ProfileResponse.Activity(3L, "낮은 활동성", "낮은 활동성");
 
         List<ProfileResponse.DislikedFactor> dislikedFactors = List.of(
-                new ProfileResponse.DislikedFactor(2L, "노가다 문제"),
-                new ProfileResponse.DislikedFactor(6L, "높은 난이도"));
+                new ProfileResponse.DislikedFactor(2L, "노가다 문제", "노가다 문제"),
+                new ProfileResponse.DislikedFactor(6L, "높은 난이도", "높은 난이도"));
 
         ProfileResponse.Color color = new ProfileResponse.Color(4L,
                 "Gradient Purple",
@@ -274,6 +274,8 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                                                 .description("선호 장르 ID"),
                                         fieldWithPath("data.preferredGenres[].title").type(JsonFieldType.STRING)
                                                 .description("선호 장르 제목"),
+                                        fieldWithPath("data.preferredGenres[].text").type(JsonFieldType.STRING)
+                                                .description("선호 장르 텍스트"),
                                         fieldWithPath("data.mbti").type(JsonFieldType.STRING)
                                                 .description("MBTI"),
                                         fieldWithPath("data.userStrengths[]").type(JsonFieldType.ARRAY)
@@ -282,34 +284,48 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                                                 .description("사용자 강점 ID"),
                                         fieldWithPath("data.userStrengths[].title").type(JsonFieldType.STRING)
                                                 .description("사용자 강점 제목"),
+                                        fieldWithPath("data.userStrengths[].text").type(JsonFieldType.STRING)
+                                                .description("사용자 강점 텍스트"),
                                         fieldWithPath("data.themeImportantFactors[]").type(JsonFieldType.ARRAY)
                                                 .description("테마 중요 요소 목록"),
                                         fieldWithPath("data.themeImportantFactors[].id").type(JsonFieldType.NUMBER)
                                                 .description("테마 중요 요소 ID"),
                                         fieldWithPath("data.themeImportantFactors[].title").type(JsonFieldType.STRING)
                                                 .description("테마 중요 요소 제목"),
+                                        fieldWithPath("data.themeImportantFactors[].text").type(JsonFieldType.STRING)
+                                                .description("테마 중요 요소 텍스트"),
                                         fieldWithPath("data.horrorThemePosition.id").type(JsonFieldType.NUMBER)
                                                 .description("공포 테마 포지션 ID"),
                                         fieldWithPath("data.horrorThemePosition.title").type(JsonFieldType.STRING)
                                                 .description("공포 테마 포지션 제목"),
+                                        fieldWithPath("data.horrorThemePosition.text").type(JsonFieldType.STRING)
+                                                .description("공포 테마 포지션 텍스트"),
                                         fieldWithPath("data.hintUsagePreference.id").type(JsonFieldType.NUMBER)
                                                 .description("힌트 사용 선호도 ID"),
                                         fieldWithPath("data.hintUsagePreference.title").type(JsonFieldType.STRING)
                                                 .description("힌트 사용 선호도 제목"),
+                                        fieldWithPath("data.hintUsagePreference.text").type(JsonFieldType.STRING)
+                                                .description("힌트 사용 선호도 텍스트"),
                                         fieldWithPath("data.deviceLockPreference.id").type(JsonFieldType.NUMBER)
                                                 .description("장치 자물쇠 선호도 ID"),
                                         fieldWithPath("data.deviceLockPreference.title").type(JsonFieldType.STRING)
                                                 .description("장치 자물쇠 선호도 제목"),
+                                        fieldWithPath("data.deviceLockPreference.text").type(JsonFieldType.STRING)
+                                                .description("장치 자물쇠 선호도 텍스트"),
                                         fieldWithPath("data.activity.id").type(JsonFieldType.NUMBER)
                                                 .description("활동성 ID"),
                                         fieldWithPath("data.activity.title").type(JsonFieldType.STRING)
                                                 .description("활동성 제목"),
+                                        fieldWithPath("data.activity.text").type(JsonFieldType.STRING)
+                                                .description("활동성 텍스트"),
                                         fieldWithPath("data.themeDislikedFactors[]").type(JsonFieldType.ARRAY)
                                                 .description("싫어하는 요소 목록"),
                                         fieldWithPath("data.themeDislikedFactors[].id").type(JsonFieldType.NUMBER)
                                                 .description("싫어하는 요소 ID"),
                                         fieldWithPath("data.themeDislikedFactors[].title").type(JsonFieldType.STRING)
                                                 .description("싫어하는 요소 제목"),
+                                        fieldWithPath("data.themeDislikedFactors[].text").type(JsonFieldType.STRING)
+                                                .description("싫어하는 요소 텍스트"),
                                         fieldWithPath("data.color.id").type(JsonFieldType.NUMBER)
                                                 .description("색상 ID"),
                                         fieldWithPath("data.color.title").type(JsonFieldType.STRING)
