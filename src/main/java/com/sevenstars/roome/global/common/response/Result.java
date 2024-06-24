@@ -40,18 +40,11 @@ public enum Result {
     // Profile
     PROFILE_NOT_FOUND(3000, "프로필을 찾을 수 없습니다."),
     PROFILE_ROOM_COUNT_POSITIVE_OR_ZERO(3001, "방 수는 0번 이상이어야 합니다."),
-    PROFILE_PREFERRED_GENRES_NOT_FOUND(3002, "선호 장르를 찾을 수 없습니다."),
-    PROFILE_MBTI_NOT_FOUND(3003, "MBTI를 찾을 수 없습니다."),
-    PROFILE_USER_STRENGTHS_NOT_FOUND(3004, "사용자 강점을 찾을 수 없습니다."),
-    PROFILE_THEME_IMPORTANT_FACTORS_NOT_FOUND(3005, "테마 중요 요소를 찾을 수 없습니다."),
-    PROFILE_HORROR_THEME_POSITION_NOT_FOUND(3006, "공포 테마 포지션을 찾을 수 없습니다."),
-    PROFILE_HINT_USAGE_PREFERENCE_NOT_FOUND(3007, "힌트 사용 선호도를 찾을 수 없습니다"),
-    PROFILE_DEVICE_LOCK_PREFERENCE_NOT_FOUND(3008, "장치 자물쇠 선호도를 찾을 수 없습니다."),
-    PROFILE_ACTIVITY_NOT_FOUND(3009, "활동성을 찾을 수 없습니다."),
-    PROFILE_THEME_DISLIKED_FACTORS_NOT_FOUND(3010, "테마 싫어하는 요소를 찾을 수 없습니다."),
-    PROFILE_COLOR_NOT_FOUND(3011, "색상을 찾을 수 없습니다."),
-    PROFILE_ROOM_COUNT_EXCEEDED(3012, "방 수가 최대값을 초과하였습니다."),
-    PROFILE_INVALID_ROOM_COUNT_RANGE(3013, "방 수 범위가 유효하지 않습니다.");
+    PROFILE_ROOM_COUNT_EXCEEDED(3002, "방 수가 최대값을 초과하였습니다."),
+    PROFILE_INVALID_ROOM_COUNT_RANGE(3003, "방 수 범위가 유효하지 않습니다."),
+    PROFILE_MBTI_NOT_FOUND(3004, "MBTI를 찾을 수 없습니다."),
+    PROFILE_ELEMENT_ID_NOT_FOUND(3005, "프로필 요소를 찾을 수 없습니다."),
+    PROFILE_ELEMENT_ID_EXCEEDED(3006, "프로필 요소 최대 값을 초과하였습니다.");
 
     private final int code;
     private final String message;

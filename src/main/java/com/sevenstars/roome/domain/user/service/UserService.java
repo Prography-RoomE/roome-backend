@@ -52,6 +52,16 @@ public class UserService {
         } else {
             user = optionalUser.get();
             user.updateEmail(email);
+
+            if (profileRepository.findByUser(user).isEmpty()) {
+                Profile profile = new Profile(user);
+                profileRepository.save(profile);
+            }
+
+            if (termsAgreementRepository.findByUser(user).isEmpty()) {
+                TermsAgreement termsAgreement = new TermsAgreement(user);
+                termsAgreementRepository.save(termsAgreement);
+            }
         }
 
         return user;

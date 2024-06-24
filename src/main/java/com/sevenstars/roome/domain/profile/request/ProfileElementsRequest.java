@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PreferredGenresRequest {
+public class ProfileElementsRequest {
     @NotNull
     @NotEmpty
     private List<Long> ids;

@@ -1,36 +1,13 @@
 package com.sevenstars.roome.domain.profile.service;
 
-import com.sevenstars.roome.domain.profile.entity.Mbti;
-import com.sevenstars.roome.domain.profile.entity.Profile;
-import com.sevenstars.roome.domain.profile.entity.activity.Activity;
+import com.sevenstars.roome.domain.profile.entity.*;
 import com.sevenstars.roome.domain.profile.entity.color.Color;
-import com.sevenstars.roome.domain.profile.entity.device.DeviceLockPreference;
-import com.sevenstars.roome.domain.profile.entity.dislike.DislikedFactor;
-import com.sevenstars.roome.domain.profile.entity.dislike.ThemeDislikedFactor;
-import com.sevenstars.roome.domain.profile.entity.genre.Genre;
-import com.sevenstars.roome.domain.profile.entity.genre.PreferredGenre;
-import com.sevenstars.roome.domain.profile.entity.hint.HintUsagePreference;
-import com.sevenstars.roome.domain.profile.entity.important.ImportantFactor;
-import com.sevenstars.roome.domain.profile.entity.important.ThemeImportantFactor;
-import com.sevenstars.roome.domain.profile.entity.position.HorrorThemePosition;
 import com.sevenstars.roome.domain.profile.entity.room.RoomCountRange;
-import com.sevenstars.roome.domain.profile.entity.strength.Strength;
-import com.sevenstars.roome.domain.profile.entity.strength.UserStrength;
+import com.sevenstars.roome.domain.profile.repository.ElementRepository;
+import com.sevenstars.roome.domain.profile.repository.ProfileElementRepository;
 import com.sevenstars.roome.domain.profile.repository.ProfileRepository;
-import com.sevenstars.roome.domain.profile.repository.activity.ActivityRepository;
 import com.sevenstars.roome.domain.profile.repository.color.ColorRepository;
-import com.sevenstars.roome.domain.profile.repository.device.DeviceLockPreferenceRepository;
-import com.sevenstars.roome.domain.profile.repository.dislike.DislikedFactorRepository;
-import com.sevenstars.roome.domain.profile.repository.dislike.ThemeDislikedFactorRepository;
-import com.sevenstars.roome.domain.profile.repository.genre.GenreRepository;
-import com.sevenstars.roome.domain.profile.repository.genre.PreferredGenreRepository;
-import com.sevenstars.roome.domain.profile.repository.hint.HintUsagePreferenceRepository;
-import com.sevenstars.roome.domain.profile.repository.important.ImportantFactorRepository;
-import com.sevenstars.roome.domain.profile.repository.important.ThemeImportantFactorRepository;
-import com.sevenstars.roome.domain.profile.repository.position.HorrorThemePositionRepository;
 import com.sevenstars.roome.domain.profile.repository.room.RoomCountRangeRepository;
-import com.sevenstars.roome.domain.profile.repository.strength.StrengthRepository;
-import com.sevenstars.roome.domain.profile.repository.strength.UserStrengthRepository;
 import com.sevenstars.roome.domain.profile.request.*;
 import com.sevenstars.roome.domain.profile.response.ProfileDefaultResponse;
 import com.sevenstars.roome.domain.profile.response.ProfileResponse;
@@ -39,9 +16,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
+import static com.sevenstars.roome.domain.profile.entity.ElementType.*;
 import static com.sevenstars.roome.global.common.response.Result.*;
 
 @RequiredArgsConstructor
@@ -51,32 +30,35 @@ public class ProfileService {
 
     private final ProfileRepository profileRepository;
     private final RoomCountRangeRepository roomCountRangeRepository;
-    private final GenreRepository genreRepository;
-    private final StrengthRepository strengthRepository;
-    private final ImportantFactorRepository importantFactorRepository;
-    private final HorrorThemePositionRepository horrorThemePositionRepository;
-    private final HintUsagePreferenceRepository hintUsagePreferenceRepository;
-    private final DeviceLockPreferenceRepository deviceLockPreferenceRepository;
-    private final ActivityRepository activityRepository;
-    private final DislikedFactorRepository dislikedFactorRepository;
+    private final ElementRepository elementRepository;
     private final ColorRepository colorRepository;
-    private final PreferredGenreRepository preferredGenreRepository;
-    private final UserStrengthRepository userStrengthRepository;
-    private final ThemeImportantFactorRepository themeImportantFactorRepository;
-    private final ThemeDislikedFactorRepository themeDislikedFactorRepository;
+    private final ProfileElementRepository profileElementRepository;
 
     @Transactional(readOnly = true)
     public ProfileDefaultResponse getProfileDefaults() {
 
         List<RoomCountRange> roomCountRanges = roomCountRangeRepository.findAll();
-        List<Genre> genres = genreRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
-        List<Strength> strengths = strengthRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
-        List<ImportantFactor> importantFactors = importantFactorRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
-        List<HorrorThemePosition> horrorThemePositions = horrorThemePositionRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
-        List<HintUsagePreference> hintUsagePreferences = hintUsagePreferenceRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
-        List<DeviceLockPreference> deviceLockPreferences = deviceLockPreferenceRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
-        List<Activity> activities = activityRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
-        List<DislikedFactor> dislikedFactors = dislikedFactorRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
+
+        Map<ElementType, List<Element>> sortedMap = elementRepository.findByIsDeletedFalse().stream()
+                .collect(Collectors.groupingBy(
+                        Element::getType,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                list -> list.stream()
+                                        .sorted(Comparator.comparing(Element::getPriority))
+                                        .collect(Collectors.toList())
+                        )
+                ));
+
+        List<Element> genres = sortedMap.get(PREFERRED_GENRE);
+        List<Element> strengths = sortedMap.get(USER_STRENGTH);
+        List<Element> importantFactors = sortedMap.get(ElementType.THEME_IMPORTANT_FACTOR);
+        List<Element> horrorThemePositions = sortedMap.get(ElementType.HORROR_THEME_POSITION);
+        List<Element> hintUsagePreferences = sortedMap.get(ElementType.HINT_USAGE_PREFERENCE);
+        List<Element> deviceLockPreferences = sortedMap.get(ElementType.DEVICE_LOCK_PREFERENCE);
+        List<Element> activities = sortedMap.get(ElementType.ACTIVITY);
+        List<Element> dislikedFactors = sortedMap.get(ElementType.THEME_DISLIKED_FACTOR);
+
         List<Color> colors = colorRepository.findByIsDeletedIsFalseOrderByPriorityAsc();
 
         return ProfileDefaultResponse.of(
@@ -98,16 +80,40 @@ public class ProfileService {
         Profile profile = profileRepository.findByUserId(userId)
                 .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
 
-        List<PreferredGenre> preferredGenres = preferredGenreRepository.findByProfile(profile);
-        List<UserStrength> userStrengths = userStrengthRepository.findByProfile(profile);
-        List<ThemeImportantFactor> themeImportantFactors = themeImportantFactorRepository.findByProfile(profile);
-        List<ThemeDislikedFactor> themeDislikedFactors = themeDislikedFactorRepository.findByProfile(profile);
+        Map<ElementType, List<Element>> sortedMap = profileElementRepository.findByProfileId(profile.getId()).stream()
+                .map(ProfileElement::getElement)
+                .collect(Collectors.groupingBy(
+                        Element::getType,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                list -> list.stream()
+                                        .sorted(Comparator.comparing(Element::getPriority))
+                                        .collect(Collectors.toList())
+                        )
+                ));
+
+        // 미리 필요한 키들을 초기화
+        Arrays.stream(ElementType.values())
+                .forEach(key -> sortedMap.putIfAbsent(key, new ArrayList<>()));
+
+        List<Element> genres = sortedMap.get(PREFERRED_GENRE);
+        List<Element> strengths = sortedMap.get(USER_STRENGTH);
+        List<Element> importantFactors = sortedMap.get(THEME_IMPORTANT_FACTOR);
+        List<Element> horrorThemePositions = sortedMap.get(HORROR_THEME_POSITION);
+        List<Element> hintUsagePreferences = sortedMap.get(HINT_USAGE_PREFERENCE);
+        List<Element> deviceLockPreferences = sortedMap.get(DEVICE_LOCK_PREFERENCE);
+        List<Element> activities = sortedMap.get(ACTIVITY);
+        List<Element> dislikedFactors = sortedMap.get(THEME_DISLIKED_FACTOR);
 
         return ProfileResponse.of(profile,
-                preferredGenres,
-                userStrengths,
-                themeImportantFactors,
-                themeDislikedFactors);
+                genres,
+                strengths,
+                importantFactors,
+                horrorThemePositions,
+                hintUsagePreferences,
+                deviceLockPreferences,
+                activities,
+                dislikedFactors);
     }
 
     @Transactional
@@ -118,10 +124,8 @@ public class ProfileService {
 
         profile.clear();
 
-        preferredGenreRepository.deleteByProfile(profile);
-        userStrengthRepository.deleteByProfile(profile);
-        themeImportantFactorRepository.deleteByProfile(profile);
-        themeDislikedFactorRepository.deleteByProfile(profile);
+        List<ProfileElement> profileElements = profileElementRepository.findByProfileId(profile.getId());
+        profileElements.forEach(ProfileElement::clear);
     }
 
     @Transactional
@@ -148,27 +152,6 @@ public class ProfileService {
     }
 
     @Transactional
-    public void updatePreferredGenres(Long userId, PreferredGenresRequest request) {
-
-        Profile profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
-
-        List<Long> ids = request.getIds();
-
-        List<Genre> genres = genreRepository.findAllById(ids);
-
-        if (ids.size() != genres.size()) {
-            throw new CustomClientErrorException(PROFILE_PREFERRED_GENRES_NOT_FOUND);
-        }
-
-        preferredGenreRepository.deleteByProfile(profile);
-
-        genres.forEach(genre -> preferredGenreRepository.save(new PreferredGenre(profile, genre)));
-
-        profile.updatePreferredGenres();
-    }
-
-    @Transactional
     public void updateMbti(Long userId, MbtiRequest request) {
 
         Profile profile = profileRepository.findByUserId(userId)
@@ -183,125 +166,6 @@ public class ProfileService {
     }
 
     @Transactional
-    public void updateUserStrengths(Long userId, UserStrengthsRequest request) {
-
-        Profile profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
-
-        List<Long> ids = request.getIds();
-
-        List<Strength> strengths = strengthRepository.findAllById(ids);
-
-        if (ids.size() != strengths.size()) {
-            throw new CustomClientErrorException(PROFILE_USER_STRENGTHS_NOT_FOUND);
-        }
-
-        userStrengthRepository.deleteByProfile(profile);
-
-        strengths.forEach(strength -> userStrengthRepository.save(new UserStrength(profile, strength)));
-
-        profile.updateUserStrengths();
-    }
-
-    @Transactional
-    public void updateThemeImportantFactors(Long userId, ThemeImportantFactorsRequest request) {
-
-        Profile profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
-
-        List<Long> ids = request.getIds();
-
-        List<ImportantFactor> importantFactors = importantFactorRepository.findAllById(ids);
-
-        if (ids.size() != importantFactors.size()) {
-            throw new CustomClientErrorException(PROFILE_THEME_IMPORTANT_FACTORS_NOT_FOUND);
-        }
-
-        themeImportantFactorRepository.deleteByProfile(profile);
-
-        importantFactors.forEach(importantFactor -> themeImportantFactorRepository.save(new ThemeImportantFactor(profile, importantFactor)));
-
-        profile.updateThemeImportantFactors();
-    }
-
-    @Transactional
-    public void updateHorrorThemePosition(Long userId, HorrorThemePositionRequest request) {
-
-        Profile profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
-
-        Long id = request.getId();
-
-        HorrorThemePosition horrorThemePosition = horrorThemePositionRepository.findById(id)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_HORROR_THEME_POSITION_NOT_FOUND));
-
-        profile.updateHorrorThemePosition(horrorThemePosition);
-    }
-
-    @Transactional
-    public void updateHintUsagePreference(Long userId, HintUsagePreferenceRequest request) {
-
-        Profile profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
-
-        Long id = request.getId();
-
-        HintUsagePreference hintUsagePreference = hintUsagePreferenceRepository.findById(id)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_HINT_USAGE_PREFERENCE_NOT_FOUND));
-
-        profile.updateHintUsagePreference(hintUsagePreference);
-    }
-
-    @Transactional
-    public void updateDeviceLockPreference(Long userId, DeviceLockPreferenceRequest request) {
-
-        Profile profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
-
-        Long id = request.getId();
-
-        DeviceLockPreference deviceLockPreference = deviceLockPreferenceRepository.findById(id)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_DEVICE_LOCK_PREFERENCE_NOT_FOUND));
-
-        profile.updateDeviceLockPreference(deviceLockPreference);
-    }
-
-    @Transactional
-    public void updateActivity(Long userId, ActivityRequest request) {
-
-        Profile profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
-
-        Long id = request.getId();
-
-        Activity activity = activityRepository.findById(id)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_ACTIVITY_NOT_FOUND));
-
-        profile.updateActivity(activity);
-    }
-
-    @Transactional
-    public void updateThemeDislikedFactors(Long userId, ThemeDislikedFactorsRequest request) {
-
-        Profile profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
-
-        List<Long> ids = request.getIds();
-
-        List<DislikedFactor> dislikedFactors = dislikedFactorRepository.findAllById(ids);
-
-        if (ids.size() != dislikedFactors.size()) {
-            throw new CustomClientErrorException(PROFILE_THEME_DISLIKED_FACTORS_NOT_FOUND);
-        }
-
-        themeDislikedFactorRepository.deleteByProfile(profile);
-
-        dislikedFactors.forEach(dislikedFactor -> themeDislikedFactorRepository.save(new ThemeDislikedFactor(profile, dislikedFactor)));
-
-        profile.updateThemeDislikedFactors();
-    }
-
-    @Transactional
     public void updateColor(Long userId, ColorRequest request) {
 
         Profile profile = profileRepository.findByUserId(userId)
@@ -310,8 +174,55 @@ public class ProfileService {
         Long id = request.getId();
 
         Color color = colorRepository.findById(id)
-                .orElseThrow(() -> new CustomClientErrorException(PROFILE_COLOR_NOT_FOUND));
+                .orElseThrow(() -> new CustomClientErrorException(PROFILE_ELEMENT_ID_NOT_FOUND));
 
         profile.updateColor(color);
+    }
+
+    @Transactional
+    public void updateProfileElement(Long userId, ProfileElementRequest request, ElementType type) {
+
+        List<Long> ids = List.of(request.getId());
+        updateProfileElements(userId, ids, type);
+    }
+
+    @Transactional
+    public void updateProfileElements(Long userId, ProfileElementsRequest request, ElementType type) {
+
+        List<Long> ids = request.getIds();
+        updateProfileElements(userId, ids, type);
+    }
+
+    private void updateProfileElements(Long userId, List<Long> ids, ElementType type) {
+
+        Profile profile = profileRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
+
+        List<Element> elements = elementRepository.findByIdInAndTypeAndIsDeletedFalse(ids, type);
+
+        if (ids.size() > type.getMaxSize()) {
+            throw new CustomClientErrorException(PROFILE_ELEMENT_ID_EXCEEDED);
+        }
+
+        if (ids.size() != elements.size()) {
+            throw new CustomClientErrorException(PROFILE_ELEMENT_ID_NOT_FOUND);
+        }
+
+        List<ProfileElement> profileElements = profileElementRepository.findByProfileIdAndType(profile.getId(), type);
+        int index = 0;
+
+        profileElements.forEach(ProfileElement::clear);
+
+        for (; index < elements.size() && index < profileElements.size(); index++) {
+            profileElements.get(index).update(elements.get(index));
+        }
+
+        for (; index < elements.size(); index++) {
+            profileElementRepository.save(new ProfileElement(profile, elements.get(index), type));
+        }
+
+        ProfileState state = type.getProfileState();
+        Consumer<Profile> consumer = state.getProfileStateUpdateConsumer();
+        consumer.accept(profile);
     }
 }
