@@ -3,7 +3,6 @@ package com.sevenstars.roome.domain.profile.service;
 import com.sevenstars.roome.domain.profile.entity.Element;
 import com.sevenstars.roome.domain.profile.entity.Profile;
 import com.sevenstars.roome.domain.profile.entity.ProfileElement;
-import com.sevenstars.roome.domain.profile.entity.ProfileState;
 import com.sevenstars.roome.domain.profile.repository.ElementRepository;
 import com.sevenstars.roome.domain.profile.repository.ProfileElementRepository;
 import com.sevenstars.roome.domain.profile.repository.ProfileRepository;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.sevenstars.roome.domain.profile.entity.ElementType.PREFERRED_GENRE;

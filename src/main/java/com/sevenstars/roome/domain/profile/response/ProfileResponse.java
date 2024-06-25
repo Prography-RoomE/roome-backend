@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProfileResponse {
 
-    private final Long id;
+    private final String nickname;
     private final ProfileState state;
     private final String count;
     private final List<Genre> preferredGenres;
@@ -41,7 +41,7 @@ public class ProfileResponse {
                                      List<Element> deviceLockPreferences,
                                      List<Element> activities,
                                      List<Element> themeDislikedFactors) {
-        return new ProfileResponse(profile.getId(),
+        return new ProfileResponse(profile.getUser().getNickname(),
                 profile.getState(),
                 profile.getCount(),
                 preferredGenres.stream().map(Genre::from).collect(Collectors.toList()),
