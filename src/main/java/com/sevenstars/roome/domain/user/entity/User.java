@@ -75,7 +75,7 @@ public class User extends BaseTimeEntity {
             throw new CustomClientErrorException(USER_NICKNAME_EMPTY);
         }
 
-        if (!nickname.matches("^[가-힣a-zA-Z0-9]+$")) {
+        if (!nickname.matches("^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]+$")) {
             throw new CustomClientErrorException(USER_NICKNAME_CAN_CONTAIN_KOREAN_ENGLISH_OR_NUMBERS);
         }
 

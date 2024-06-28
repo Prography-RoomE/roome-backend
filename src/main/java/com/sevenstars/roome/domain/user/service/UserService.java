@@ -1,7 +1,9 @@
 package com.sevenstars.roome.domain.user.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.sevenstars.roome.domain.common.repository.ForbiddenWordRepository;
 import com.sevenstars.roome.domain.profile.entity.Profile;
 import com.sevenstars.roome.domain.profile.entity.ProfileState;
@@ -216,7 +218,10 @@ public class UserService {
         deleteImage(id);
 
         try {
-            amazonS3.putObject(userImageBucket, fileName, file.getInputStream(), metadata);
+            PutObjectRequest request = new PutObjectRequest(userImageBucket, fileName, file.getInputStream(), metadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead);
+            amazonS3.putObject(request);
+
         } catch (IOException e) {
             throw new CustomServerErrorException(FILE_UPLOAD_FAILED);
         }
