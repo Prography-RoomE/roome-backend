@@ -1,11 +1,16 @@
 package com.sevenstars.roome.domain.user.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.sevenstars.roome.domain.common.repository.ForbiddenWordRepository;
 import com.sevenstars.roome.domain.profile.entity.Profile;
+import com.sevenstars.roome.domain.profile.entity.ProfileState;
 import com.sevenstars.roome.domain.profile.repository.ProfileElementRepository;
 import com.sevenstars.roome.domain.profile.repository.ProfileRepository;
+import com.sevenstars.roome.domain.profile.response.ProfileResponse;
+import com.sevenstars.roome.domain.profile.service.ProfileService;
 import com.sevenstars.roome.domain.user.entity.TermsAgreement;
 import com.sevenstars.roome.domain.user.entity.User;
 import com.sevenstars.roome.domain.user.repository.TermsAgreementRepository;
@@ -38,6 +43,7 @@ import static com.sevenstars.roome.global.common.response.Result.*;
 public class UserService {
 
     private static final String USER_IMAGE_PATH = "/users/images";
+    private final ProfileService profileService;
     private final UserRepository userRepository;
     private final TermsAgreementRepository termsAgreementRepository;
     private final ProfileRepository profileRepository;
@@ -212,7 +218,10 @@ public class UserService {
         deleteImage(id);
 
         try {
-            amazonS3.putObject(userImageBucket, fileName, file.getInputStream(), metadata);
+            PutObjectRequest request = new PutObjectRequest(userImageBucket, fileName, file.getInputStream(), metadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead);
+            amazonS3.putObject(request);
+
         } catch (IOException e) {
             throw new CustomServerErrorException(FILE_UPLOAD_FAILED);
         }
@@ -232,6 +241,23 @@ public class UserService {
         String imageUrl = user.getImageUrl();
         deleteImage(imageUrl);
         user.deleteImageUrl();
+    }
+
+    @Transactional(readOnly = true)
+    public ProfileResponse getUserProfile(String nickname) {
+
+        User user = userRepository.findByNickname(nickname)
+                .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
+
+        Long id = user.getId();
+
+        ProfileResponse response = profileService.getProfile(id);
+
+        if (!ProfileState.COMPLETE.equals(response.getState())) {
+            throw new CustomClientErrorException(PROFILE_NOT_FOUND);
+        }
+
+        return response;
     }
 
     public void deleteImage(String imageUrl) {

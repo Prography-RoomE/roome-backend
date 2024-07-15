@@ -177,3 +177,33 @@ include::{snippets}/user-controller-docs-test/delete-image/request-body.adoc[]
 ==== 6. HTTP Response Body
 include::{snippets}/user-controller-docs-test/delete-image/response-body.adoc[]
 include::{snippets}/user-controller-docs-test/delete-image/response-fields.adoc[]
+
+=== 사용자 프로필 조회
+
+==== 1. Curl Request
+include::{snippets}/user-controller-docs-test/get-profile/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/user-controller-docs-test/get-profile/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/user-controller-docs-test/delete-image/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/user-controller-docs-test/delete-image/path-parameters.adoc[]
+
+===== 2) Query Parameters
+include::{snippets}/user-controller-docs-test/get-profile/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/user-controller-docs-test/delete-image/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/user-controller-docs-test/get-profile/request-body.adoc[]
+// include::{snippets}/user-controller-docs-test/delete-image/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/user-controller-docs-test/get-profile/response-body.adoc[]
+include::{snippets}/user-controller-docs-test/get-profile/response-fields.adoc[]

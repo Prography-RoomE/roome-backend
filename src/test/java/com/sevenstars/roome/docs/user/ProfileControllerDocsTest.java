@@ -237,7 +237,7 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                 "#73549D");
 
         ProfileResponse response = new ProfileResponse(
-                1L,
+                "루미",
                 COMPLETE,
                 "150",
                 genres,
@@ -262,8 +262,8 @@ public class ProfileControllerDocsTest extends RestDocsTest {
                 .andDo(restDocs.document(
                         responseFields(responseCommon())
                                 .and(
-                                        fieldWithPath("data.id").type(JsonFieldType.NUMBER)
-                                                .description("프로필 ID"),
+                                        fieldWithPath("data.nickname").type(JsonFieldType.STRING)
+                                                .description("사용자 닉네임"),
                                         fieldWithPath("data.state").type(JsonFieldType.STRING)
                                                 .description("프로필 상태"),
                                         fieldWithPath("data.count").type(JsonFieldType.STRING)

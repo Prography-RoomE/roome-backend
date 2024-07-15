@@ -1,5 +1,6 @@
 package com.sevenstars.roome.domain.user.controller;
 
+import com.sevenstars.roome.domain.profile.response.ProfileResponse;
 import com.sevenstars.roome.domain.user.request.NicknameRequest;
 import com.sevenstars.roome.domain.user.request.TermsAgreementRequest;
 import com.sevenstars.roome.domain.user.response.UserImageResponse;
@@ -54,5 +55,10 @@ public class UserController {
     public ApiResponse<Void> deleteImage(@AuthenticationPrincipal Long id) {
         userService.deleteImage(id);
         return ApiResponse.success();
+    }
+
+    @GetMapping("/users/profile")
+    public ApiResponse<ProfileResponse> getUserProfile(@RequestParam String nickname) {
+        return ApiResponse.success(userService.getUserProfile(nickname));
     }
 }
