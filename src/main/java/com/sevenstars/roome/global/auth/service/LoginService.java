@@ -1,8 +1,8 @@
 package com.sevenstars.roome.global.auth.service;
 
 import com.sevenstars.roome.global.auth.entity.OAuth2Provider;
+import com.sevenstars.roome.global.auth.request.DeactivateRequest;
 import com.sevenstars.roome.global.auth.request.SignInRequest;
-import com.sevenstars.roome.global.auth.request.WithdrawalRequest;
 import com.sevenstars.roome.global.auth.response.TokenResponse;
 import com.sevenstars.roome.global.common.exception.CustomClientErrorException;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class LoginService {
         return oAuth2LoginService.signIn(request);
     }
 
-    public void withdraw(Long id, WithdrawalRequest request) {
+    public void deactivate(Long id, DeactivateRequest request) {
 
         OAuth2Provider oAuth2Provider = Arrays.stream(OAuth2Provider.values())
                 .filter(provider -> provider.getName().equals(request.getProvider()))
@@ -46,6 +46,6 @@ public class LoginService {
                 .findAny()
                 .orElseThrow(() -> new CustomClientErrorException(PROVIDER_NOT_FOUND));
 
-        oAuth2LoginService.withdraw(id, request);
+        oAuth2LoginService.deactivate(id, request);
     }
 }
