@@ -8,8 +8,8 @@ import com.sevenstars.roome.global.auth.config.OAuth2ProviderProperties;
 import com.sevenstars.roome.global.auth.entity.OAuth2Provider;
 import com.sevenstars.roome.global.auth.entity.OAuth2ProviderToken;
 import com.sevenstars.roome.global.auth.entity.TokenHeader;
+import com.sevenstars.roome.global.auth.request.DeactivateRequest;
 import com.sevenstars.roome.global.auth.request.SignInRequest;
-import com.sevenstars.roome.global.auth.request.WithdrawalRequest;
 import com.sevenstars.roome.global.auth.response.Key;
 import com.sevenstars.roome.global.auth.response.OAuth2TokenResponse;
 import com.sevenstars.roome.global.auth.response.PublicKeyResponse;
@@ -69,15 +69,17 @@ public abstract class AbstractLoginService {
         return tokenService.issue(userId);
     }
 
-    public void withdraw(Long id, WithdrawalRequest request) {
+    public void deactivate(Long id, DeactivateRequest request) {
 
         String code = request.getCode();
+        String reason = request.getReason();
+        String content = request.getContent();
 
         if (StringUtils.hasText(code)) {
             revokeToken(code);
         }
 
-        userService.withdraw(id);
+        userService.deactivate(id, reason, content);
     }
 
     protected OAuth2ProviderToken getToken(String code) {

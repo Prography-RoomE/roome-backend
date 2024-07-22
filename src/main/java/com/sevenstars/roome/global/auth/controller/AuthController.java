@@ -1,8 +1,8 @@
 package com.sevenstars.roome.global.auth.controller;
 
+import com.sevenstars.roome.global.auth.request.DeactivateRequest;
 import com.sevenstars.roome.global.auth.request.SignInRequest;
 import com.sevenstars.roome.global.auth.request.TokenRequest;
-import com.sevenstars.roome.global.auth.request.WithdrawalRequest;
 import com.sevenstars.roome.global.auth.response.TokenResponse;
 import com.sevenstars.roome.global.auth.service.LoginService;
 import com.sevenstars.roome.global.common.response.ApiResponse;
@@ -25,27 +25,27 @@ public class AuthController {
     private final LoginService loginService;
     private final JwtTokenService tokenService;
 
-    @PostMapping("/signin")
+    @PostMapping("/auth/signin")
     public ApiResponse<TokenResponse> signIn(@RequestBody @Valid SignInRequest request) {
         return ApiResponse.success(loginService.signIn(request));
     }
 
-    @PostMapping("/token")
+    @PostMapping("/auth/token")
     public ApiResponse<TokenResponse> getToken(@RequestBody @Valid TokenRequest request) {
         return ApiResponse.success(tokenService.getToken(request));
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @PostMapping("/signout")
+    @PostMapping("/auth/signout")
     public ApiResponse<Void> signOut(@AuthenticationPrincipal Long userId) {
         tokenService.delete(userId);
         return ApiResponse.success();
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @PostMapping("/withdrawal")
-    public ApiResponse<Void> withdraw(@AuthenticationPrincipal Long userId, @RequestBody @Valid WithdrawalRequest request) {
-        loginService.withdraw(userId, request);
+    @PostMapping("/auth/deactivate")
+    public ApiResponse<Void> deactivate(@AuthenticationPrincipal Long userId, @RequestBody @Valid DeactivateRequest request) {
+        loginService.deactivate(userId, request);
         return ApiResponse.success();
     }
 

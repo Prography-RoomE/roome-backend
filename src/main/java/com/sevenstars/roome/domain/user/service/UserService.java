@@ -13,7 +13,9 @@ import com.sevenstars.roome.domain.profile.response.ProfileResponse;
 import com.sevenstars.roome.domain.profile.service.ProfileService;
 import com.sevenstars.roome.domain.user.entity.TermsAgreement;
 import com.sevenstars.roome.domain.user.entity.User;
+import com.sevenstars.roome.domain.user.entity.UserDeactivationReason;
 import com.sevenstars.roome.domain.user.repository.TermsAgreementRepository;
+import com.sevenstars.roome.domain.user.repository.UserDeactivationReasonRepository;
 import com.sevenstars.roome.domain.user.repository.UserRepository;
 import com.sevenstars.roome.domain.user.request.NicknameRequest;
 import com.sevenstars.roome.domain.user.request.TermsAgreementRequest;
@@ -45,6 +47,7 @@ public class UserService {
     private static final String USER_IMAGE_PATH = "/users/images";
     private final ProfileService profileService;
     private final UserRepository userRepository;
+    private final UserDeactivationReasonRepository userDeactivationReasonRepository;
     private final TermsAgreementRepository termsAgreementRepository;
     private final ProfileRepository profileRepository;
     private final ProfileElementRepository profileElementRepository;
@@ -93,7 +96,7 @@ public class UserService {
     }
 
     @Transactional
-    public void withdraw(Long id) {
+    public void deactivate(Long id, String reason, String content) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
@@ -118,6 +121,10 @@ public class UserService {
 
         // User
         userRepository.delete(user);
+
+        if (StringUtils.hasText(reason) || StringUtils.hasText(content)) {
+            userDeactivationReasonRepository.save(new UserDeactivationReason(reason, content));
+        }
     }
 
     @Transactional(readOnly = true)
