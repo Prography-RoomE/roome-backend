@@ -4,7 +4,7 @@ import com.sevenstars.roome.docs.RestDocsTest;
 import com.sevenstars.roome.global.auth.controller.AuthController;
 import com.sevenstars.roome.global.auth.request.SignInRequest;
 import com.sevenstars.roome.global.auth.request.TokenRequest;
-import com.sevenstars.roome.global.auth.request.WithdrawalRequest;
+import com.sevenstars.roome.global.auth.request.DeactivateRequest;
 import com.sevenstars.roome.global.auth.response.TokenResponse;
 import com.sevenstars.roome.global.auth.service.LoginService;
 import com.sevenstars.roome.global.jwt.service.JwtTokenService;
@@ -48,7 +48,7 @@ public class AuthControllerDocsTest extends RestDocsTest {
         request.setIdToken("Identity Token");
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/signin")
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/auth/signin")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
                 .andDo(print())
@@ -75,7 +75,7 @@ public class AuthControllerDocsTest extends RestDocsTest {
         request.setRefreshToken("Refresh Token");
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/token")
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/auth/token")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
                 .andDo(print())
@@ -96,7 +96,7 @@ public class AuthControllerDocsTest extends RestDocsTest {
         // Given
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/signout")
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/auth/signout")
                         .header(AUTHORIZATION, "Bearer {token}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -106,15 +106,17 @@ public class AuthControllerDocsTest extends RestDocsTest {
 
     @DisplayName("탈퇴")
     @Test
-    void withdraw() throws Exception {
+    void deactivate() throws Exception {
 
         // Given
-        WithdrawalRequest request = new WithdrawalRequest();
+        DeactivateRequest request = new DeactivateRequest();
         request.setProvider("google");
         request.setCode("Authorization Code");
+        request.setReason("원하는 기능이 없어요");
+        request.setContent("방탈출 메이트 구하는 기능이 없어요!");
 
         // When & Then
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/withdrawal")
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/auth/deactivate")
                         .header(AUTHORIZATION, "Bearer {token}")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(APPLICATION_JSON))
