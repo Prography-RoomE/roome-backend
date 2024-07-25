@@ -2,9 +2,9 @@ package com.sevenstars.roome.docs.auth;
 
 import com.sevenstars.roome.docs.RestDocsTest;
 import com.sevenstars.roome.global.auth.controller.AuthController;
+import com.sevenstars.roome.global.auth.request.DeactivateRequest;
 import com.sevenstars.roome.global.auth.request.SignInRequest;
 import com.sevenstars.roome.global.auth.request.TokenRequest;
-import com.sevenstars.roome.global.auth.request.DeactivateRequest;
 import com.sevenstars.roome.global.auth.response.TokenResponse;
 import com.sevenstars.roome.global.auth.service.LoginService;
 import com.sevenstars.roome.global.jwt.service.JwtTokenService;

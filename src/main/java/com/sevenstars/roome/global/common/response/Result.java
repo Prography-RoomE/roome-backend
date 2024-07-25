@@ -29,6 +29,7 @@ public enum Result {
     INVALID_IMAGE_FILE(1011, "이미지 파일이 아닙니다."),
     INVALID_IMAGE_FILE_EXTENSION(1012, "이미지 파일 확장자가 아닙니다."),
     FILE_EXTENSION_DOES_NOT_EXIST(1013, "파일 확장자가 존재하지 않습니다."),
+    INVALID_VERSION_UPDATE_KEY(1014, "버전 업데이트 키가 유효하지 않습니다."),
 
     // User
     USER_NOT_FOUND(2000, "사용자를 찾을 수 없습니다."),
