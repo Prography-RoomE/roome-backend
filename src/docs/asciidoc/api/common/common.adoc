@@ -27,3 +27,243 @@ include::{snippets}/health-check-controller-docs-test/get-health/request-body.ad
 ==== 6. HTTP Response Body
 include::{snippets}/health-check-controller-docs-test/get-health/response-body.adoc[]
 include::{snippets}/health-check-controller-docs-test/get-health/response-fields.adoc[]
+
+=== 전체 버전 조회
+
+==== 1. Curl Request
+include::{snippets}/version-controller-docs-test/get-versions/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/version-controller-docs-test/get-versions/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/version-controller-docs-test/get-versions/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/version-controller-docs-test/get-versions/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/version-controller-docs-test/get-versions/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/version-controller-docs-test/get-versions/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/version-controller-docs-test/get-versions/request-body.adoc[]
+// include::{snippets}/version-controller-docs-test/get-versions/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/version-controller-docs-test/get-versions/response-body.adoc[]
+include::{snippets}/version-controller-docs-test/get-versions/response-fields.adoc[]
+
+=== Server 버전 조회
+
+==== 1. Curl Request
+include::{snippets}/version-controller-docs-test/get-server-version/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/version-controller-docs-test/get-server-version/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/version-controller-docs-test/get-server-version/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/version-controller-docs-test/get-server-version/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/version-controller-docs-test/get-server-version/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/version-controller-docs-test/get-server-version/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/version-controller-docs-test/get-server-version/request-body.adoc[]
+// include::{snippets}/version-controller-docs-test/get-server-version/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/version-controller-docs-test/get-server-version/response-body.adoc[]
+include::{snippets}/version-controller-docs-test/get-server-version/response-fields.adoc[]
+
+=== AOS 버전 조회
+
+==== 1. Curl Request
+include::{snippets}/version-controller-docs-test/get-aos-version/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/version-controller-docs-test/get-aos-version/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/version-controller-docs-test/get-aos-version/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/version-controller-docs-test/get-aos-version/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/version-controller-docs-test/get-aos-version/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/version-controller-docs-test/get-aos-version/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/version-controller-docs-test/get-aos-version/request-body.adoc[]
+// include::{snippets}/version-controller-docs-test/get-aos-version/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/version-controller-docs-test/get-aos-version/response-body.adoc[]
+include::{snippets}/version-controller-docs-test/get-aos-version/response-fields.adoc[]
+
+=== iOS 버전 조회
+
+==== 1. Curl Request
+include::{snippets}/version-controller-docs-test/get-ios-version/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/version-controller-docs-test/get-ios-version/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/version-controller-docs-test/get-ios-version/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/version-controller-docs-test/get-ios-version/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/version-controller-docs-test/get-ios-version/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/version-controller-docs-test/get-ios-version/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/version-controller-docs-test/get-ios-version/request-body.adoc[]
+// include::{snippets}/version-controller-docs-test/get-ios-version/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/version-controller-docs-test/get-ios-version/response-body.adoc[]
+include::{snippets}/version-controller-docs-test/get-ios-version/response-fields.adoc[]
+
+=== 전체 버전 업데이트
+
+==== 1. Curl Request
+include::{snippets}/version-controller-docs-test/update-versions/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/version-controller-docs-test/update-versions/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/version-controller-docs-test/update-versions/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/version-controller-docs-test/update-versions/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/version-controller-docs-test/update-versions/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/version-controller-docs-test/update-versions/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/version-controller-docs-test/update-versions/request-body.adoc[]
+// include::{snippets}/version-controller-docs-test/update-versions/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/version-controller-docs-test/update-versions/response-body.adoc[]
+include::{snippets}/version-controller-docs-test/update-versions/response-fields.adoc[]
+
+=== Server 버전 업데이트
+
+==== 1. Curl Request
+include::{snippets}/version-controller-docs-test/update-server-version/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/version-controller-docs-test/update-server-version/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/version-controller-docs-test/update-server-version/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/version-controller-docs-test/update-server-version/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/version-controller-docs-test/update-server-version/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/version-controller-docs-test/update-server-version/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/version-controller-docs-test/update-server-version/request-body.adoc[]
+// include::{snippets}/version-controller-docs-test/update-server-version/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/version-controller-docs-test/update-server-version/response-body.adoc[]
+include::{snippets}/version-controller-docs-test/update-server-version/response-fields.adoc[]
+
+=== AOS 버전 업데이트
+
+==== 1. Curl Request
+include::{snippets}/version-controller-docs-test/update-aos-version/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/version-controller-docs-test/update-aos-version/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/version-controller-docs-test/update-aos-version/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/version-controller-docs-test/update-aos-version/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/version-controller-docs-test/update-aos-version/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/version-controller-docs-test/update-aos-version/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/version-controller-docs-test/update-aos-version/request-body.adoc[]
+// include::{snippets}/version-controller-docs-test/update-aos-version/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/version-controller-docs-test/update-aos-version/response-body.adoc[]
+include::{snippets}/version-controller-docs-test/update-aos-version/response-fields.adoc[]
+
+=== iOS 버전 업데이트
+
+==== 1. Curl Request
+include::{snippets}/version-controller-docs-test/update-ios-version/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/version-controller-docs-test/update-ios-version/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/version-controller-docs-test/update-ios-version/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/version-controller-docs-test/update-ios-version/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/version-controller-docs-test/update-ios-version/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/version-controller-docs-test/update-ios-version/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/version-controller-docs-test/update-ios-version/request-body.adoc[]
+// include::{snippets}/version-controller-docs-test/update-ios-version/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/version-controller-docs-test/update-ios-version/response-body.adoc[]
+include::{snippets}/version-controller-docs-test/update-ios-version/response-fields.adoc[]
