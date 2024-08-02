@@ -198,7 +198,7 @@ public class ProfileService {
         Profile profile = profileRepository.findByUserId(userId)
                 .orElseThrow(() -> new CustomClientErrorException(PROFILE_NOT_FOUND));
 
-        List<Element> elements = elementRepository.findByIdInAndTypeAndIsDeletedFalse(ids, type);
+        List<Element> elements = elementRepository.findByIdInAndTypeAndIsDeletedFalseOrderByPriorityAsc(ids, type);
 
         if (ids.size() > type.getMaxSize()) {
             throw new CustomClientErrorException(PROFILE_ELEMENT_ID_EXCEEDED);

@@ -10,5 +10,5 @@ public interface ElementRepository extends JpaRepository<Element, Long> {
 
     List<Element> findByIsDeletedFalse();
 
-    List<Element> findByIdInAndTypeAndIsDeletedFalse(List<Long> ids, ElementType type);
+    List<Element> findByIdInAndTypeAndIsDeletedFalseOrderByPriorityAsc(List<Long> ids, ElementType type);
 }
