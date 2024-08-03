@@ -1,0 +1,29 @@
+=== 테마 정보 크롤링
+
+==== 1. Curl Request
+include::{snippets}/crawling-controller-docs-test/update-themes/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/crawling-controller-docs-test/update-themes/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/crawling-controller-docs-test/update-themes/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/crawling-controller-docs-test/update-themes/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/crawling-controller-docs-test/update-themes/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/crawling-controller-docs-test/update-themes/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/crawling-controller-docs-test/update-themes/request-body.adoc[]
+// include::{snippets}/crawling-controller-docs-test/update-themes/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/crawling-controller-docs-test/update-themes/response-body.adoc[]
+include::{snippets}/crawling-controller-docs-test/update-themes/response-fields.adoc[]
