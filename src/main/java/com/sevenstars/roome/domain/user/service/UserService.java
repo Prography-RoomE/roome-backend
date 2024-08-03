@@ -8,6 +8,8 @@ import com.sevenstars.roome.domain.profile.repository.ProfileElementRepository;
 import com.sevenstars.roome.domain.profile.repository.ProfileRepository;
 import com.sevenstars.roome.domain.profile.response.ProfileResponse;
 import com.sevenstars.roome.domain.profile.service.ProfileService;
+import com.sevenstars.roome.domain.review.entity.Review;
+import com.sevenstars.roome.domain.review.repository.ReviewRepository;
 import com.sevenstars.roome.domain.user.entity.TermsAgreement;
 import com.sevenstars.roome.domain.user.entity.User;
 import com.sevenstars.roome.domain.user.entity.UserDeactivationReason;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.sevenstars.roome.global.common.response.Result.*;
@@ -46,6 +49,7 @@ public class UserService {
     private final ProfileElementRepository profileElementRepository;
     private final ForbiddenWordRepository forbiddenWordRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final ReviewRepository reviewRepository;
 
     @Transactional
     public User saveOrUpdate(UserRequest request) {
@@ -107,6 +111,10 @@ public class UserService {
         // RefreshToken
         refreshTokenRepository.findByUser(user)
                 .ifPresent(refreshTokenRepository::delete);
+
+        // Reviews
+        List<Review> reviews = reviewRepository.findByUser(user);
+        reviews.forEach(Review::deleteUser);
 
         // User
         userRepository.delete(user);

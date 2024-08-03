@@ -51,4 +51,8 @@ public class Element {
         this.isDeleted = false;
         this.priority = priority;
     }
+
+    public void markAsDeleted() {
+        this.isDeleted = true;
+    }
 }

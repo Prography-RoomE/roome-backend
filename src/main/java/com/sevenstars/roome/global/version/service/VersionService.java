@@ -26,7 +26,7 @@ public class VersionService {
 
     private final VersionRepository versionRepository;
 
-    @Value("${version.secret}")
+    @Value("${application.secret}")
     private String secret;
 
     public VersionsResponse getVersions() {
@@ -91,7 +91,7 @@ public class VersionService {
 
     private void validateSecret(String secret) {
         if (!this.secret.equals(secret)) {
-            throw new CustomClientErrorException(Result.INVALID_VERSION_UPDATE_KEY);
+            throw new CustomClientErrorException(Result.INVALID_UPDATE_KEY);
         }
     }
 }
