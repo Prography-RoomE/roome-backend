@@ -1,10 +1,7 @@
 package com.sevenstars.roome.domain.user.service;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.sevenstars.roome.domain.common.repository.ForbiddenWordRepository;
+import com.sevenstars.roome.domain.common.service.StorageService;
 import com.sevenstars.roome.domain.profile.entity.Profile;
 import com.sevenstars.roome.domain.profile.entity.ProfileState;
 import com.sevenstars.roome.domain.profile.repository.ProfileElementRepository;
@@ -23,19 +20,14 @@ import com.sevenstars.roome.domain.user.request.UserRequest;
 import com.sevenstars.roome.domain.user.response.UserImageResponse;
 import com.sevenstars.roome.domain.user.response.UserResponse;
 import com.sevenstars.roome.global.common.exception.CustomClientErrorException;
-import com.sevenstars.roome.global.common.exception.CustomServerErrorException;
 import com.sevenstars.roome.global.jwt.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.tika.Tika;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.sevenstars.roome.global.common.response.Result.*;
 
@@ -44,8 +36,9 @@ import static com.sevenstars.roome.global.common.response.Result.*;
 @Service
 public class UserService {
 
-    private static final String USER_IMAGE_PATH = "/users/images";
+    private static final String USERS_IMAGES_PATH = "/users/images";
     private final ProfileService profileService;
+    private final StorageService storageService;
     private final UserRepository userRepository;
     private final UserDeactivationReasonRepository userDeactivationReasonRepository;
     private final TermsAgreementRepository termsAgreementRepository;
@@ -53,10 +46,6 @@ public class UserService {
     private final ProfileElementRepository profileElementRepository;
     private final ForbiddenWordRepository forbiddenWordRepository;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final AmazonS3 amazonS3;
-    private final Tika tika = new Tika();
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
 
     @Transactional
     public User saveOrUpdate(UserRequest request) {
@@ -102,7 +91,7 @@ public class UserService {
 
         // Image
         String imageUrl = user.getImageUrl();
-        deleteImage(imageUrl);
+        storageService.deleteImage(USERS_IMAGES_PATH, imageUrl);
 
         // TermsAgreement
         termsAgreementRepository.findByUser(user).ifPresent(termsAgreementRepository::delete);
@@ -204,36 +193,12 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
-        String originalFilename = file.getOriginalFilename();
-
-        if (!StringUtils.hasText(originalFilename) || !isImage(file)) {
-            throw new CustomClientErrorException(INVALID_IMAGE_FILE);
-        }
-
-        String extension = getExtension(originalFilename).toLowerCase();
-
-        if (!extension.equals("jpg") && !extension.equals("jpeg") && !extension.equals("png")) {
-            throw new CustomClientErrorException(INVALID_IMAGE_FILE_EXTENSION);
-        }
-
-        String userImageBucket = bucket + USER_IMAGE_PATH;
-        String fileName = UUID.randomUUID() + "." + extension;
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentType(file.getContentType());
-        metadata.setContentLength(file.getSize());
+        storageService.validateImage(file);
 
         deleteImage(id);
 
-        try {
-            PutObjectRequest request = new PutObjectRequest(userImageBucket, fileName, file.getInputStream(), metadata)
-                    .withCannedAcl(CannedAccessControlList.PublicRead);
-            amazonS3.putObject(request);
+        String imageUrl = storageService.saveImage(USERS_IMAGES_PATH, file);
 
-        } catch (IOException e) {
-            throw new CustomServerErrorException(FILE_UPLOAD_FAILED);
-        }
-
-        String imageUrl = amazonS3.getUrl(userImageBucket, fileName).toString();
         user.updateImageUrl(imageUrl);
 
         return new UserImageResponse(imageUrl);
@@ -246,8 +211,10 @@ public class UserService {
                 .orElseThrow(() -> new CustomClientErrorException(USER_NOT_FOUND));
 
         String imageUrl = user.getImageUrl();
-        deleteImage(imageUrl);
+
         user.deleteImageUrl();
+
+        storageService.deleteImage(USERS_IMAGES_PATH, imageUrl);
     }
 
     @Transactional(readOnly = true)
@@ -265,44 +232,5 @@ public class UserService {
         }
 
         return response;
-    }
-
-    public void deleteImage(String imageUrl) {
-
-        if (!StringUtils.hasText(imageUrl)) {
-            return;
-        }
-
-        int index = imageUrl.lastIndexOf("/");
-        if (index == -1) {
-            return;
-        }
-
-        String existFileName = imageUrl.substring(index + 1);
-        String userImageBucket = bucket + USER_IMAGE_PATH;
-        amazonS3.deleteObject(userImageBucket, existFileName);
-    }
-
-    private boolean isImage(MultipartFile file) {
-        try {
-            String mimeType = tika.detect(file.getInputStream());
-            return mimeType.startsWith("image/");
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    private String getExtension(String filename) {
-        int index = filename.lastIndexOf(".");
-        if (index == -1) {
-            throw new CustomClientErrorException(FILE_EXTENSION_DOES_NOT_EXIST);
-        }
-
-        String extension = filename.substring(index + 1);
-        if (!StringUtils.hasText(extension)) {
-            throw new CustomClientErrorException(FILE_EXTENSION_DOES_NOT_EXIST);
-        }
-
-        return extension;
     }
 }
