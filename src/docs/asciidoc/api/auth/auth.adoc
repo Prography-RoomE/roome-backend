@@ -1,0 +1,119 @@
+=== 로그인
+
+==== 1. Curl Request
+include::{snippets}/auth-controller-docs-test/sign-in/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/auth-controller-docs-test/sign-in/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/auth-controller-docs-test/sign-in/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/auth-controller-docs-test/sign-in/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/auth-controller-docs-test/sign-in/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/auth-controller-docs-test/sign-in/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/auth-controller-docs-test/sign-in/request-body.adoc[]
+// include::{snippets}/auth-controller-docs-test/sign-in/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/auth-controller-docs-test/sign-in/response-body.adoc[]
+include::{snippets}/auth-controller-docs-test/sign-in/response-fields.adoc[]
+
+=== 토큰 재발급
+
+==== 1. Curl Request
+include::{snippets}/auth-controller-docs-test/token/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/auth-controller-docs-test/token/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/auth-controller-docs-test/token/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/auth-controller-docs-test/token/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/auth-controller-docs-test/token/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/auth-controller-docs-test/token/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/auth-controller-docs-test/token/request-body.adoc[]
+// include::{snippets}/auth-controller-docs-test/token/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/auth-controller-docs-test/token/response-body.adoc[]
+include::{snippets}/auth-controller-docs-test/token/response-fields.adoc[]
+
+=== 로그아웃
+
+==== 1. Curl Request
+include::{snippets}/auth-controller-docs-test/sign-out/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/auth-controller-docs-test/sign-out/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/auth-controller-docs-test/sign-out/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/auth-controller-docs-test/sign-out/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/auth-controller-docs-test/sign-out/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/auth-controller-docs-test/sign-out/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/auth-controller-docs-test/sign-out/request-body.adoc[]
+// include::{snippets}/auth-controller-docs-test/sign-out/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/auth-controller-docs-test/sign-out/response-body.adoc[]
+include::{snippets}/auth-controller-docs-test/sign-out/response-fields.adoc[]
+
+=== 탈퇴
+
+==== 1. Curl Request
+include::{snippets}/auth-controller-docs-test/deactivate/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/auth-controller-docs-test/deactivate/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/auth-controller-docs-test/deactivate/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/auth-controller-docs-test/deactivate/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/auth-controller-docs-test/deactivate/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/auth-controller-docs-test/deactivate/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/auth-controller-docs-test/deactivate/request-body.adoc[]
+// include::{snippets}/auth-controller-docs-test/deactivate/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/auth-controller-docs-test/deactivate/response-body.adoc[]
+include::{snippets}/auth-controller-docs-test/deactivate/response-fields.adoc[]

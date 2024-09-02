@@ -1,0 +1,419 @@
+=== 프로필 기본 정보 조회
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/get-profile-defaults/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/get-profile-defaults/response-fields.adoc[]
+
+=== 프로필 정보 조회
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/get-profile/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/get-profile/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/get-profile/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/get-profile/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/get-profile/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/get-profile/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/get-profile/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/get-profile/response-fields.adoc[]
+
+=== 방 수 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-room-count/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-room-count/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-room-count/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-room-count/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-room-count/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-room-count/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-room-count/response-fields.adoc[]
+
+=== 방 수 범위 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-room-count-range/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-room-count-range/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-room-count-range/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-room-count-range/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-room-count-range/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-room-count-range/response-fields.adoc[]
+
+=== 선호 장르 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-preferred-genres/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-preferred-genres/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-preferred-genres/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-preferred-genres/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-preferred-genres/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-preferred-genres/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-preferred-genres/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-preferred-genres/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-preferred-genres/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-preferred-genres/response-fields.adoc[]
+
+=== MBTI 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-mbti/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-mbti/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-mbti/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-mbti/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-mbti/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-mbti/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-mbti/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-mbti/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-mbti/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-mbti/response-fields.adoc[]
+
+=== 사용자 강점 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-user-strengths/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-user-strengths/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-user-strengths/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-user-strengths/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-user-strengths/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-user-strengths/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-user-strengths/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-user-strengths/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-user-strengths/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-user-strengths/response-fields.adoc[]
+
+=== 테마 중요 요소 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-theme-important-factors/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-theme-important-factors/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-theme-important-factors/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-theme-important-factors/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-theme-important-factors/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-theme-important-factors/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-theme-important-factors/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-theme-important-factors/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-theme-important-factors/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-theme-important-factors/response-fields.adoc[]
+
+=== 공포 테마 포지션 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-horror-theme-position/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-horror-theme-position/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-horror-theme-position/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-horror-theme-position/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-horror-theme-position/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-horror-theme-position/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-horror-theme-position/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-horror-theme-position/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-horror-theme-position/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-horror-theme-position/response-fields.adoc[]
+
+=== 힌트 사용 선호도 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-hint-usage-preference/response-fields.adoc[]
+
+=== 장치 자물쇠 선호도 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-device-lock-preference/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-device-lock-preference/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-device-lock-preference/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-device-lock-preference/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-device-lock-preference/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-device-lock-preference/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-device-lock-preference/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-device-lock-preference/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-device-lock-preference/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-device-lock-preference/response-fields.adoc[]
+
+=== 활동성 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-activity/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-activity/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-activity/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-activity/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-activity/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-activity/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-activity/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-activity/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-activity/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-activity/response-fields.adoc[]
+
+=== 테마 싫어하는 요소 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-theme-disliked-factors/response-fields.adoc[]
+
+=== 색상 저장
+
+==== 1. Curl Request
+include::{snippets}/profile-controller-docs-test/update-color/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/profile-controller-docs-test/update-color/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/profile-controller-docs-test/update-color/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/profile-controller-docs-test/update-color/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/profile-controller-docs-test/update-color/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/profile-controller-docs-test/update-color/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/profile-controller-docs-test/update-color/request-body.adoc[]
+// include::{snippets}/profile-controller-docs-test/update-color/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/profile-controller-docs-test/update-color/response-body.adoc[]
+include::{snippets}/profile-controller-docs-test/update-color/response-fields.adoc[]

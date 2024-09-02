@@ -1,0 +1,305 @@
+=== 매장 이름 목록 조회
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/get-stores/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/get-stores/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/get-stores/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/review-controller-docs-test/get-stores/path-parameters.adoc[]
+
+===== 2) Query Parameters
+include::{snippets}/review-controller-docs-test/get-stores/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/get-stores/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/get-stores/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/get-stores/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/get-stores/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/get-stores/response-fields.adoc[]
+
+=== 테마 이름 목록 조회
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/get-themes/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/get-themes/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/get-themes/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/review-controller-docs-test/get-themes/path-parameters.adoc[]
+
+===== 2) Query Parameters
+include::{snippets}/review-controller-docs-test/get-themes/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/get-themes/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/get-themes/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/get-themes/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/get-themes/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/get-themes/response-fields.adoc[]
+
+=== 장르 목록 조회
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/get-genres/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/get-genres/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/get-genres/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/review-controller-docs-test/get-genres/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/review-controller-docs-test/get-genres/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/get-genres/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/get-genres/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/get-genres/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/get-genres/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/get-genres/response-fields.adoc[]
+
+=== 후기 목록 조회
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/get-reviews/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/get-reviews/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/get-reviews/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/review-controller-docs-test/get-reviews/path-parameters.adoc[]
+
+===== 2) Query Parameters
+include::{snippets}/review-controller-docs-test/get-reviews/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/get-reviews/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/get-reviews/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/get-reviews/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/get-reviews/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/get-reviews/response-fields.adoc[]
+
+=== 후기 조회
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/get-review/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/get-review/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/get-review/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+include::{snippets}/review-controller-docs-test/get-review/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/review-controller-docs-test/get-review/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/get-review/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/get-review/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/get-review/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/get-review/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/get-review/response-fields.adoc[]
+
+=== 후기 생성
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/create-review/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/create-review/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/create-review/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+// include::{snippets}/review-controller-docs-test/create-review/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/review-controller-docs-test/create-review/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/create-review/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/create-review/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/create-review/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/create-review/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/create-review/response-fields.adoc[]
+
+=== 후기 필수 항목 업데이트
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/update-mandatory-contents/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/update-mandatory-contents/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/update-mandatory-contents/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+include::{snippets}/review-controller-docs-test/update-mandatory-contents/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/review-controller-docs-test/update-mandatory-contents/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/update-mandatory-contents/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/update-mandatory-contents/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/update-mandatory-contents/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/update-mandatory-contents/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/update-mandatory-contents/response-fields.adoc[]
+
+=== 후기 선택 항목 업데이트
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/update-optional-contents/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/update-optional-contents/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/update-optional-contents/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+include::{snippets}/review-controller-docs-test/update-optional-contents/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/review-controller-docs-test/update-optional-contents/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/update-optional-contents/form-parameters.adoc[]
+
+===== 4) Request Parts
+include::{snippets}/review-controller-docs-test/update-optional-contents/request-parts.adoc[]
+
+===== 5) Request Part Json Field
+include::{snippets}/review-controller-docs-test/update-optional-contents/request-part-json-fields.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/update-optional-contents/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/update-optional-contents/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/update-optional-contents/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/update-optional-contents/response-fields.adoc[]
+
+=== 후기 등록
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/publish-review/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/publish-review/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/publish-review/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+include::{snippets}/review-controller-docs-test/publish-review/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/review-controller-docs-test/publish-review/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/publish-review/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/publish-review/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/publish-review/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/publish-review/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/publish-review/response-fields.adoc[]
+
+=== 후기 삭제
+
+==== 1. Curl Request
+include::{snippets}/review-controller-docs-test/delete-review/curl-request.adoc[]
+
+==== 2. HTTP Request
+include::{snippets}/review-controller-docs-test/delete-review/http-request.adoc[]
+
+==== 3. HTTP Request Headers
+// include::{snippets}/review-controller-docs-test/delete-review/request-headers.adoc[]
+
+==== 4. HTTP Request Parameters
+
+===== 1) Path Parameters
+include::{snippets}/review-controller-docs-test/delete-review/path-parameters.adoc[]
+
+===== 2) Query Parameters
+// include::{snippets}/review-controller-docs-test/delete-review/query-parameters.adoc[]
+
+===== 3) Form Parameters
+// include::{snippets}/review-controller-docs-test/delete-review/form-parameters.adoc[]
+
+==== 5. HTTP Request Body
+include::{snippets}/review-controller-docs-test/delete-review/request-body.adoc[]
+// include::{snippets}/review-controller-docs-test/delete-review/request-fields.adoc[]
+
+==== 6. HTTP Response Body
+include::{snippets}/review-controller-docs-test/delete-review/response-body.adoc[]
+include::{snippets}/review-controller-docs-test/delete-review/response-fields.adoc[]
