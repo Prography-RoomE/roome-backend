@@ -18,8 +18,8 @@ import java.util.UUID;
 
 import static com.sevenstars.roome.global.common.response.Result.*;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class StorageService {
 
     private final AmazonS3 amazonS3;

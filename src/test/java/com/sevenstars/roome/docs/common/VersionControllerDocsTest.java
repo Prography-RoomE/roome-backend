@@ -37,9 +37,8 @@ public class VersionControllerDocsTest extends RestDocsTest {
         // Given
         String serverVersion = "1.0.0";
         String aosVersion = "1.0.1";
-        ;
         String iosVersion = "1.0.2";
-        ;
+
         given(versionService.getVersions())
                 .willReturn(VersionsResponse.of(serverVersion, aosVersion, iosVersion));
 

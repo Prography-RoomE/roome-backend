@@ -1,6 +1,7 @@
 package com.sevenstars.roome.docs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public abstract class RestDocsTest {
 
     protected RestDocumentationResultHandler restDocs;
-    protected ObjectMapper objectMapper = new ObjectMapper();
+    protected ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
     protected MockMvc mockMvc;
 
     @BeforeEach

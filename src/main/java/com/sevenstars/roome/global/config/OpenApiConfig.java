@@ -32,6 +32,8 @@ import org.springframework.context.annotation.Configuration;
                 @Tag(name = "인증", description = "인증 API"),
                 @Tag(name = "사용자", description = "사용자 API"),
                 @Tag(name = "프로필", description = "프로필 API"),
+                @Tag(name = "후기", description = "후기 API"),
+                @Tag(name = "크롤링", description = "크롤링 API"),
         }
         ,
         servers = {

@@ -178,7 +178,7 @@ include::{snippets}/user-controller-docs-test/delete-image/request-body.adoc[]
 include::{snippets}/user-controller-docs-test/delete-image/response-body.adoc[]
 include::{snippets}/user-controller-docs-test/delete-image/response-fields.adoc[]
 
-=== 사용자 프로필 조회
+=== 프로필 정보 조회
 
 ==== 1. Curl Request
 include::{snippets}/user-controller-docs-test/get-profile/curl-request.adoc[]

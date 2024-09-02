@@ -29,7 +29,7 @@ public enum Result {
     INVALID_IMAGE_FILE(1011, "이미지 파일이 아닙니다."),
     INVALID_IMAGE_FILE_EXTENSION(1012, "이미지 파일 확장자가 아닙니다."),
     FILE_EXTENSION_DOES_NOT_EXIST(1013, "파일 확장자가 존재하지 않습니다."),
-    INVALID_VERSION_UPDATE_KEY(1014, "버전 업데이트 키가 유효하지 않습니다."),
+    INVALID_UPDATE_KEY(1014, "업데이트 키가 유효하지 않습니다."),
 
     // User
     USER_NOT_FOUND(2000, "사용자를 찾을 수 없습니다."),
@@ -50,7 +50,15 @@ public enum Result {
     PROFILE_INVALID_ROOM_COUNT_RANGE(3003, "방 수 범위가 유효하지 않습니다."),
     PROFILE_MBTI_NOT_FOUND(3004, "MBTI를 찾을 수 없습니다."),
     PROFILE_ELEMENT_ID_NOT_FOUND(3005, "프로필 요소를 찾을 수 없습니다."),
-    PROFILE_ELEMENT_ID_EXCEEDED(3006, "프로필 요소 최대 값을 초과하였습니다.");
+    PROFILE_ELEMENT_ID_EXCEEDED(3006, "프로필 요소 최대 값을 초과하였습니다."),
+
+    // Review
+    REVIEW_NOT_FOUND(4000, "후기를 찾을 수 없습니다."),
+    REVIEW_STORE_NAME_BLANK(4001, "방 탈출 카페 이름을 입력해주세요."),
+    REVIEW_THEME_NAME_BLANK(4002, "테마 명을 입력해주세요."),
+    REVIEW_GENRES_EXCEEDED(4003, "장르 최대 개수를 초과하였습니다."),
+    REVIEW_GENRES_NOT_FOUND(4004, "장르를 찾을 수 없습니다."),
+    REVIEW_IMAGES_EXCEEDED(4005, "이미지 최대 개수를 초과하였습니다.");
 
     private final int code;
     private final String message;

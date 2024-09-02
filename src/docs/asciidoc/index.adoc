@@ -22,6 +22,9 @@ include::api/common/status-detail.adoc[]
 == 공통
 include::api/common/common.adoc[]
 
+== 크롤링
+include::api/crawling/crawling.adoc[]
+
 == 인증
 include::api/auth/auth.adoc[]
 
@@ -30,3 +33,6 @@ include::api/user/user.adoc[]
 
 == 프로필
 include::api/profile/profile.adoc[]
+
+== 후기
+include::api/review/review.adoc[]

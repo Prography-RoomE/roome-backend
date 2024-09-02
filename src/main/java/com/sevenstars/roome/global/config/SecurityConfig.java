@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(antMatcher("/swagger-resources/**")).permitAll()
                         .requestMatchers(antMatcher("/v3/api-docs/**")).permitAll()
                         .requestMatchers(antMatcher("/versions/**")).permitAll()
+                        .requestMatchers(antMatcher("/crawling/**")).permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/profile").permitAll()
                         .anyRequest().authenticated()
                 )
